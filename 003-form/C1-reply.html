@@ -1,0 +1,231 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>C1 AIの説明文｜はかり</title><style>body{margin:0;background:#FFF1D6;color:#2F5D62;font:15px/1.8 system-ui,sans-serif}main{max-width:720px;margin:auto;padding:24px 16px}pre{white-space:pre-wrap;word-break:break-word;background:#fff;border-radius:12px;padding:16px;font:14px/1.7 ui-monospace,monospace}</style><main><p><a href="./">一覧へ</a>｜<a href="C1-before.html">フォームを触る</a></p><h1>C1：AIがフォームと一緒に返した説明文</h1><p>コードを除いた説明だけで <b>8,323文字</b>（400字詰め原稿用紙 約21枚）。以下はAIの返答そのままです（コード部分を含みます）。</p><pre># こむぎ堂 予約フォーム
+
+予約フォームのHTML（`index.html`）を作りました。
+
+## しくみ（無料・サーバー不要）
+
+```
+お客さん → 予約フォーム（index.html） → Google Apps Script → Google スプレッドシートに保存
+                                                          └→ お店にメールでお知らせ
+```
+
+- **費用：0円**（Google アカウントがあれば使えます）
+- **自分のサーバーは不要**です。予約は Google のスプレッドシートにたまっていきます。
+- **HTML に秘密情報は書きません。** パスワード・メールアドレス・APIキーは HTML に一切入っていません。HTML に書くのは「送り先 URL」だけで、これはパスワードではありません（知られても予約を送れるだけで、予約一覧は見られません）。
+
+## フォームの機能
+
+| 項目 | 内容 |
+|---|---|
+| 入力欄 | お名前・電話番号・受け取り日・商品と個数（＋任意のご要望） |
+| 入力チェック | 空欄、電話番号の形、定休日・選べる期間外の日付、商品未選択をその場で赤字表示 |
+| 失敗したとき | 赤い枠で「**送信できませんでした（ご予約は完了していません）**」と表示し、入力内容は消さずに残します。電話での予約もあわせて案内します。通信が20秒以上かかったときも失敗として表示します |
+| 成功したとき | 緑の枠で受付番号と予約内容を表示します（お店側で保存が完了したときだけ表示） |
+| 迷惑送信対策 | ①人には見えない「ロボットよけ」欄 ②開いてすぐの送信を拒否 ③同じブラウザからの連続送信を防止 ④二重押し防止 ⑤お店側で1時間あたりの受付数に上限 ⑥同じ内容の重複予約をはじく ⑦お店側でも入力内容を再チェック |
+| 個人情報 | 利用目的・保存場所・保存期間・第三者提供しないこと・問い合わせ先を説明し、同意チェックを必須にしました |
+
+---
+
+## お店の方がやる設定（所要 20〜30分）
+
+### 手順1：スプレッドシートを作る
+
+1. パソコンで Google にログインし、[Google スプレッドシート](https://sheets.google.com) を開きます。
+   - 予約専用の Google アカウントを新しく作ると、ほかのデータと混ざらず安心です。
+2. 「空白のスプレッドシート」を作り、名前を「こむぎ堂 予約」にします。
+
+### 手順2：受付プログラムを貼り付ける
+
+1. スプレッドシートの上のメニューから **［拡張機能］→［Apps Script］** を押します。
+2. 新しい画面が開き、`function myFunction() { }` と書かれています。**これを全部消して**、下のプログラムを**まるごとコピーして貼り付け**ます。
+3. 上の 💾（保存）ボタンを押します。
+
+```javascript
+/***** こむぎ堂 予約受付プログラム *****/
+
+// ▼ 必要なら変更してください
+const SHEET_NAME     = &#x27;予約一覧&#x27;;  // 予約がたまるシートの名前
+const MAX_PER_HOUR   = 30;          // 1時間に受け付ける予約の上限（迷惑送信対策）
+const RETENTION_DAYS = 90;          // 受け取り日から何日たったら削除するか
+const SEND_MAIL      = true;        // 予約が来たらメールで知らせるか（true/false）
+// ▲ ここまで
+
+function doPost(e) {
+  const lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(10000);
+    const d = JSON.parse(e.postData.contents);
+
+    // ロボット対策：見えない欄に入力がある → 受け付けたふりをして保存しない
+    if (d.website) return reply_({ ok: true, id: &#x27;-&#x27; });
+    // 開いてから3秒未満の送信は機械とみなす
+    if (!(Number(d.elapsed) &gt;= 3000)) return reply_({ ok: false, error: &#x27;too_fast&#x27; });
+
+    // 1時間あたりの上限
+    const cache = CacheService.getScriptCache();
+    const hourKey = &#x27;count_&#x27; + Utilities.formatDate(new Date(), &#x27;Asia/Tokyo&#x27;, &#x27;yyyyMMddHH&#x27;);
+    const count = Number(cache.get(hourKey) || 0);
+    if (count &gt;= MAX_PER_HOUR) return reply_({ ok: false, error: &#x27;busy&#x27; });
+
+    // 入力内容の再チェック
+    const name  = clean_(d.name, 40);
+    const phone = clean_(d.phone, 20);
+    const date  = String(d.date || &#x27;&#x27;);
+    const note  = clean_(d.note, 200);
+    const items = Array.isArray(d.items) ? d.items.slice(0, 30) : [];
+    if (!name) return reply_({ ok: false, error: &#x27;invalid&#x27; });
+    if (!/^0\d{9,10}$/.test(phone.replace(/-/g, &#x27;&#x27;))) return reply_({ ok: false, error: &#x27;invalid&#x27; });
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return reply_({ ok: false, error: &#x27;invalid&#x27; });
+    const today = Utilities.formatDate(new Date(), &#x27;Asia/Tokyo&#x27;, &#x27;yyyy-MM-dd&#x27;);
+    const limit = Utilities.formatDate(new Date(Date.now() + 60 * 86400000), &#x27;Asia/Tokyo&#x27;, &#x27;yyyy-MM-dd&#x27;);
+    if (date &lt;= today || date &gt; limit) return reply_({ ok: false, error: &#x27;invalid&#x27; });
+    const lines = [];
+    for (const it of items) {
+      const n = clean_(it &amp;&amp; it.name, 40);
+      const q = Number(it &amp;&amp; it.qty);
+      if (!n || !Number.isInteger(q) || q &lt; 1 || q &gt; 20) return reply_({ ok: false, error: &#x27;invalid&#x27; });
+      lines.push(n + &#x27; × &#x27; + q);
+    }
+    if (!lines.length) return reply_({ ok: false, error: &#x27;invalid&#x27; });
+    const order = lines.join(&#x27;\n&#x27;);
+
+    // 同じ内容の重複予約をはじく（30分以内）
+    const dupKey = &#x27;dup_&#x27; + Utilities.base64Encode(
+      Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, [name, phone, date, order].join(&#x27;|&#x27;)));
+    if (cache.get(dupKey)) return reply_({ ok: false, error: &#x27;duplicate&#x27; });
+
+    // 保存
+    const sheet = getSheet_();
+    const id = Utilities.formatDate(new Date(), &#x27;Asia/Tokyo&#x27;, &#x27;MMdd&#x27;) + &#x27;-&#x27; +
+               Math.floor(1000 + Math.random() * 9000);
+    sheet.appendRow([
+      new Date(), id, safe_(name), &quot;&#x27;&quot; + phone, date, safe_(order), safe_(note), &#x27;未対応&#x27;
+    ]);
+    cache.put(hourKey, String(count + 1), 3600);
+    cache.put(dupKey, &#x27;1&#x27;, 1800);
+
+    // お店へのお知らせメール（電話番号は書かず、詳しくはシートで確認）
+    if (SEND_MAIL) {
+      try {
+        MailApp.sendEmail(
+          Session.getEffectiveUser().getEmail(),
+          &#x27;【こむぎ堂】新しい予約 &#x27; + date + &#x27; 受取（&#x27; + id + &#x27;）&#x27;,
+          &#x27;新しい予約が入りました。\n\n受付番号：&#x27; + id + &#x27;\n受け取り日：&#x27; + date +
+          &#x27;\n\n&#x27; + order + &#x27;\n\nお客さまの連絡先などはスプレッドシートで確認してください。\n&#x27; +
+          SpreadsheetApp.getActiveSpreadsheet().getUrl());
+      } catch (mailErr) { /* メールが送れなくても予約の保存は成功扱い */ }
+    }
+    return reply_({ ok: true, id: id });
+  } catch (err) {
+    console.error(err);
+    return reply_({ ok: false, error: &#x27;server&#x27; });
+  } finally {
+    try { lock.releaseLock(); } catch (e) {}
+  }
+}
+
+// 受け取り日から RETENTION_DAYS 日すぎた予約を消す（手順5で毎日自動実行）
+function deleteOldReservations() {
+  const sheet = getSheet_();
+  const values = sheet.getDataRange().getValues();
+  const border = Utilities.formatDate(new Date(Date.now() - RETENTION_DAYS * 86400000), &#x27;Asia/Tokyo&#x27;, &#x27;yyyy-MM-dd&#x27;);
+  for (let r = values.length - 1; r &gt;= 1; r--) {
+    const v = values[r][4];
+    const date = v instanceof Date ? Utilities.formatDate(v, &#x27;Asia/Tokyo&#x27;, &#x27;yyyy-MM-dd&#x27;) : String(v);
+    if (date &amp;&amp; date &lt; border) sheet.deleteRow(r + 1);
+  }
+}
+
+function getSheet_() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName(SHEET_NAME);
+  if (!sheet) {
+    sheet = ss.insertSheet(SHEET_NAME);
+    sheet.appendRow([&#x27;受付日時&#x27;, &#x27;受付番号&#x27;, &#x27;お名前&#x27;, &#x27;電話番号&#x27;, &#x27;受け取り日&#x27;, &#x27;ご注文&#x27;, &#x27;ご要望&#x27;, &#x27;対応状況&#x27;]);
+    sheet.setFrozenRows(1);
+  }
+  return sheet;
+}
+function clean_(v, max) { return String(v == null ? &#x27;&#x27; : v).replace(/[\u0000-\u001f]/g, &#x27; &#x27;).trim().slice(0, max); }
+// = + - @ で始まる文字が「計算式」として動かないようにする
+function safe_(v) { return /^[=+\-@]/.test(v) ? &quot;&#x27;&quot; + v : v; }
+function reply_(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
+
+// 手順3の「許可」のためだけに使う関数
+function setup() { getSheet_(); }
+```
+
+### 手順3：許可を出す
+
+1. 画面上部の関数の選択欄（「実行」ボタンの右）で **`setup`** を選び、**［実行］** を押します。
+2. 「承認が必要です」と出たら **［権限を確認］** → 自分のアカウントを選ぶ。
+3. 「Google はこのアプリを検証していません」と出たら、**［詳細］→［（プロジェクト名）に移動］** を押し、**［許可］** を押します。
+   - 自分で作ったプログラムなので、この表示が出るのは正常です。
+4. スプレッドシートに戻ると「予約一覧」シートができています。
+
+### 手順4：ウェブアプリとして公開する
+
+1. Apps Script の画面右上 **［デプロイ］→［新しいデプロイ］** を押します。
+2. 歯車マーク ⚙ → **［ウェブアプリ］** を選びます。
+3. 次のように設定します。
+   - 説明：`予約受付`
+   - 次のユーザーとして実行：**自分**
+   - アクセスできるユーザー：**全員**
+     （お客さんが Google にログインしていなくても送れるようにするためです。予約一覧が公開されるわけではありません）
+4. **［デプロイ］** を押すと **ウェブアプリの URL**（`https://script.google.com/macros/s/……/exec`）が表示されるので、**コピー**します。
+
+### 手順5：古い予約を自動で消す設定（個人情報を守るため）
+
+1. Apps Script 画面左の ⏰（トリガー）→ 右下 **［トリガーを追加］**。
+2. 実行する関数：**`deleteOldReservations`**／イベントのソース：**時間主導型**／種類：**日付ベースのタイマー**／時刻：**午前2時〜3時** → **［保存］**。
+
+### 手順6：HTML に URL を書き込む
+
+1. `index.html` をメモ帳（Mac は「テキストエディット」）で開きます。
+2. `ENDPOINT_URL: &quot;&quot;,` を探し、`&quot;&quot;` の間に手順4の URL を貼り付けます。
+   ```
+   ENDPOINT_URL: &quot;https://script.google.com/macros/s/xxxxxxxx/exec&quot;,
+   ```
+3. 同じ場所の `SHOP_PHONE`（お店の電話番号）、`CLOSED_DAYS`（定休日）、`PRODUCTS`（商品と値段）もお店に合わせて書き換えて保存します。
+   - 記号の `&quot;` `,` `[ ]` `{ }` は消さないように注意してください。
+
+### 手順7：インターネットに公開する（無料）
+
+おすすめは **Netlify Drop**（ドラッグ＆ドロップだけで公開できます）。
+
+1. `index.html` だけを入れたフォルダを作ります（例：「komugido-yoyaku」）。
+2. https://app.netlify.com/drop を開き、無料アカウントを作ってから、そのフォルダを画面にドラッグ＆ドロップします。
+3. `https://〇〇〇.netlify.app` という URL ができます。これを Instagram のプロフィール、LINE、お店のQRコードなどに載せてください。
+   - 商品を変えたいときは、HTML を書き換えて同じサイトに再度ドラッグ＆ドロップします。
+
+### 手順8：テストする
+
+1. 公開したページで、自分の名前で予約を1件送ってみます。
+2. 緑色の「ご予約を受け付けました」が出て、スプレッドシートに1行増え、メールが届けば完成です。
+3. テストの行はスプレッドシートから削除してください。
+
+---
+
+## 日々の使い方
+
+- 予約が来るとメールが届きます。お客さまの電話番号などは**スプレッドシート**で確認してください（メールには個人情報をなるべく載せていません）。
+- 「対応状況」の列を「準備済み」「受け渡し済み」などに書き換えて管理できます。
+
+## 安全のための注意
+
+- スプレッドシートの **［共有］はお店の人だけ** にしてください。「リンクを知っている全員」にはしないでください。
+- 予約用の Google アカウントには **2段階認証** を設定してください。
+- Apps Script のプログラムを後から書き換えたときは、**［デプロイ］→［デプロイを管理］→ ✏（編集）→ バージョン「新バージョン」→［デプロイ］** で更新してください（こうすると URL は変わりません）。「新しいデプロイ」をすると URL が変わってしまいます。
+- 迷惑な送信が続く場合は、プログラムの `MAX_PER_HOUR` を小さくするか、一時的にデプロイを「アーカイブ」して受付を止められます。
+
+## うまくいかないとき
+
+| 症状 | 確認すること |
+|---|---|
+| 「まだ準備中です」と出る | 手順6の URL が貼れているか、`/exec` で終わっているか |
+| 「通信に失敗しました」と出る | 手順4で「アクセスできるユーザー：全員」になっているか。プログラムを直した後に「新バージョン」で更新したか |
+| シートには入るがメールが来ない | 迷惑メールフォルダを確認。メールが不要なら `SEND_MAIL` を `false` に |
+| 「混み合っています」と出る | 1時間の上限（`MAX_PER_HOUR`）に達しています。必要なら数字を大きくしてください |
+</pre></main></html>

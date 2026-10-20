@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="ja">
+<head><meta name="robots" content="noindex"><script>(function(){
+var P=new URLSearchParams(location.search),M=window.__DEMO_BEFORE?'before':(P.get('mode')==='fail'?'fail':'ok');
+function ov(t){var d=document.createElement('div');d.setAttribute('role','alertdialog');d.style.cssText='position:fixed;inset:0;z-index:100000;background:#0008;display:flex;align-items:center;justify-content:center;padding:16px';d.innerHTML='<div style="background:#fff;color:#2F5D62;max-width:420px;border-radius:16px;padding:20px;font:15px/1.7 system-ui,sans-serif"><b>【デモ】</b>'+t+'<br><button style="margin-top:12px;padding:8px 16px;border:0;border-radius:8px;background:#2F5D62;color:#fff;font:inherit">閉じる</button></div>';d.querySelector('button').onclick=function(){d.remove()};document.body.appendChild(d)}
+var rf=window.fetch;window.fetch=function(u,o){var s=String(u&&u.url||u);if(/^https?:/.test(s)&&s.indexOf(location.origin)!==0){return new Promise(function(r){setTimeout(function(){r(new Response(M==='fail'?'{"error":"server error"}':'{"ok":true,"result":"success"}',{status:M==='fail'?500:200,headers:{'Content-Type':'application/json'}}))},700)})}return rf.apply(this,arguments)};
+function nav(f){var a=f.getAttribute('action')||'';ov(M==='before'?'このまま公開すると、入力内容が仮のアドレス宛て（'+a.replace(/^https?:\/\//,'')+'）に送信されます。デモでは止めています。':M==='fail'?'本来はここで送信サービス（'+a.replace(/^https?:\/\/([^\/]+).*/,'$1')+'）の画面に移動し、そちらでエラーが表示されます。フォーム自身はエラーを表示しません。':'本来はここで送信サービス（'+a.replace(/^https?:\/\/([^\/]+).*/,'$1')+'）の画面に移動し、入力内容がお店のメールに届きます。デモのため送信していません。')}
+HTMLFormElement.prototype.submit=function(){nav(this)};
+document.addEventListener('submit',function(e){if(!e.defaultPrevented){e.preventDefault();nav(e.target)}});
+Object.defineProperty(window,'__demoMail',{set:function(){ov('本来はここでメールアプリが開き、予約内容を書いたメールの下書きができます。デモでは開きません。')}});
+})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>こむぎ堂 ご予約フォーム</title>
+<style>
+  :root {
+    --bg: #faf6ef;
+    --card: #ffffff;
+    --text: #3b2f25;
+    --muted: #7a6a5c;
+    --accent: #b5732f;
+    --accent-dark: #8f5820;
+    --border: #e4d8c8;
+    --error: #b3261e;
+    --ok-bg: #eef6ea;
+    --ok-text: #2f5d23;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #211b16;
+      --card: #2c241e;
+      --text: #f1e7da;
+      --muted: #bfae9c;
+      --accent: #d99550;
+      --accent-dark: #e9a964;
+      --border: #4a3e33;
+      --error: #f2948c;
+      --ok-bg: #26351f;
+      --ok-text: #bfe3ac;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #211b16;
+    --card: #2c241e;
+    --text: #f1e7da;
+    --muted: #bfae9c;
+    --accent: #d99550;
+    --accent-dark: #e9a964;
+    --border: #4a3e33;
+    --error: #f2948c;
+    --ok-bg: #26351f;
+    --ok-text: #bfe3ac;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+    line-height: 1.7;
+  }
+  .wrap { max-width: 560px; margin: 0 auto; padding: 32px 16px 48px; }
+  header { text-align: center; margin-bottom: 24px; }
+  header .logo { font-size: 40px; line-height: 1; }
+  header h1 { margin: 8px 0 4px; font-size: 1.6rem; letter-spacing: .08em; }
+  header p { margin: 0; color: var(--muted); font-size: .95rem; }
+  form {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 20px;
+  }
+  .field { margin-bottom: 20px; }
+  label, .label { display: block; font-weight: bold; margin-bottom: 6px; }
+  .req { color: var(--error); font-size: .8rem; margin-left: 6px; font-weight: normal; }
+  input[type="text"], input[type="tel"], input[type="date"], select, textarea {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: inherit;
+  }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .hint { color: var(--muted); font-size: .85rem; margin-top: 4px; }
+  .products { display: grid; gap: 8px; }
+  .product {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px;
+  }
+  .product .name { font-weight: normal; margin: 0; }
+  .product .price { color: var(--muted); font-size: .85rem; display: block; }
+  .product input[type="number"] {
+    width: 72px; padding: 6px 8px; font-size: 1rem; text-align: right;
+    border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text);
+  }
+  .total { text-align: right; margin-top: 8px; font-weight: bold; }
+  .error-msg { color: var(--error); font-size: .85rem; margin-top: 4px; display: none; }
+  .field.invalid .error-msg { display: block; }
+  .field.invalid input, .field.invalid .products { border-color: var(--error); }
+  button {
+    width: 100%; padding: 14px; font-size: 1.05rem; font-weight: bold;
+    background: var(--accent); color: #fff; border: none; border-radius: 10px; cursor: pointer;
+    font-family: inherit;
+  }
+  button:hover { background: var(--accent-dark); }
+  button:disabled { opacity: .6; cursor: wait; }
+  .result {
+    display: none; margin-top: 20px; padding: 16px; border-radius: 10px;
+    background: var(--ok-bg); color: var(--ok-text);
+  }
+  .result.error { background: transparent; border: 1px solid var(--error); color: var(--error); }
+  footer { text-align: center; color: var(--muted); font-size: .85rem; margin-top: 24px; }
+</style>
+</head>
+<body><script>document.write(new URLSearchParams(location.search).get('mode')==='fail'?"<div role=\"note\" style=\"position:sticky;top:0;z-index:99999;background:#2F5D62;color:#fff;font:14px/1.7 system-ui,sans-serif;padding:8px 12px;text-align:center\">\u3010\u691c\u8a3c\u7528\u30c7\u30e2\uff5cA3\u3011\u67b6\u7a7a\u306e\u304a\u5e97\u3067\u3059\u3002\u5b9f\u969b\u306b\u306f\u9001\u4fe1\u3055\u308c\u307e\u305b\u3093\u3002<br><a href=\"A3-before.html\" style=\"color:#F2B544\">\u8a2d\u5b9a\u524d</a>\u3000<a href=\"A3.html?mode=ok\" style=\"color:#F2B544\">\u5c4a\u3044\u305f\u5834\u5408</a>\u3000<a href=\"A3.html?mode=fail\" style=\"color:#fff;font-weight:700;text-decoration:none;border-bottom:2px solid #F2B544\">\u9001\u4fe1\u5148\u30a8\u30e9\u30fc</a>\u3000<a href=\"A3-reply.html\" style=\"color:#F2B544\">AI\u306e\u8aac\u660e\u6587</a>\u3000<a href=\"./\" style=\"color:#F2B544\">\u4e00\u89a7\u3078</a></div>":"<div role=\"note\" style=\"position:sticky;top:0;z-index:99999;background:#2F5D62;color:#fff;font:14px/1.7 system-ui,sans-serif;padding:8px 12px;text-align:center\">\u3010\u691c\u8a3c\u7528\u30c7\u30e2\uff5cA3\u3011\u67b6\u7a7a\u306e\u304a\u5e97\u3067\u3059\u3002\u5b9f\u969b\u306b\u306f\u9001\u4fe1\u3055\u308c\u307e\u305b\u3093\u3002<br><a href=\"A3-before.html\" style=\"color:#F2B544\">\u8a2d\u5b9a\u524d</a>\u3000<a href=\"A3.html?mode=ok\" style=\"color:#fff;font-weight:700;text-decoration:none;border-bottom:2px solid #F2B544\">\u5c4a\u3044\u305f\u5834\u5408</a>\u3000<a href=\"A3.html?mode=fail\" style=\"color:#F2B544\">\u9001\u4fe1\u5148\u30a8\u30e9\u30fc</a>\u3000<a href=\"A3-reply.html\" style=\"color:#F2B544\">AI\u306e\u8aac\u660e\u6587</a>\u3000<a href=\"./\" style=\"color:#F2B544\">\u4e00\u89a7\u3078</a></div>")</script>
+<div class="wrap">
+  <header>
+    <div class="logo" aria-hidden="true">🍞</div>
+    <h1>こむぎ堂</h1>
+    <p>パンのご予約フォーム</p>
+  </header>
+
+  <form id="reserve-form" novalidate>
+    <div class="field" id="f-name">
+      <label for="name">お名前<span class="req">必須</span></label>
+      <input type="text" id="name" name="お名前" autocomplete="name" placeholder="例）小麦 花子" required>
+      <div class="error-msg">お名前を入力してください。</div>
+    </div>
+
+    <div class="field" id="f-tel">
+      <label for="tel">電話番号<span class="req">必須</span></label>
+      <input type="tel" id="tel" name="電話番号" autocomplete="tel" inputmode="tel" placeholder="例）090-1234-5678" required>
+      <div class="error-msg">正しい電話番号を入力してください（数字とハイフンのみ）。</div>
+    </div>
+
+    <div class="field" id="f-date">
+      <label for="date">受け取り日<span class="req">必須</span></label>
+      <input type="date" id="date" name="受け取り日" required>
+      <div class="hint">ご予約は翌日以降・2週間先までとなります。定休日：月曜日</div>
+      <div class="error-msg" id="date-error">受け取り日を選んでください。</div>
+    </div>
+
+    <div class="field" id="f-products">
+      <span class="label">商品<span class="req">1点以上</span></span>
+      <div class="products" id="products"></div>
+      <div class="total" id="total">合計 0点 / 0円</div>
+      <div class="error-msg">商品を1点以上お選びください。</div>
+    </div>
+
+    <div class="field">
+      <label for="note">備考</label>
+      <textarea id="note" name="備考" rows="3" placeholder="受け取り時間のご希望、スライス指定などあればご記入ください"></textarea>
+    </div>
+
+    <!-- スパム対策（人間には見えない欄） -->
+    <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+    <button type="submit" id="submit-btn">予約を送信する</button>
+    <div class="result" id="result" role="status" aria-live="polite"></div>
+  </form>
+
+  <footer>
+    こむぎ堂　営業時間 8:00〜18:00（月曜定休）<br>
+    お急ぎの方はお電話でもご予約いただけます。
+  </footer>
+</div>
+
+<script>
+/* =========================================================
+   ★ お店の方へ：ここだけ設定してください ★
+   ---------------------------------------------------------
+   1. https://formspree.io で無料アカウントを作成
+   2. 「New Form」でフォームを作り、受け取りたいメールアドレスを登録
+   3. 表示される URL（https://formspree.io/f/xxxxxxx）を下に貼り付け
+   これで送信内容がお店のメールに届きます。
+   未設定のままだと、お客様のメールアプリが開いて
+   SHOP_EMAIL 宛てに送る方式になります。
+   ========================================================= */
+const FORM_ENDPOINT = "https://formspree.io/f/test123";                     // 例: "https://formspree.io/f/abcdwxyz"
+const SHOP_EMAIL    = "info@komugido.example"; // お店のメールアドレス
+
+// 商品リスト（自由に編集してください）
+const PRODUCTS = [
+  { name: "食パン（1斤）",       price: 400 },
+  { name: "食パン（1.5斤）",     price: 580 },
+  { name: "クロワッサン",         price: 220 },
+  { name: "あんぱん",             price: 180 },
+  { name: "メロンパン",           price: 200 },
+  { name: "カレーパン",           price: 230 },
+  { name: "カンパーニュ",         price: 520 },
+  { name: "バゲット",             price: 320 },
+];
+const CLOSED_WEEKDAYS = [1]; // 0=日, 1=月 ... 定休日
+const MAX_DAYS_AHEAD  = 14;
+
+/* ---------- 以下は触らなくてOK ---------- */
+const $ = (id) => document.getElementById(id);
+const yen = (n) => n.toLocaleString("ja-JP") + "円";
+
+// 商品欄を作る
+const productsEl = $("products");
+PRODUCTS.forEach((p, i) => {
+  const row = document.createElement("div");
+  row.className = "product";
+  row.innerHTML =
+    '<label class="name" for="p' + i + '">' + p.name +
+    '<span class="price">' + yen(p.price) + '</span></label>' +
+    '<input type="number" id="p' + i + '" min="0" max="50" value="0" aria-label="' + p.name + 'の個数">';
+  productsEl.appendChild(row);
+});
+
+function getItems() {
+  return PRODUCTS.map((p, i) => ({ ...p, qty: Math.max(0, parseInt($("p" + i).value, 10) || 0) }))
+                 .filter((p) => p.qty > 0);
+}
+function updateTotal() {
+  const items = getItems();
+  const count = items.reduce((s, p) => s + p.qty, 0);
+  const sum = items.reduce((s, p) => s + p.qty * p.price, 0);
+  $("total").textContent = "合計 " + count + "点 / " + yen(sum);
+  if (count > 0) $("f-products").classList.remove("invalid");
+}
+productsEl.addEventListener("input", updateTotal);
+
+// 日付の範囲（翌日〜2週間後）
+function fmt(d) {
+  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
+const today = new Date(); today.setHours(0, 0, 0, 0);
+const minD = new Date(today); minD.setDate(minD.getDate() + 1);
+const maxD = new Date(today); maxD.setDate(maxD.getDate() + MAX_DAYS_AHEAD);
+$("date").min = fmt(minD);
+$("date").max = fmt(maxD);
+
+// 入力チェック
+function setInvalid(id, bad) { $(id).classList.toggle("invalid", bad); return !bad; }
+function validate() {
+  let ok = true;
+  ok = setInvalid("f-name", $("name").value.trim() === "") && ok;
+
+  const tel = $("tel").value.trim().replace(/[０-９]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0xFEE0)).replace(/[ー－]/g, "-");
+  $("tel").value = tel;
+  ok = setInvalid("f-tel", !/^0\d{1,4}-?\d{1,4}-?\d{3,4}$/.test(tel) || tel.replace(/-/g, "").length < 10) && ok;
+
+  const v = $("date").value;
+  let dateBad = !v, msg = "受け取り日を選んでください。";
+  if (v) {
+    const d = new Date(v + "T00:00:00");
+    if (d < minD || d > maxD) { dateBad = true; msg = "受け取り日は翌日〜" + MAX_DAYS_AHEAD + "日後の間でお選びください。"; }
+    else if (CLOSED_WEEKDAYS.includes(d.getDay())) { dateBad = true; msg = "その日は定休日です。別の日をお選びください。"; }
+  }
+  $("date-error").textContent = msg;
+  ok = setInvalid("f-date", dateBad) && ok;
+
+  ok = setInvalid("f-products", getItems().length === 0) && ok;
+  return ok;
+}
+["name", "tel", "date"].forEach((id) => $(id).addEventListener("change", () => $("f-" + id).classList.remove("invalid")));
+
+function buildSummary() {
+  const items = getItems();
+  const w = ["日", "月", "火", "水", "木", "金", "土"][new Date($("date").value + "T00:00:00").getDay()];
+  const lines = items.map((p) => "・" + p.name + " × " + p.qty + "（" + yen(p.price * p.qty) + "）");
+  const sum = items.reduce((s, p) => s + p.qty * p.price, 0);
+  return [
+    "【こむぎ堂 ご予約】",
+    "お名前：" + $("name").value.trim(),
+    "電話番号：" + $("tel").value.trim(),
+    "受け取り日：" + $("date").value + "（" + w + "）",
+    "ご注文：",
+    ...lines,
+    "合計：" + yen(sum),
+    "備考：" + ($("note").value.trim() || "なし"),
+  ].join("\n");
+}
+
+function showResult(html, isError) {
+  const r = $("result");
+  r.innerHTML = html;
+  r.className = "result" + (isError ? " error" : "");
+  r.style.display = "block";
+}
+
+$("reserve-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (!validate()) {
+    const first = document.querySelector(".field.invalid");
+    if (first) first.scrollIntoView({ behavior: "smooth", block: "center" });
+    return;
+  }
+  const summary = buildSummary();
+
+  // 送信先が未設定 → メールアプリで送る
+  if (!FORM_ENDPOINT) {
+    window.__demoMail = "mailto:" + SHOP_EMAIL +
+      "?subject=" + encodeURIComponent("【予約】" + $("name").value.trim() + " 様 " + $("date").value) +
+      "&body=" + encodeURIComponent(summary);
+    showResult("メールアプリが開きます。内容を確認して<strong>そのまま送信</strong>してください。<br>送信していただいた時点でご予約受付となります。");
+    return;
+  }
+
+  const btn = $("submit-btn");
+  btn.disabled = true; btn.textContent = "送信中…";
+  try {
+    const fd = new FormData(e.target);
+    fd.append("ご注文", getItems().map((p) => p.name + " × " + p.qty).join(" / "));
+    fd.append("予約内容まとめ", summary);
+    fd.append("_subject", "【予約】" + $("name").value.trim() + " 様 " + $("date").value);
+    const res = await fetch(FORM_ENDPOINT, { method: "POST", body: fd, headers: { Accept: "application/json" } });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    e.target.querySelectorAll("input, textarea, button").forEach((el) => (el.disabled = true));
+    showResult("ご予約ありがとうございます！<br>内容を確認のうえ、必要に応じてお店からお電話いたします。<br><br>" +
+      summary.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/\n/g, "<br>"));
+    btn.textContent = "送信しました";
+  } catch (err) {
+    showResult("送信できませんでした。通信環境をご確認のうえもう一度お試しいただくか、お電話でご予約ください。", true);
+    btn.disabled = false; btn.textContent = "予約を送信する";
+  }
+});
+</script>
+</body>
+</html>

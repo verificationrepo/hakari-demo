@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="ja">
+<head><script>window.__DEMO_BEFORE=1</script><meta name="robots" content="noindex"><script>(function(){
+var P=new URLSearchParams(location.search),M=window.__DEMO_BEFORE?'before':(P.get('mode')==='fail'?'fail':'ok');
+function ov(t){var d=document.createElement('div');d.setAttribute('role','alertdialog');d.style.cssText='position:fixed;inset:0;z-index:100000;background:#0008;display:flex;align-items:center;justify-content:center;padding:16px';d.innerHTML='<div style="background:#fff;color:#2F5D62;max-width:420px;border-radius:16px;padding:20px;font:15px/1.7 system-ui,sans-serif"><b>【デモ】</b>'+t+'<br><button style="margin-top:12px;padding:8px 16px;border:0;border-radius:8px;background:#2F5D62;color:#fff;font:inherit">閉じる</button></div>';d.querySelector('button').onclick=function(){d.remove()};document.body.appendChild(d)}
+var rf=window.fetch;window.fetch=function(u,o){var s=String(u&&u.url||u);if(/^https?:/.test(s)&&s.indexOf(location.origin)!==0){return new Promise(function(r){setTimeout(function(){r(new Response(M==='fail'?'{"error":"server error"}':'{"ok":true,"result":"success"}',{status:M==='fail'?500:200,headers:{'Content-Type':'application/json'}}))},700)})}return rf.apply(this,arguments)};
+function nav(f){var a=f.getAttribute('action')||'';ov(M==='before'?'このまま公開すると、入力内容が仮のアドレス宛て（'+a.replace(/^https?:\/\//,'')+'）に送信されます。デモでは止めています。':M==='fail'?'本来はここで送信サービス（'+a.replace(/^https?:\/\/([^\/]+).*/,'$1')+'）の画面に移動し、そちらでエラーが表示されます。フォーム自身はエラーを表示しません。':'本来はここで送信サービス（'+a.replace(/^https?:\/\/([^\/]+).*/,'$1')+'）の画面に移動し、入力内容がお店のメールに届きます。デモのため送信していません。')}
+HTMLFormElement.prototype.submit=function(){nav(this)};
+document.addEventListener('submit',function(e){if(!e.defaultPrevented){e.preventDefault();nav(e.target)}});
+Object.defineProperty(window,'__demoMail',{set:function(){ov('本来はここでメールアプリが開き、予約内容を書いたメールの下書きができます。デモでは開きません。')}});
+})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<title>こむぎ堂 ご予約フォーム</title>
+<!--
+  ============================================================
+  ■ お店の方へ：ここだけ書き換えてください（設定は2か所）
+  ============================================================
+  1) 下の CONFIG の「ENDPOINT_URL」に、Google Apps Script で作った
+     「ウェブアプリのURL」（https://script.google.com/macros/s/.../exec）を貼り付けます。
+     ※このURLはパスワードではありません。HTMLに書いても大丈夫です。
+     ※Googleのパスワードやメールアドレスのパスワードは、絶対にこのファイルに書かないでください。
+  2) 商品・定休日・お問い合わせ電話番号は CONFIG の中で変更できます。
+  詳しい手順は一緒にお渡しした説明書（reply.md）をご覧ください。
+  ============================================================
+-->
+<style>
+  :root {
+    --bg: #fbf6ee;
+    --card: #ffffff;
+    --text: #3b2f25;
+    --muted: #7a6a5b;
+    --accent: #b5652b;
+    --accent-dark: #8f4c1c;
+    --border: #e6d9c7;
+    --error: #b3261e;
+    --error-bg: #fdecea;
+    --ok: #2e7d32;
+    --ok-bg: #e8f5e9;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1f1a16; --card: #2a241f; --text: #f1e7dc; --muted: #bba995;
+      --accent: #e0915a; --accent-dark: #f0a873; --border: #463b31;
+      --error: #ff8a80; --error-bg: #3a1f1d; --ok: #81c784; --ok-bg: #1d3320;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1f1a16; --card: #2a241f; --text: #f1e7dc; --muted: #bba995;
+    --accent: #e0915a; --accent-dark: #f0a873; --border: #463b31;
+    --error: #ff8a80; --error-bg: #3a1f1d; --ok: #81c784; --ok-bg: #1d3320;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", Meiryo, sans-serif;
+    line-height: 1.7; font-size: 16px;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 24px 16px 48px; }
+  header { text-align: center; margin-bottom: 20px; }
+  header h1 { margin: 0; font-size: 1.7rem; letter-spacing: .08em; }
+  header p { margin: 4px 0 0; color: var(--muted); font-size: .95rem; }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 20px; margin-bottom: 16px;
+  }
+  h2 { font-size: 1.1rem; margin: 0 0 12px; }
+  .field { margin-bottom: 18px; }
+  label, .label { display: block; font-weight: bold; margin-bottom: 6px; }
+  .req { display: inline-block; font-size: .75rem; color: #fff; background: var(--accent);
+         border-radius: 4px; padding: 0 6px; margin-left: 6px; vertical-align: middle; }
+  .opt { display: inline-block; font-size: .75rem; color: var(--muted); border: 1px solid var(--border);
+         border-radius: 4px; padding: 0 6px; margin-left: 6px; vertical-align: middle; }
+  input[type=text], input[type=tel], input[type=date], select, textarea {
+    width: 100%; font-size: 16px; padding: 10px 12px; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--bg); color: var(--text); font-family: inherit;
+  }
+  textarea { min-height: 80px; resize: vertical; }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .hint { font-size: .85rem; color: var(--muted); margin-top: 4px; }
+  .err { font-size: .9rem; color: var(--error); margin-top: 4px; display: none; }
+  .field.invalid .err { display: block; }
+  .field.invalid input, .field.invalid select, .field.invalid textarea { border-color: var(--error); }
+  .items { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .item { display: flex; align-items: center; justify-content: space-between; gap: 12px;
+          padding: 10px 12px; border-bottom: 1px solid var(--border); }
+  .item:last-child { border-bottom: none; }
+  .item .name { flex: 1; min-width: 0; }
+  .item .price { color: var(--muted); font-size: .85rem; }
+  .item select { width: 84px; flex: none; }
+  .total { text-align: right; margin-top: 8px; font-weight: bold; }
+  .privacy { font-size: .9rem; }
+  .privacy ul { padding-left: 1.2em; margin: 8px 0; }
+  .agree { display: flex; gap: 8px; align-items: flex-start; font-weight: bold; }
+  .agree input { width: 20px; height: 20px; margin-top: 4px; flex: none; }
+  /* 迷惑送信対策用の見えない項目（人間には表示されません） */
+  .hp { position: absolute !important; left: -10000px !important; width: 1px; height: 1px; overflow: hidden; }
+  button[type=submit] {
+    width: 100%; font-size: 1.1rem; font-weight: bold; padding: 14px; border: none; border-radius: 10px;
+    background: var(--accent); color: #fff; cursor: pointer; font-family: inherit;
+  }
+  button[type=submit]:hover { background: var(--accent-dark); }
+  button[type=submit]:disabled { opacity: .6; cursor: wait; }
+  .msg { border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; display: none; }
+  .msg.show { display: block; }
+  .msg.error { background: var(--error-bg); color: var(--error); border: 1px solid var(--error); }
+  .msg.ok { background: var(--ok-bg); color: var(--ok); border: 1px solid var(--ok); }
+  .msg strong { display: block; font-size: 1.05rem; margin-bottom: 4px; }
+  .msg p { margin: 4px 0; color: var(--text); }
+  .done-summary { white-space: pre-wrap; font-size: .95rem; background: var(--card); color: var(--text);
+                  border-radius: 8px; padding: 10px; margin-top: 8px; border: 1px solid var(--border); }
+  footer { text-align: center; color: var(--muted); font-size: .85rem; margin-top: 24px; }
+</style>
+</head>
+<body><div role="note" style="position:sticky;top:0;z-index:99999;background:#2F5D62;color:#fff;font:14px/1.7 system-ui,sans-serif;padding:8px 12px;text-align:center">【検証用デモ｜C3】架空のお店です。実際には送信されません。<br><a href="C3-before.html" style="color:#fff;font-weight:700;text-decoration:none;border-bottom:2px solid #F2B544">設定前</a>　<a href="C3.html?mode=ok" style="color:#F2B544">届いた場合</a>　<a href="C3.html?mode=fail" style="color:#F2B544">送信先エラー</a>　<a href="C3-reply.html" style="color:#F2B544">AIの説明文</a>　<a href="./" style="color:#F2B544">一覧へ</a></div>
+<div class="wrap">
+  <header>
+    <h1>こむぎ堂</h1>
+    <p>パンのご予約フォーム</p>
+  </header>
+
+  <div id="message" class="msg" role="alert" aria-live="assertive"></div>
+
+  <form id="reserveForm" novalidate>
+    <div class="card">
+      <h2>お客さま情報</h2>
+      <div class="field" id="f-name">
+        <label for="name">お名前<span class="req">必須</span></label>
+        <input type="text" id="name" name="name" maxlength="40" autocomplete="name" placeholder="例）小麦 花子">
+        <div class="err">お名前を入力してください（40文字まで）。</div>
+      </div>
+      <div class="field" id="f-phone">
+        <label for="phone">電話番号<span class="req">必須</span></label>
+        <input type="tel" id="phone" name="phone" maxlength="15" autocomplete="tel" inputmode="tel" placeholder="例）090-1234-5678">
+        <div class="hint">ご予約内容の確認でお電話することがあります。</div>
+        <div class="err">電話番号を正しく入力してください（数字10〜11桁）。</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>受け取り日</h2>
+      <div class="field" id="f-date">
+        <label for="date">受け取り日<span class="req">必須</span></label>
+        <input type="date" id="date" name="date">
+        <div class="hint" id="dateHint"></div>
+        <div class="err" id="dateErr">受け取り日を選んでください。</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>ご予約の商品</h2>
+      <div class="field" id="f-items">
+        <span class="label">商品と個数<span class="req">必須</span></span>
+        <div class="items" id="itemList"></div>
+        <div class="total" id="total">合計 0円（税込）</div>
+        <div class="err">商品を1つ以上お選びください。</div>
+      </div>
+      <div class="field" id="f-note">
+        <label for="note">ご要望など<span class="opt">任意</span></label>
+        <textarea id="note" name="note" maxlength="200" placeholder="例）お昼ごろ受け取りに伺います"></textarea>
+        <div class="hint">200文字まで。アレルギー等の詳しいご相談はお電話でお願いします。</div>
+      </div>
+    </div>
+
+    <div class="card privacy">
+      <h2>個人情報の取り扱いについて</h2>
+      <p>こむぎ堂は、このフォームでお預かりする個人情報（お名前・電話番号・ご予約内容）を次のとおり取り扱います。</p>
+      <ul>
+        <li><b>利用目的：</b>ご予約の受付・商品のご用意・ご予約内容の確認のご連絡のためだけに使います。</li>
+        <li><b>保管：</b>お店が管理するGoogleのアカウント（スプレッドシートとメール）に保存されます。受け取り日から<span class="keepDays"></span>ほどで削除します。</li>
+        <li><b>第三者への提供：</b>法令に基づく場合を除き、お客さまの同意なく第三者に渡すことはありません。</li>
+        <li><b>営業のご案内：</b>この情報を使って広告やセールスのご連絡をすることはありません。</li>
+        <li><b>開示・訂正・削除：</b>ご自身の情報の確認や削除をご希望の場合は、お店までお電話（<span class="shopTel"></span>）ください。</li>
+      </ul>
+      <label class="agree"><input type="checkbox" id="agree" name="agree"> 上記の内容に同意します</label>
+      <div class="field" id="f-agree" style="margin:0"><div class="err">ご予約には同意が必要です。</div></div>
+    </div>
+
+    <!-- 迷惑送信対策（ロボットだけが入力してしまう見えない欄）。消さないでください。 -->
+    <div class="hp" aria-hidden="true">
+      <label for="website">この欄は空のままにしてください</label>
+      <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+    </div>
+
+    <button type="submit" id="submitBtn">この内容で予約する</button>
+    <p class="hint" style="text-align:center">送信後、画面に「ご予約を受け付けました」と表示されれば完了です。</p>
+  </form>
+
+  <footer>
+    パン工房 こむぎ堂 ／ お電話：<span class="shopTel"></span>
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   ■ お店の方が書き換える設定（ここ以外は触らなくて大丈夫です）
+   ============================================================ */
+const CONFIG = {
+  // Google Apps Script の「ウェブアプリのURL」を "" の中に貼り付けてください。
+  ENDPOINT_URL: "ここにウェブアプリのURLを貼り付け",
+
+  // お店の電話番号（失敗したときの案内などに表示されます）
+  SHOP_TEL: "000-000-0000",
+
+  // 商品（名前と税込価格）。増やすときは { name: "…", price: 000 }, の行を追加します。
+  PRODUCTS: [
+    { name: "食パン（1斤）",       price: 400 },
+    { name: "食パン（1.5斤）",     price: 580 },
+    { name: "バゲット",            price: 320 },
+    { name: "クロワッサン",        price: 220 },
+    { name: "あんぱん",            price: 180 },
+    { name: "カレーパン",          price: 230 },
+    { name: "季節のフルーツデニッシュ", price: 300 }
+  ],
+
+  MAX_QTY: 10,            // 1商品あたりの最大個数
+  EARLIEST_DAYS: 1,       // 何日後から予約できるか（1 = 明日から）
+  LATEST_DAYS: 30,        // 何日後まで予約できるか
+  CLOSED_WEEKDAYS: [1],   // 定休日（0=日 1=月 2=火 3=水 4=木 5=金 6=土）。なければ []
+  KEEP_DAYS_TEXT: "3か月" // 個人情報を保管する期間の目安（説明文に表示）
+};
+/* ============================================================ */
+
+(function () {
+  "use strict";
+  const $ = (id) => document.getElementById(id);
+  const form = $("reserveForm");
+  const btn = $("submitBtn");
+  const msg = $("message");
+  const startedAt = Date.now();
+  const WEEK = ["日", "月", "火", "水", "木", "金", "土"];
+
+  document.querySelectorAll(".shopTel").forEach((el) => (el.textContent = CONFIG.SHOP_TEL));
+  document.querySelectorAll(".keepDays").forEach((el) => (el.textContent = CONFIG.KEEP_DAYS_TEXT));
+
+  // 商品リストを作る（textContentを使い、HTMLとして解釈させない）
+  const list = $("itemList");
+  CONFIG.PRODUCTS.forEach((p, i) => {
+    const row = document.createElement("div");
+    row.className = "item";
+    const nameBox = document.createElement("div");
+    nameBox.className = "name";
+    const n = document.createElement("label");
+    n.htmlFor = "qty" + i;
+    n.style.margin = "0";
+    n.textContent = p.name;
+    const pr = document.createElement("div");
+    pr.className = "price";
+    pr.textContent = p.price.toLocaleString("ja-JP") + "円";
+    nameBox.append(n, pr);
+    const sel = document.createElement("select");
+    sel.id = "qty" + i;
+    sel.dataset.index = i;
+    for (let q = 0; q <= CONFIG.MAX_QTY; q++) {
+      const o = document.createElement("option");
+      o.value = q;
+      o.textContent = q === 0 ? "—" : q + "個";
+      sel.appendChild(o);
+    }
+    sel.addEventListener("change", updateTotal);
+    row.append(nameBox, sel);
+    list.appendChild(row);
+  });
+
+  function selectedItems() {
+    const items = [];
+    list.querySelectorAll("select").forEach((s) => {
+      const q = parseInt(s.value, 10);
+      if (q > 0) {
+        const p = CONFIG.PRODUCTS[s.dataset.index];
+        items.push({ name: p.name, qty: q, price: p.price });
+      }
+    });
+    return items;
+  }
+  function updateTotal() {
+    const sum = selectedItems().reduce((a, it) => a + it.qty * it.price, 0);
+    $("total").textContent = "合計 " + sum.toLocaleString("ja-JP") + "円（税込）";
+  }
+
+  // 日付の範囲
+  function ymd(d) {
+    const p = (n) => String(n).padStart(2, "0");
+    return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate());
+  }
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const minD = new Date(today); minD.setDate(minD.getDate() + CONFIG.EARLIEST_DAYS);
+  const maxD = new Date(today); maxD.setDate(maxD.getDate() + CONFIG.LATEST_DAYS);
+  $("date").min = ymd(minD);
+  $("date").max = ymd(maxD);
+  const closedText = CONFIG.CLOSED_WEEKDAYS.length
+    ? "定休日（" + CONFIG.CLOSED_WEEKDAYS.map((w) => WEEK[w] + "曜").join("・") + "）はお選びいただけません。"
+    : "";
+  $("dateHint").textContent =
+    (CONFIG.EARLIEST_DAYS === 1 ? "明日" : CONFIG.EARLIEST_DAYS + "日後") +
+    "から" + CONFIG.LATEST_DAYS + "日後までお選びいただけます。" + closedText;
+
+  // 入力チェック
+  function setInvalid(id, bad, text) {
+    const f = $(id);
+    f.classList.toggle("invalid", bad);
+    if (text) f.querySelector(".err").textContent = text;
+    return !bad;
+  }
+  function normalizePhone(v) {
+    // 全角数字を半角に、ハイフン・空白・括弧を除去
+    return v.replace(/[０-９]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0xfee0))
+            .replace(/[\s\-ー－‐()（）]/g, "");
+  }
+  function validate() {
+    let ok = true;
+    const name = $("name").value.trim();
+    ok = setInvalid("f-name", !name || name.length > 40) && ok;
+
+    const phone = normalizePhone($("phone").value);
+    ok = setInvalid("f-phone", !/^0\d{9,10}$/.test(phone)) && ok;
+
+    const dv = $("date").value;
+    let dateBad = false, dateMsg = "受け取り日を選んでください。";
+    if (!dv) dateBad = true;
+    else {
+      const d = new Date(dv + "T00:00:00");
+      if (isNaN(d) || d < minD || d > maxD) { dateBad = true; dateMsg = "選べる期間外の日付です。" + $("dateHint").textContent; }
+      else if (CONFIG.CLOSED_WEEKDAYS.includes(d.getDay())) { dateBad = true; dateMsg = "その日は定休日です。別の日をお選びください。"; }
+    }
+    ok = setInvalid("f-date", dateBad, dateMsg) && ok;
+
+    ok = setInvalid("f-items", selectedItems().length === 0) && ok;
+    ok = setInvalid("f-note", $("note").value.length > 200) && ok;
+    ok = setInvalid("f-agree", !$("agree").checked) && ok;
+    return ok;
+  }
+
+  function showMessage(type, title, bodyLines, summary) {
+    msg.className = "msg show " + type;
+    msg.textContent = "";
+    const t = document.createElement("strong");
+    t.textContent = title;
+    msg.appendChild(t);
+    bodyLines.forEach((line) => {
+      const p = document.createElement("p");
+      p.textContent = line;
+      msg.appendChild(p);
+    });
+    if (summary) {
+      const s = document.createElement("div");
+      s.className = "done-summary";
+      s.textContent = summary;
+      msg.appendChild(s);
+    }
+    msg.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  function showFailure(reason) {
+    showMessage("error", "送信できませんでした。ご予約はまだ完了していません。", [
+      reason,
+      "お手数ですが、少し時間をおいてもう一度お試しいただくか、お電話（" + CONFIG.SHOP_TEL + "）でご予約ください。"
+    ]);
+  }
+
+  let sending = false;
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (sending) return;
+    msg.className = "msg";
+
+    if (!validate()) {
+      showMessage("error", "入力内容をご確認ください。", ["赤字の項目を修正してから、もう一度送信してください。"]);
+      return;
+    }
+    if (!/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(CONFIG.ENDPOINT_URL)) {
+      showFailure("（このフォームは現在準備中のため、送信先が設定されていません。）");
+      return;
+    }
+    // ボット対策：見えない欄に入力がある、または表示から3秒未満での送信は受け付けない
+    const elapsed = Date.now() - startedAt;
+    if ($("website").value !== "" || elapsed < 3000) {
+      showFailure("送信が早すぎるか、正しくない操作が検出されました。");
+      return;
+    }
+
+    const items = selectedItems();
+    const payload = {
+      name: $("name").value.trim(),
+      phone: normalizePhone($("phone").value),
+      date: $("date").value,
+      items: items.map((it) => ({ name: it.name, qty: it.qty })),
+      note: $("note").value.trim(),
+      agree: true,
+      website: $("website").value,
+      elapsed: elapsed
+    };
+
+    sending = true;
+    btn.disabled = true;
+    btn.textContent = "送信中です…（画面を閉じずにお待ちください）";
+
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 25000);
+    try {
+      // text/plain で送ることで、Google Apps Script とブラウザ間の通信制限を回避します
+      const res = await fetch(CONFIG.ENDPOINT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+        redirect: "follow",
+        credentials: "omit"
+      });
+      if (!res.ok) throw new Error("http");
+      let data;
+      try { data = await res.json(); } catch (_) { throw new Error("parse"); }
+
+      if (data && data.ok === true) {
+        const d = new Date(payload.date + "T00:00:00");
+        const summary =
+          (data.id ? "受付番号：" + data.id + "\n" : "") +
+          "お名前：" + payload.name + " 様\n" +
+          "受け取り日：" + (d.getMonth() + 1) + "月" + d.getDate() + "日（" + WEEK[d.getDay()] + "）\n" +
+          "商品：\n" + items.map((it) => "　・" + it.name + " × " + it.qty).join("\n");
+        showMessage("ok", "ご予約を受け付けました。ありがとうございます！", [
+          "お店に予約内容が届きました。この画面を保存（スクリーンショット）しておくと安心です。",
+          "ご予約内容について確認が必要な場合は、お店からお電話することがあります。"
+        ], summary);
+        form.reset();
+        updateTotal();
+        form.style.display = "none";
+      } else {
+        const reason = (data && typeof data.message === "string" && data.message.length < 200)
+          ? data.message : "お店側でご予約を受け付けられませんでした。";
+        showFailure(reason);
+      }
+    } catch (err) {
+      if (err && err.name === "AbortError") {
+        showFailure("通信に時間がかかりすぎたため、送信を中止しました。");
+      } else {
+        showFailure("通信エラーが発生しました。インターネット接続をご確認ください。");
+      }
+    } finally {
+      clearTimeout(timer);
+      sending = false;
+      btn.disabled = false;
+      btn.textContent = "この内容で予約する";
+    }
+  });
+
+  // 入力し直したらエラー表示を消す
+  form.addEventListener("input", (e) => {
+    const f = e.target.closest(".field");
+    if (f) f.classList.remove("invalid");
+    if (e.target.id === "agree") $("f-agree").classList.remove("invalid");
+  });
+  $("agree").addEventListener("change", () => $("f-agree").classList.remove("invalid"));
+})();
+</script>
+</body>
+</html>

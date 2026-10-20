@@ -1,0 +1,31 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>A3 AIの説明文｜はかり</title><style>body{margin:0;background:#FFF1D6;color:#2F5D62;font:15px/1.8 system-ui,sans-serif}main{max-width:720px;margin:auto;padding:24px 16px}pre{white-space:pre-wrap;word-break:break-word;background:#fff;border-radius:12px;padding:16px;font:14px/1.7 ui-monospace,monospace}</style><main><p><a href="./">一覧へ</a>｜<a href="A3-before.html">フォームを触る</a></p><h1>A3：AIがフォームと一緒に返した説明文</h1><p>コードを除いた説明だけで <b>923文字</b>（400字詰め原稿用紙 約3枚）。以下はAIの返答そのままです（コード部分を含みます）。</p><pre>こむぎ堂の予約フォームを作りました（`index.html` 1ファイル）。
+
+**入力項目**
+- お名前・電話番号・受け取り日（すべて必須）
+- 商品：一覧から個数を入力する形式で、合計点数・金額も自動で出ます
+- 備考（任意）
+
+受け取り日は「翌日〜2週間後」で「月曜定休」の設定にしています。電話番号の形式チェックや、未入力時のエラー表示も付けています。
+
+---
+
+### ⚠️ 「お店に届く」ようにするには、設定がひとつ必要です
+
+HTMLファイル1つだけでは、送信内容を受け取るサーバーがないので、そのままではどこにも届きません。そこで無料のフォーム受信サービス **Formspree** を使う形にしています。
+
+1. https://formspree.io で無料アカウントを作る
+2. 「New Form」を作成し、予約を受け取りたいメールアドレスを登録
+3. 表示された URL（`https://formspree.io/f/xxxxxxx`）を、HTML内の `FORM_ENDPOINT = &quot;&quot;` の `&quot;&quot;` の中に貼り付ける
+
+これで、お客様が送信するたびに予約内容がお店のメールに届きます（無料プランは月50件まで）。
+
+**設定する前の動き：** `FORM_ENDPOINT` が空のままだと、お客様のメールアプリが開いて `SHOP_EMAIL` 宛てに予約内容入りのメールを作る方式になります。お客様が送信ボタンを押し忘れると届かないので、本番では Formspree の設定をおすすめします。
+
+### ほかに書き換えてほしいところ
+- `SHOP_EMAIL`：仮のアドレス（info@komugido.example）なので、お店のアドレスに変えてください
+- `PRODUCTS`：商品名と価格は仮のものです。実際のメニューに合わせて編集してください
+- `CLOSED_WEEKDAYS` / `MAX_DAYS_AHEAD`：定休日や予約可能期間
+- フッターの営業時間
+
+最後に、ファイルをWebサイトに置いたら、一度ご自身でテスト予約を送って、メールが届くか確認してみてください。
+</pre></main></html>

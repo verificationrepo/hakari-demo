@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head><meta name="robots" content="noindex"><script>(function(){
+var P=new URLSearchParams(location.search),M=window.__DEMO_BEFORE?'before':(P.get('mode')==='fail'?'fail':'ok');
+function ov(t){var d=document.createElement('div');d.setAttribute('role','alertdialog');d.style.cssText='position:fixed;inset:0;z-index:100000;background:#0008;display:flex;align-items:center;justify-content:center;padding:16px';d.innerHTML='<div style="background:#fff;color:#2F5D62;max-width:420px;border-radius:16px;padding:20px;font:15px/1.7 system-ui,sans-serif"><b>【デモ】</b>'+t+'<br><button style="margin-top:12px;padding:8px 16px;border:0;border-radius:8px;background:#2F5D62;color:#fff;font:inherit">閉じる</button></div>';d.querySelector('button').onclick=function(){d.remove()};document.body.appendChild(d)}
+var rf=window.fetch;window.fetch=function(u,o){var s=String(u&&u.url||u);if(/^https?:/.test(s)&&s.indexOf(location.origin)!==0){return new Promise(function(r){setTimeout(function(){r(new Response(M==='fail'?'{"error":"server error"}':'{"ok":true,"result":"success"}',{status:M==='fail'?500:200,headers:{'Content-Type':'application/json'}}))},700)})}return rf.apply(this,arguments)};
+function nav(f){var a=f.getAttribute('action')||'';ov(M==='before'?'このまま公開すると、入力内容が仮のアドレス宛て（'+a.replace(/^https?:\/\//,'')+'）に送信されます。デモでは止めています。':M==='fail'?'本来はここで送信サービス（'+a.replace(/^https?:\/\/([^\/]+).*/,'$1')+'）の画面に移動し、そちらでエラーが表示されます。フォーム自身はエラーを表示しません。':'本来はここで送信サービス（'+a.replace(/^https?:\/\/([^\/]+).*/,'$1')+'）の画面に移動し、入力内容がお店のメールに届きます。デモのため送信していません。')}
+HTMLFormElement.prototype.submit=function(){nav(this)};
+document.addEventListener('submit',function(e){if(!e.defaultPrevented){e.preventDefault();nav(e.target)}});
+Object.defineProperty(window,'__demoMail',{set:function(){ov('本来はここでメールアプリが開き、予約内容を書いたメールの下書きができます。デモでは開きません。')}});
+})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<title>こむぎ堂 ご予約フォーム</title>
+<!--
+  ===================================================================
+  こむぎ堂 予約フォーム（HTML 1ファイル）
+
+  ■ お店の方が書き換えるのは、下の <script> の中の「SETTINGS」だけです。
+    ・ENDPOINT_URL … Google Apps Script を公開したときに表示される URL
+    ・SHOP_PHONE   … お店の電話番号（送信失敗時の案内に使います）
+    ・CLOSED_DAYS  … 定休日（0=日 1=月 2=火 3=水 4=木 5=金 6=土）
+    ・PRODUCTS     … 予約できる商品の一覧
+
+  ■ このファイルにはパスワード・メールアドレス・APIキーなどの
+    秘密情報は一切書きません（書かないでください）。
+    ENDPOINT_URL は「送り先の住所」であり、パスワードではありません。
+    送られた予約は、お店の Google アカウントのスプレッドシートにだけ保存されます。
+  ===================================================================
+-->
+<style>
+  :root {
+    --bg: #fbf7f0;
+    --card: #ffffff;
+    --text: #3b2f25;
+    --muted: #7a6a5c;
+    --accent: #b8742a;
+    --accent-dark: #8f5a1f;
+    --border: #e4d8c8;
+    --error: #b3261e;
+    --error-bg: #fdecea;
+    --ok: #2e6b34;
+    --ok-bg: #e9f5ea;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1f1a15;
+      --card: #2a231c;
+      --text: #f1e8dc;
+      --muted: #bfae9b;
+      --accent: #e0a058;
+      --accent-dark: #f0b878;
+      --border: #4a3e31;
+      --error: #ffb4ab;
+      --error-bg: #4a1f1b;
+      --ok: #a6d8a9;
+      --ok-bg: #1f3a22;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", Meiryo, sans-serif;
+    line-height: 1.7;
+  }
+  main { max-width: 640px; margin: 0 auto; padding: 24px 16px 64px; }
+  header { text-align: center; margin-bottom: 24px; }
+  header h1 { font-size: 1.6rem; margin: 0.2em 0; letter-spacing: 0.08em; }
+  header p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .field { margin-bottom: 20px; }
+  label, .label { display: block; font-weight: bold; margin-bottom: 6px; }
+  .req {
+    display: inline-block; font-size: 0.75rem; color: #fff; background: var(--accent-dark);
+    border-radius: 4px; padding: 0 6px; margin-left: 6px; vertical-align: middle;
+  }
+  .hint { font-size: 0.85rem; color: var(--muted); margin: 4px 0 0; }
+  input[type="text"], input[type="tel"], input[type="date"], select, textarea {
+    width: 100%; font-size: 1rem; padding: 10px 12px;
+    border: 1px solid var(--border); border-radius: 8px;
+    background: var(--bg); color: var(--text);
+  }
+  input:focus, select:focus, textarea:focus, button:focus {
+    outline: 3px solid var(--accent); outline-offset: 1px;
+  }
+  textarea { min-height: 80px; resize: vertical; }
+  .products { display: grid; gap: 8px; }
+  .product {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px;
+  }
+  .product .name { flex: 1; }
+  .product .price { color: var(--muted); font-size: 0.9rem; white-space: nowrap; }
+  .product select { width: 84px; padding: 6px; }
+  .total { text-align: right; margin-top: 8px; font-weight: bold; }
+  .field-error { color: var(--error); font-size: 0.9rem; margin: 4px 0 0; }
+  [aria-invalid="true"] { border-color: var(--error) !important; }
+  .consent { display: flex; gap: 8px; align-items: flex-start; font-weight: normal; }
+  .consent input { margin-top: 6px; width: 20px; height: 20px; }
+  button[type="submit"] {
+    width: 100%; font-size: 1.1rem; font-weight: bold; padding: 14px;
+    border: none; border-radius: 10px; background: var(--accent-dark); color: #fff; cursor: pointer;
+  }
+  button[type="submit"]:disabled { opacity: 0.6; cursor: wait; }
+  .message { border-radius: 10px; padding: 16px; margin-bottom: 20px; }
+  .message.error { background: var(--error-bg); color: var(--error); border: 1px solid var(--error); }
+  .message.ok { background: var(--ok-bg); color: var(--ok); border: 1px solid var(--ok); }
+  .message h2 { margin: 0 0 6px; font-size: 1.1rem; }
+  .message p { margin: 4px 0; }
+  .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  details summary { cursor: pointer; font-weight: bold; }
+  .privacy h2 { font-size: 1.05rem; margin-top: 0; }
+  .privacy ul { padding-left: 1.2em; margin: 8px 0; }
+  .privacy li { margin-bottom: 4px; font-size: 0.92rem; }
+  footer { text-align: center; color: var(--muted); font-size: 0.85rem; }
+</style>
+</head>
+<body><script>document.write(new URLSearchParams(location.search).get('mode')==='fail'?"<div role=\"note\" style=\"position:sticky;top:0;z-index:99999;background:#2F5D62;color:#fff;font:14px/1.7 system-ui,sans-serif;padding:8px 12px;text-align:center\">\u3010\u691c\u8a3c\u7528\u30c7\u30e2\uff5cC1\u3011\u67b6\u7a7a\u306e\u304a\u5e97\u3067\u3059\u3002\u5b9f\u969b\u306b\u306f\u9001\u4fe1\u3055\u308c\u307e\u305b\u3093\u3002<br><a href=\"C1-before.html\" style=\"color:#F2B544\">\u8a2d\u5b9a\u524d</a>\u3000<a href=\"C1.html?mode=ok\" style=\"color:#F2B544\">\u5c4a\u3044\u305f\u5834\u5408</a>\u3000<a href=\"C1.html?mode=fail\" style=\"color:#fff;font-weight:700;text-decoration:none;border-bottom:2px solid #F2B544\">\u9001\u4fe1\u5148\u30a8\u30e9\u30fc</a>\u3000<a href=\"C1-reply.html\" style=\"color:#F2B544\">AI\u306e\u8aac\u660e\u6587</a>\u3000<a href=\"./\" style=\"color:#F2B544\">\u4e00\u89a7\u3078</a></div>":"<div role=\"note\" style=\"position:sticky;top:0;z-index:99999;background:#2F5D62;color:#fff;font:14px/1.7 system-ui,sans-serif;padding:8px 12px;text-align:center\">\u3010\u691c\u8a3c\u7528\u30c7\u30e2\uff5cC1\u3011\u67b6\u7a7a\u306e\u304a\u5e97\u3067\u3059\u3002\u5b9f\u969b\u306b\u306f\u9001\u4fe1\u3055\u308c\u307e\u305b\u3093\u3002<br><a href=\"C1-before.html\" style=\"color:#F2B544\">\u8a2d\u5b9a\u524d</a>\u3000<a href=\"C1.html?mode=ok\" style=\"color:#fff;font-weight:700;text-decoration:none;border-bottom:2px solid #F2B544\">\u5c4a\u3044\u305f\u5834\u5408</a>\u3000<a href=\"C1.html?mode=fail\" style=\"color:#F2B544\">\u9001\u4fe1\u5148\u30a8\u30e9\u30fc</a>\u3000<a href=\"C1-reply.html\" style=\"color:#F2B544\">AI\u306e\u8aac\u660e\u6587</a>\u3000<a href=\"./\" style=\"color:#F2B544\">\u4e00\u89a7\u3078</a></div>")</script>
+<main>
+  <header>
+    <h1>🍞 こむぎ堂</h1>
+    <p>パンのご予約フォーム</p>
+  </header>
+
+  <!-- 送信結果のお知らせ（成功・失敗）をここに表示します -->
+  <div id="result" role="alert" aria-live="assertive" tabindex="-1"></div>
+
+  <form id="reserve-form" class="card" novalidate>
+    <div class="field">
+      <label for="name">お名前<span class="req">必須</span></label>
+      <input type="text" id="name" name="name" autocomplete="name" maxlength="40" required placeholder="例）小麦 花子">
+      <p class="field-error" id="name-error" hidden></p>
+    </div>
+
+    <div class="field">
+      <label for="phone">電話番号<span class="req">必須</span></label>
+      <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" maxlength="20" required placeholder="例）090-1234-5678">
+      <p class="hint">ご予約内容の確認のため、お店からお電話することがあります。</p>
+      <p class="field-error" id="phone-error" hidden></p>
+    </div>
+
+    <div class="field">
+      <label for="date">受け取り日<span class="req">必須</span></label>
+      <input type="date" id="date" name="date" required>
+      <p class="hint" id="date-hint"></p>
+      <p class="field-error" id="date-error" hidden></p>
+    </div>
+
+    <div class="field">
+      <span class="label" id="products-label">商品と個数<span class="req">必須</span></span>
+      <div class="products" id="products" role="group" aria-labelledby="products-label"></div>
+      <p class="total" id="total">合計 0点 / 0円</p>
+      <p class="field-error" id="products-error" hidden></p>
+    </div>
+
+    <div class="field">
+      <label for="note">ご要望など（任意）</label>
+      <textarea id="note" name="note" maxlength="200" placeholder="例）夕方に受け取りに行きます"></textarea>
+      <p class="hint">アレルギー等の詳しいご相談はお電話でお願いします。</p>
+    </div>
+
+    <!-- 迷惑送信（ロボット）対策：人には見えない入力欄。ここに入力があれば送信を受け付けません -->
+    <div class="hp" aria-hidden="true">
+      <label for="website">この欄は空のままにしてください</label>
+      <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+    </div>
+
+    <div class="field">
+      <label class="consent">
+        <input type="checkbox" id="consent" name="consent" required>
+        <span>下の「個人情報の取り扱いについて」を読み、同意します。<span class="req">必須</span></span>
+      </label>
+      <p class="field-error" id="consent-error" hidden></p>
+    </div>
+
+    <button type="submit" id="submit-btn">この内容で予約する</button>
+  </form>
+
+  <section class="card privacy" aria-labelledby="privacy-title">
+    <details>
+      <summary id="privacy-title">個人情報の取り扱いについて</summary>
+      <ul>
+        <li><strong>集める情報：</strong>お名前、電話番号、受け取り日、ご注文の商品、ご要望。</li>
+        <li><strong>使う目的：</strong>ご予約の受付・パンのご用意・ご予約内容の確認のご連絡のためだけに使います。宣伝やほかの目的には使いません。</li>
+        <li><strong>保存する場所：</strong>こむぎ堂が管理する Google のスプレッドシートに保存し、閲覧できるのはお店の者だけです。</li>
+        <li><strong>保存する期間：</strong>受け取り日から <span class="js-retention">90</span> 日が過ぎた情報は削除します。</li>
+        <li><strong>第三者への提供：</strong>法令にもとづく場合を除き、ほかの会社や人に渡すことはありません。</li>
+        <li><strong>通信について：</strong>送信内容は暗号化された通信（https）で送られます。</li>
+        <li><strong>お問い合わせ・削除のご依頼：</strong>こむぎ堂（電話 <span class="js-shop-phone"></span>）までご連絡ください。</li>
+      </ul>
+    </details>
+  </section>
+
+  <footer>
+    <p>お電話でのご予約も承ります：<span class="js-shop-phone"></span></p>
+  </footer>
+</main>
+
+<script>
+/* =================================================================
+   SETTINGS（お店の方が書き換える場所はここだけです）
+   ================================================================= */
+const SETTINGS = {
+  // ① Google Apps Script の「ウェブアプリの URL」を "" の中に貼り付けてください。
+  //    （https://script.google.com/macros/s/……/exec という形です）
+  ENDPOINT_URL: "https://script.google.com/macros/s/TESTID123/exec",
+
+  // ② お店の電話番号
+  SHOP_PHONE: "000-0000-0000",
+
+  // ③ 定休日（0=日 1=月 2=火 3=水 4=木 5=金 6=土）。例：月曜と火曜なら [1, 2]
+  CLOSED_DAYS: [1],
+
+  // ④ 何日先まで予約できるか / 最短で何日後から受け取れるか
+  MAX_DAYS_AHEAD: 30,
+  MIN_DAYS_AHEAD: 1,
+
+  // ⑤ 個人情報を保存しておく日数（説明文に表示されます）
+  RETENTION_DAYS: 90,
+
+  // ⑥ 予約できる商品（名前と税込価格）。行を増やしたり消したりできます。
+  PRODUCTS: [
+    { name: "食パン（1斤）",       price: 400 },
+    { name: "食パン（1.5斤）",     price: 580 },
+    { name: "バゲット",            price: 320 },
+    { name: "クロワッサン",        price: 220 },
+    { name: "あんぱん",            price: 180 },
+    { name: "カレーパン",          price: 230 },
+    { name: "季節のフルーツデニッシュ", price: 350 }
+  ],
+
+  // 1商品あたりの最大個数
+  MAX_QTY: 10
+};
+/* ================================================================= */
+
+(function () {
+  "use strict";
+
+  const form = document.getElementById("reserve-form");
+  const result = document.getElementById("result");
+  const submitBtn = document.getElementById("submit-btn");
+  const productsBox = document.getElementById("products");
+  const totalEl = document.getElementById("total");
+  const dateInput = document.getElementById("date");
+  const pageOpenedAt = Date.now();
+  const WEEK = ["日", "月", "火", "水", "木", "金", "土"];
+  let sending = false;
+
+  // ---- 表示の準備 ----
+  document.querySelectorAll(".js-shop-phone").forEach(el => { el.textContent = SETTINGS.SHOP_PHONE; });
+  document.querySelectorAll(".js-retention").forEach(el => { el.textContent = String(SETTINGS.RETENTION_DAYS); });
+
+  SETTINGS.PRODUCTS.forEach((p, i) => {
+    const row = document.createElement("div");
+    row.className = "product";
+    const name = document.createElement("label");
+    name.className = "name";
+    name.htmlFor = "qty-" + i;
+    name.textContent = p.name;
+    const price = document.createElement("span");
+    price.className = "price";
+    price.textContent = p.price.toLocaleString("ja-JP") + "円";
+    const sel = document.createElement("select");
+    sel.id = "qty-" + i;
+    sel.dataset.index = String(i);
+    for (let q = 0; q <= SETTINGS.MAX_QTY; q++) {
+      const opt = document.createElement("option");
+      opt.value = String(q);
+      opt.textContent = q === 0 ? "0" : q + "個";
+      sel.appendChild(opt);
+    }
+    sel.addEventListener("change", updateTotal);
+    row.append(name, price, sel);
+    productsBox.appendChild(row);
+  });
+
+  function pad(n) { return String(n).padStart(2, "0"); }
+  function toYMD(d) { return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
+  function addDays(d, n) { const x = new Date(d); x.setDate(x.getDate() + n); return x; }
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  dateInput.min = toYMD(addDays(today, SETTINGS.MIN_DAYS_AHEAD));
+  dateInput.max = toYMD(addDays(today, SETTINGS.MAX_DAYS_AHEAD));
+  const closedText = SETTINGS.CLOSED_DAYS.length
+    ? "定休日（" + SETTINGS.CLOSED_DAYS.map(d => WEEK[d] + "曜").join("・") + "）は選べません。"
+    : "";
+  document.getElementById("date-hint").textContent =
+    SETTINGS.MIN_DAYS_AHEAD + "日後から" + SETTINGS.MAX_DAYS_AHEAD + "日後まで選べます。" + closedText;
+
+  function selectedItems() {
+    const items = [];
+    productsBox.querySelectorAll("select").forEach(sel => {
+      const qty = Number(sel.value);
+      if (qty > 0) {
+        const p = SETTINGS.PRODUCTS[Number(sel.dataset.index)];
+        items.push({ name: p.name, price: p.price, qty: qty });
+      }
+    });
+    return items;
+  }
+
+  function updateTotal() {
+    const items = selectedItems();
+    const count = items.reduce((s, it) => s + it.qty, 0);
+    const sum = items.reduce((s, it) => s + it.qty * it.price, 0);
+    totalEl.textContent = "合計 " + count + "点 / " + sum.toLocaleString("ja-JP") + "円";
+  }
+
+  // ---- 入力チェック ----
+  function setError(id, msg) {
+    const el = document.getElementById(id + "-error");
+    const input = document.getElementById(id);
+    if (msg) {
+      el.textContent = msg; el.hidden = false;
+      if (input) input.setAttribute("aria-invalid", "true");
+    } else {
+      el.textContent = ""; el.hidden = true;
+      if (input) input.removeAttribute("aria-invalid");
+    }
+  }
+
+  function normalizePhone(v) {
+    // 全角数字・全角ハイフンを半角に
+    return v.replace(/[０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0))
+            .replace(/[‐－―ー−]/g, "-")
+            .replace(/\s/g, "");
+  }
+
+  function validate() {
+    let firstBad = null;
+    const mark = (id, msg) => { setError(id, msg); if (msg && !firstBad) firstBad = id; };
+
+    const name = document.getElementById("name").value.trim();
+    mark("name", !name ? "お名前を入力してください。" : (name.length > 40 ? "お名前は40文字以内で入力してください。" : ""));
+
+    const phone = normalizePhone(document.getElementById("phone").value);
+    const digits = phone.replace(/-/g, "");
+    mark("phone", !phone ? "電話番号を入力してください。"
+      : (!/^[0-9-]+$/.test(phone) || !/^0\d{9,10}$/.test(digits)) ? "電話番号を正しく入力してください（例：090-1234-5678）。" : "");
+
+    const dv = dateInput.value;
+    let dateMsg = "";
+    if (!dv) dateMsg = "受け取り日を選んでください。";
+    else if (dv < dateInput.min || dv > dateInput.max) dateMsg = "選べる期間の中から受け取り日を選んでください。";
+    else {
+      const [y, m, d] = dv.split("-").map(Number);
+      const wd = new Date(y, m - 1, d).getDay();
+      if (SETTINGS.CLOSED_DAYS.includes(wd)) dateMsg = WEEK[wd] + "曜日は定休日です。別の日を選んでください。";
+    }
+    mark("date", dateMsg);
+
+    const items = selectedItems();
+    setError("products", items.length ? "" : "商品を1つ以上選んでください（個数を1以上にしてください）。");
+    if (!items.length && !firstBad) firstBad = "qty-0";
+
+    const consent = document.getElementById("consent").checked;
+    mark("consent", consent ? "" : "個人情報の取り扱いへの同意が必要です。");
+
+    if (firstBad) {
+      const el = document.getElementById(firstBad);
+      if (el) el.focus();
+      return null;
+    }
+    return { name, phone, date: dv, items, note: document.getElementById("note").value.trim().slice(0, 200) };
+  }
+
+  // ---- 結果の表示 ----
+  function showMessage(type, title, lines) {
+    result.innerHTML = "";
+    const box = document.createElement("div");
+    box.className = "message " + type;
+    const h = document.createElement("h2");
+    h.textContent = title;
+    box.appendChild(h);
+    lines.forEach(t => { const p = document.createElement("p"); p.textContent = t; box.appendChild(p); });
+    result.appendChild(box);
+    result.focus();
+    result.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function showFailure(reason) {
+    showMessage("error", "⚠ 送信できませんでした（ご予約は完了していません）", [
+      reason,
+      "入力内容は残っていますので、少し時間をおいてもう一度「この内容で予約する」を押してください。",
+      "何度やってもうまくいかない場合は、お手数ですがお電話（" + SETTINGS.SHOP_PHONE + "）でご予約ください。"
+    ]);
+  }
+
+  const SERVER_ERRORS = {
+    invalid: "入力内容に誤りがありました。内容をご確認ください。",
+    too_fast: "送信が早すぎました。内容をご確認のうえ、もう一度お試しください。",
+    busy: "ただいま予約が混み合っています。",
+    duplicate: "同じ内容のご予約がすでに届いています。お店からの連絡をお待ちください。",
+    server: "お店のシステムで問題が起きました。"
+  };
+
+  // ---- 送信 ----
+  form.addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    if (sending) return;              // 二重送信の防止
+    result.innerHTML = "";
+
+    const data = validate();
+    if (!data) {
+      showMessage("error", "入力内容をご確認ください", ["赤字の項目を直してから、もう一度送信してください。"]);
+      return;
+    }
+
+    if (!SETTINGS.ENDPOINT_URL || !/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(SETTINGS.ENDPOINT_URL)) {
+      showFailure("このフォームはまだ準備中です（送り先が設定されていません）。");
+      return;
+    }
+
+    // 連続送信の防止（同じブラウザから60秒以内の再送信を止める）
+    try {
+      const last = Number(sessionStorage.getItem("komugido_last_sent") || 0);
+      if (Date.now() - last < 60 * 1000) {
+        showMessage("error", "少し時間をおいてください", ["直前にご予約を送信済みです。1分ほどおいてからお試しください。"]);
+        return;
+      }
+    } catch (e) { /* 保存領域が使えない環境では何もしない */ }
+
+    const payload = {
+      name: data.name,
+      phone: data.phone,
+      date: data.date,
+      items: data.items.map(it => ({ name: it.name, qty: it.qty, price: it.price })),
+      note: data.note,
+      website: document.getElementById("website").value, // ロボット対策欄
+      elapsed: Date.now() - pageOpenedAt                   // 開いてから送信までの時間（ロボット対策）
+    };
+
+    sending = true;
+    submitBtn.disabled = true;
+    submitBtn.textContent = "送信しています…";
+
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 20000);
+
+    try {
+      // Content-Type を text/plain にすることで、Google Apps Script にそのまま送れます
+      const res = await fetch(SETTINGS.ENDPOINT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+        redirect: "follow",
+        credentials: "omit"
+      });
+      if (!res.ok) throw new Error("http_" + res.status);
+      let json;
+      try { json = await res.json(); } catch (e) { throw new Error("bad_response"); }
+
+      if (json && json.ok === true) {
+        try { sessionStorage.setItem("komugido_last_sent", String(Date.now())); } catch (e) {}
+        const [y, m, d] = data.date.split("-").map(Number);
+        const wd = WEEK[new Date(y, m - 1, d).getDay()];
+        const lines = [
+          "受付番号：" + (json.id || "―"),
+          "お名前：" + data.name + " 様",
+          "受け取り日：" + m + "月" + d + "日（" + wd + "）",
+          "ご注文：" + data.items.map(it => it.name + " × " + it.qty).join("、"),
+          "この画面を保存（スクリーンショット）しておくと安心です。",
+          "内容の確認でお店からお電話することがあります。キャンセル・変更はお電話（" + SETTINGS.SHOP_PHONE + "）でお願いします。"
+        ];
+        showMessage("ok", "✓ ご予約を受け付けました", lines);
+        form.reset();
+        updateTotal();
+      } else {
+        const code = json && json.error;
+        if (code === "duplicate") {
+          showMessage("error", "すでに受け付けています", [SERVER_ERRORS.duplicate]);
+        } else {
+          showFailure(SERVER_ERRORS[code] || SERVER_ERRORS.server);
+        }
+      }
+    } catch (err) {
+      if (err && err.name === "AbortError") {
+        showFailure("お店との通信に時間がかかりすぎました。");
+      } else if (!navigator.onLine) {
+        showFailure("インターネットにつながっていないようです。");
+      } else {
+        showFailure("お店との通信に失敗しました。");
+      }
+    } finally {
+      clearTimeout(timer);
+      sending = false;
+      submitBtn.disabled = false;
+      submitBtn.textContent = "この内容で予約する";
+    }
+  });
+})();
+</script>
+</body>
+</html>

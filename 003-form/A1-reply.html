@@ -1,0 +1,31 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>A1 AIの説明文｜はかり</title><style>body{margin:0;background:#FFF1D6;color:#2F5D62;font:15px/1.8 system-ui,sans-serif}main{max-width:720px;margin:auto;padding:24px 16px}pre{white-space:pre-wrap;word-break:break-word;background:#fff;border-radius:12px;padding:16px;font:14px/1.7 ui-monospace,monospace}</style><main><p><a href="./">一覧へ</a>｜<a href="A1-before.html">フォームを触る</a></p><h1>A1：AIがフォームと一緒に返した説明文</h1><p>コードを除いた説明だけで <b>1,089文字</b>（400字詰め原稿用紙 約3枚）。以下はAIの返答そのままです（コード部分を含みます）。</p><pre>「こむぎ堂」の予約フォームを1ファイルのHTML（`index.html`）にまとめました。
+
+## できること
+- 入力項目：お名前・電話番号・受け取り日・商品（数量を＋／−で選択、合計金額を自動計算）・備考
+- 入力チェック：未入力、電話番号の桁数、受け取り日（翌日〜30日先、定休日の月曜は選べない）、商品0点を送信前に確認
+- 送信が終わると、お客さまに予約内容の確認画面を表示
+- スマホでも見やすいレイアウトで、ダークモードにも対応
+
+## 大事な点：お店に届くようにするための設定（1回だけ）
+HTMLファイルだけでは、メールを送ったりデータを保存したりはできません。受け取り役のサービスがどこかに必要です。このフォームは **Formspree**（無料プランあり）というフォーム送信サービスを使い、予約内容がお店のメールアドレスに届く作りにしています。
+
+1. https://formspree.io でお店のメールアドレスを使ってアカウントを作ります。
+2. 「New Form」でフォームを作ると、`https://formspree.io/f/abcdwxyz` のような URL が発行されます。
+3. `index.html` をメモ帳などで開き、`&lt;script&gt;` のすぐ下にある次の行を、発行された URL に書き換えます。
+   ```js
+   const FORM_ENDPOINT = &quot;https://formspree.io/f/YOUR_FORM_ID&quot;;
+   ```
+4. ホームページに置き（またはファイルを開き）、テスト予約を1件送って、お店のメールに届くか確認してください。初回は Formspree から確認メールが届くことがあるので、承認してください。
+
+※ 設定前に送信ボタンを押すと「送信先がまだ設定されていません」と表示され、送信はされません。
+
+## お好みで変えられるところ（`&lt;script&gt;` 内の先頭部分）
+- `PRODUCTS`：商品名と価格
+- `CLOSED_WEEKDAYS`：定休日（0=日曜、1=月曜…）
+- `MAX_DAYS_AHEAD`：何日先まで予約を受けるか
+- フッターの営業時間・定休日の表記
+
+## ご注意
+- 無料プランは月の送信件数に上限があります。件数が多いときは有料プランか、別の方法をご検討ください。
+- 在庫の確認や予約の確定は自動ではありません。届いたメールを見て、必要ならお客さまに電話で連絡する運用を想定しています（完了画面にもそう書いています）。
+</pre></main></html>

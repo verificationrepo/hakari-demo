@@ -1,0 +1,27 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>A2 AIの説明文｜はかり</title><style>body{margin:0;background:#FFF1D6;color:#2F5D62;font:15px/1.8 system-ui,sans-serif}main{max-width:720px;margin:auto;padding:24px 16px}pre{white-space:pre-wrap;word-break:break-word;background:#fff;border-radius:12px;padding:16px;font:14px/1.7 ui-monospace,monospace}</style><main><p><a href="./">一覧へ</a>｜<a href="A2-before.html">フォームを触る</a></p><h1>A2：AIがフォームと一緒に返した説明文</h1><p>コードを除いた説明だけで <b>976文字</b>（400字詰め原稿用紙 約3枚）。以下はAIの返答そのままです（コード部分を含みます）。</p><pre>こむぎ堂さんの予約フォームを作りました（`index.html` の1ファイルです）。
+
+**できること**
+- お名前・電話番号・受け取り日・商品（個数つき）・備考を入力
+- 未入力や電話番号の形式ミス、受け取り日（翌日〜30日先）をチェック
+- 選んだ商品の合計金額を自動で計算
+- 送信が終わると、予約内容の確認画面を表示
+
+**大事な点：お店に届くようにするには、設定が1つ必要です**
+
+HTMLファイルだけでは、メールを送ったりデータを保存したりはできません。どこかに「受け取る仕組み」が必要です。そこで、このフォームは無料のフォーム受信サービス **Formspree** に送る形にしてあります。
+
+1. https://formspree.io で無料アカウントを作る（受け取りたいメールアドレスで登録）
+2. 「New Form」でフォームを作ると、`https://formspree.io/f/xxxxxxx` のようなURLが表示される
+3. `index.html` をメモ帳などで開き、`const FORM_ENDPOINT = &#x27;&#x27;;` の `&#x27;&#x27;` の中にそのURLを貼り付けて保存
+4. 自分で一度テスト送信して、メールが届くことを確認
+
+これで、予約が入るたびに登録したメールアドレスへ「【こむぎ堂 予約】〇〇 様 / 〇月〇日受け取り」という件名で届きます。
+
+※ 設定前の状態で送信ボタンを押すと、「送信先が設定されていないため送信できません。お電話でご予約ください」と表示されます（予約が届いていないのに「受け付けました」と出てしまうことはありません）。
+※ Formspree の無料プランには月あたりの送信数に上限があります。予約が多い場合は有料プランや別の方法を検討してください。
+
+**その他**
+- 商品名と価格は、ファイル内の `PRODUCTS` の部分を書き換えれば変更できます（今は仮の商品・価格を入れています）。
+- フォームを公開するには、このHTMLをホームページのサーバーや、Netlify・GitHub Pages などの無料ホスティングに置いてください。
+- 予約の確定連絡（お客さんへの返信）は自動では送られないので、お店から電話やメールでご連絡する運用を想定しています。
+</pre></main></html>

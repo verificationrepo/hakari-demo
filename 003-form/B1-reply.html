@@ -1,0 +1,50 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>B1 AIの説明文｜はかり</title><style>body{margin:0;background:#FFF1D6;color:#2F5D62;font:15px/1.8 system-ui,sans-serif}main{max-width:720px;margin:auto;padding:24px 16px}pre{white-space:pre-wrap;word-break:break-word;background:#fff;border-radius:12px;padding:16px;font:14px/1.7 ui-monospace,monospace}</style><main><p><a href="./">一覧へ</a>｜<a href="B1-before.html">フォームを触る</a></p><h1>B1：AIがフォームと一緒に返した説明文</h1><p>コードを除いた説明だけで <b>1,447文字</b>（400字詰め原稿用紙 約4枚）。以下はAIの返答そのままです（コード部分を含みます）。</p><pre>こむぎ堂さんの予約フォームを、HTML1ファイルで作りました。
+
+ただ、**HTMLファイルだけでは「お店に届く」ところまではできません。** 送られた内容を受け取る仕組みがどこかに必要です。そこで、自分のサーバーがなくても使える無料サービス **Formspree（フォームスプリー）** を受け取り役にしました。予約が入るたびに、**お店のメールアドレスに予約内容がメールで届きます**。
+
+## フォームの中身
+- 入力欄：お名前・電話番号・受け取り日・商品（個数を選ぶ形式。合計金額も出ます）・ご要望（任意）
+- 受け取り日は「翌日〜2か月先」の範囲でしか選べません
+- 入力漏れや、電話番号の打ち間違いがあれば、その場でお知らせします
+- スマホでも見やすいレイアウトです
+
+## お店の方にやっていただくこと（約10分、プログラミング不要）
+
+### 1. 受け取り先を作る（無料）
+1. https://formspree.io を開いて「Get Started」から登録します（予約を受け取りたいメールアドレスで登録してください）
+2. 「New Form」を押し、名前に「こむぎ堂 予約」などと入れて作ります
+3. `https://formspree.io/f/xxxxxxxx` のようなURLが表示されるので、コピーしておきます
+
+### 2. HTMLにURLを貼る
+1. `index.html` をメモ帳（Macは「テキストエディット」）で開きます
+2. 上の方にある次の行を探します
+   ```
+   const FORM_ENDPOINT = &quot;&quot;;
+   ```
+3. `&quot;&quot;` の間に、コピーしたURLを貼り付けて保存します
+   ```
+   const FORM_ENDPOINT = &quot;https://formspree.io/f/xxxxxxxx&quot;;
+   ```
+
+### 3. ネットに公開する（無料）
+いちばん簡単なのは **Netlify Drop** です。
+1. https://app.netlify.com/drop を開きます
+2. `index.html` を入れたフォルダをドラッグ＆ドロップします
+3. 表示されたURLが予約ページです。InstagramやGoogleマップのお店情報に貼って使えます
+   （ページを残しておくには、無料アカウント登録をしてください）
+
+### 4. テストする
+自分で一度予約を送ってみて、メールが届けば完了です。最初の1回だけ、Formspreeから確認メールが来ることがあるので、そのメールのボタンを押してください。
+
+## 商品や値段を変えたいとき
+`index.html` の中の「商品リスト」の部分を書きかえるだけです。
+```
+{ name: &quot;クロワッサン&quot;, price: 220 },
+```
+の形で、行を増やしたり消したりしてください（商品名と値段は仮のものを入れています）。
+
+## 知っておいてほしいこと
+- **Formspreeの無料プランは月50件まで**です。それを超えそうなら有料プラン（月1,000円前後〜）にするか、別の方法を検討しましょう。
+- 予約が届いたら、確認の電話や返信をしてあげるとお客様が安心です（フォームはお客様に自動の確認メールを送りません）。
+- メールが迷惑メールフォルダに入ることがあるので、最初は確認してみてください。
+</pre></main></html>
