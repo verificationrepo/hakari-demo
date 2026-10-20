@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>こむぎ堂｜国産小麦と自家製酵母のパン屋（朝7時から営業）</title>
+<meta name="description" content="住宅街の小さなパン屋「こむぎ堂」。国産小麦と自家製酵母で、毎朝焼きたての食パンと季節のデニッシュをお届けします。朝7時〜18時営業（火曜定休）。お取り置き予約も受付中。">
+<meta name="theme-color" content="#f7efe3">
+<meta property="og:type" content="website">
+<meta property="og:title" content="こむぎ堂｜国産小麦と自家製酵母のパン屋">
+<meta property="og:description" content="毎朝焼きたての食パンと季節のデニッシュ。朝7時から営業、火曜定休。">
+<meta property="og:locale" content="ja_JP">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M8 30c0-12 11-20 24-20s24 8 24 20c0 3-2 5-5 5v17a4 4 0 0 1-4 4H17a4 4 0 0 1-4-4V35c-3 0-5-2-5-5z' fill='%23c98a4b'/%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Bakery",
+  "name": "こむぎ堂",
+  "description": "国産小麦と自家製酵母のパン屋。朝焼きたての食パンと季節のデニッシュ。",
+  "telephone": "000-0000-0000",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "JP",
+    "addressRegion": "〇〇県",
+    "addressLocality": "〇〇市",
+    "streetAddress": "△△町1-2-3"
+  },
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+    "opens": "07:00",
+    "closes": "18:00"
+  }],
+  "servesCuisine": "パン",
+  "priceRange": "¥"
+}
+</script>
+<style>
+  :root{
+    --bg:#fbf6ee;
+    --bg-alt:#f3e8d6;
+    --surface:#ffffff;
+    --text:#3b2a1e;        /* bg比 約12:1 */
+    --text-muted:#5f4a3a;  /* bg比 約7:1 */
+    --accent:#8a4b1c;      /* 白文字との比 約6.6:1 */
+    --accent-dark:#6e3a13;
+    --line:#e2d3bd;
+    --wheat:#d9a560;
+    --focus:#1f5fa8;
+    --error:#a3241a;
+    --ok:#2f6b2f;
+    --radius:16px;
+    --max:1080px;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","BIZ UDPGothic","Yu Gothic UI","Yu Gothic","Meiryo",system-ui,sans-serif;
+    font-size:1rem;line-height:1.8;
+  }
+  img,svg{max-width:100%;display:block}
+  a{color:var(--accent-dark);text-underline-offset:3px}
+  a:hover{color:var(--accent)}
+  :focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:4px}
+  .skip{position:absolute;left:-9999px;top:0;background:var(--accent-dark);color:#fff;padding:.6em 1em;z-index:100;border-radius:0 0 8px 0}
+  .skip:focus{left:0}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 16px}
+  h1,h2,h3{line-height:1.4;letter-spacing:.04em;margin:0}
+  h2{font-size:clamp(1.5rem,4.5vw,2rem);margin-bottom:.4em}
+  h3{font-size:1.15rem}
+  .eyebrow{display:block;font-size:.8rem;letter-spacing:.2em;color:var(--accent);font-weight:700;margin-bottom:.3em;text-transform:uppercase}
+  section{padding:64px 0}
+  .lead{color:var(--text-muted);max-width:40em}
+
+  /* header */
+  .site-header{position:sticky;top:0;z-index:50;background:rgba(251,246,238,.95);border-bottom:1px solid var(--line);backdrop-filter:blur(6px)}
+  .site-header .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px}
+  .logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:1.25rem;color:var(--text);text-decoration:none;letter-spacing:.08em}
+  .logo svg{width:32px;height:32px}
+  .nav ul{display:flex;gap:4px;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+  .nav a{display:block;padding:.5em .7em;text-decoration:none;color:var(--text);font-size:.92rem;border-radius:8px}
+  .nav a:hover{background:var(--bg-alt)}
+  .nav .cta{background:var(--accent);color:#fff}
+  .nav .cta:hover{background:var(--accent-dark);color:#fff}
+  @media (max-width:720px){
+    .nav li:not(.nav-cta){display:none}
+  }
+
+  /* hero */
+  .hero{padding:48px 0 56px;background:
+      radial-gradient(ellipse at 85% 10%,#f6dcb4 0,transparent 55%),
+      radial-gradient(ellipse at 0% 100%,#efe0c8 0,transparent 50%),var(--bg)}
+  .hero .wrap{display:grid;gap:32px;align-items:center}
+  @media (min-width:800px){.hero .wrap{grid-template-columns:1.1fr .9fr}}
+  .hero h1{font-size:clamp(1.8rem,6.5vw,2.9rem);margin:.2em 0 .5em}
+  .hero h1 span{display:block;font-size:.5em;color:var(--text-muted);letter-spacing:.12em;font-weight:700;margin-bottom:.4em}
+  .hero p{font-size:1.05rem;color:var(--text-muted);margin:0 0 1.5em}
+  .badges{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:0 0 1.6em}
+  .badges li{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:.25em .9em;font-size:.88rem}
+  .btns{display:flex;flex-wrap:wrap;gap:12px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:.7em 1.5em;border-radius:999px;font-weight:700;text-decoration:none;border:2px solid var(--accent);font-size:1rem;cursor:pointer;font-family:inherit}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-primary:hover{background:var(--accent-dark);border-color:var(--accent-dark);color:#fff}
+  .btn-ghost{background:transparent;color:var(--accent-dark)}
+  .btn-ghost:hover{background:var(--surface)}
+  .hero-art{max-width:420px;margin:0 auto;width:100%}
+  .today{margin-top:1.2em;font-size:.95rem;font-weight:700}
+  .today[data-open="true"]::before{content:"● ";color:var(--ok)}
+  .today[data-open="false"]::before{content:"● ";color:var(--text-muted)}
+
+  /* about */
+  .about{background:var(--surface)}
+  .points{display:grid;gap:16px;margin-top:32px;list-style:none;padding:0}
+  @media (min-width:720px){.points{grid-template-columns:repeat(3,1fr)}}
+  .points li{background:var(--bg);border-radius:var(--radius);padding:24px}
+  .points svg{width:44px;height:44px;margin-bottom:12px}
+  .points p{margin:.5em 0 0;color:var(--text-muted);font-size:.95rem}
+
+  /* products */
+  .products-list{display:grid;gap:20px;margin-top:32px;list-style:none;padding:0}
+  @media (min-width:720px){.products-list{grid-template-columns:repeat(3,1fr)}}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;height:100%}
+  .card-art{aspect-ratio:4/3;background:var(--bg-alt);display:grid;place-items:center}
+  .card-art svg{width:70%;height:auto}
+  .card-body{padding:20px;display:flex;flex-direction:column;gap:.5em;flex:1}
+  .card-body p{margin:0;color:var(--text-muted);font-size:.95rem;flex:1}
+  .tag{align-self:flex-start;font-size:.78rem;font-weight:700;background:#fbe6c8;color:#6e3a13;border-radius:999px;padding:.1em .8em}
+  .price{font-size:1.3rem;font-weight:700;color:var(--text)}
+  .price small{font-size:.75rem;font-weight:400;color:var(--text-muted);margin-left:.3em}
+  .note{font-size:.85rem;color:var(--text-muted);margin-top:16px}
+
+  /* owner */
+  .owner{background:var(--bg-alt)}
+  .owner .wrap{display:grid;gap:32px;align-items:center}
+  @media (min-width:800px){.owner .wrap{grid-template-columns:.8fr 1.2fr}}
+  .owner-art{max-width:300px;margin:0 auto;width:100%}
+  blockquote{margin:1.2em 0 0;padding:0 0 0 1em;border-left:4px solid var(--wheat);font-size:1.05rem}
+  blockquote p{margin:0 0 .8em}
+  .owner .sign{color:var(--text-muted);font-size:.95rem;margin:0}
+  .commit{list-style:none;padding:0;margin:1.5em 0 0;display:grid;gap:10px}
+  .commit li{background:var(--surface);border-radius:12px;padding:12px 16px}
+  .commit strong{color:var(--accent-dark)}
+
+  /* access */
+  .access .grid{display:grid;gap:24px;margin-top:24px}
+  @media (min-width:800px){.access .grid{grid-template-columns:1fr 1fr}}
+  .info{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+  .info dl{margin:0;display:grid;grid-template-columns:6.5em 1fr;gap:12px 8px}
+  .info dt{font-weight:700}
+  .info dd{margin:0}
+  table.hours{width:100%;border-collapse:collapse;margin-top:4px;font-size:.95rem}
+  table.hours caption{text-align:left;font-weight:700;margin-bottom:.4em}
+  table.hours th,table.hours td{padding:.5em .6em;border-bottom:1px solid var(--line);text-align:left}
+  table.hours tr.closed td{color:var(--error);font-weight:700}
+  table.hours tr.is-today{background:#fbe6c8}
+  .map{background:var(--bg-alt);border-radius:var(--radius);padding:16px}
+  .map figcaption{font-size:.9rem;color:var(--text-muted);margin-top:8px}
+
+  /* form */
+  .reserve{background:var(--surface)}
+  form{margin-top:24px;max-width:640px;display:grid;gap:20px}
+  .field{display:grid;gap:6px}
+  label,.legend{font-weight:700}
+  .req{display:inline-block;margin-left:.5em;font-size:.75rem;background:var(--accent);color:#fff;border-radius:4px;padding:0 .5em;vertical-align:middle}
+  .hint{font-size:.85rem;color:var(--text-muted);margin:0}
+  input,select,textarea{
+    font:inherit;font-size:1rem;color:var(--text);background:#fff;
+    border:2px solid #9c8672;border-radius:10px;padding:.7em .8em;width:100%;min-height:48px
+  }
+  input:focus-visible,select:focus-visible,textarea:focus-visible{border-color:var(--focus)}
+  [aria-invalid="true"]{border-color:var(--error)}
+  .error{color:var(--error);font-size:.9rem;font-weight:700;margin:0}
+  .error:empty{display:none}
+  fieldset{border:0;padding:0;margin:0;display:grid;gap:8px}
+  legend{padding:0;margin-bottom:6px}
+  .choices{display:grid;gap:8px}
+  .choice{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--bg);border-radius:10px;padding:10px 12px}
+  .choice label{font-weight:400;flex:1;min-width:10em}
+  .choice input[type=number]{width:5.5em;min-height:44px}
+  .form-status{padding:16px;border-radius:12px;font-weight:700}
+  .form-status:empty{display:none}
+  .form-status.ok{background:#e6f1e3;color:var(--ok)}
+  .form-status.ng{background:#fbe7e4;color:var(--error)}
+
+  footer{background:#3b2a1e;color:#f6ece0;padding:32px 0;font-size:.9rem}
+  footer a{color:#f6ece0}
+  footer p{margin:.3em 0}
+</style>
+</head>
+<body><div role="note" style="position:sticky;top:0;z-index:99999;background:#2F5D62;color:#fff;font:14px/1.5 system-ui,sans-serif;padding:8px 12px;text-align:center">【検証用デモ｜C：＋品質の1行】架空のお店です。フォームは送信されません。<a href="./" style="color:#F2B544">一覧へ</a></div>
+<a class="skip" href="#main">本文へスキップ</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="こむぎ堂 トップへ">
+      <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M8 30c0-12 11-20 24-20s24 8 24 20c0 3-2 5-5 5v17a4 4 0 0 1-4 4H17a4 4 0 0 1-4-4V35c-3 0-5-2-5-5z" fill="#c98a4b"/><path d="M22 22c2 3 2 7 0 10M32 20c2 3 2 8 0 12M42 22c2 3 2 7 0 10" stroke="#f6dcb4" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+      こむぎ堂
+    </a>
+    <nav class="nav" aria-label="メインメニュー">
+      <ul>
+        <li><a href="#about">お店について</a></li>
+        <li><a href="#products">人気のパン</a></li>
+        <li><a href="#owner">こだわり</a></li>
+        <li><a href="#access">アクセス</a></li>
+        <li class="nav-cta"><a class="cta" href="#reserve">予約する</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="wrap">
+      <div>
+        <h1 id="hero-title"><span>国産小麦と自家製酵母のパン屋</span>朝7時、焼きたての香りで<br>いってらっしゃい。</h1>
+        <p>住宅街の小さなパン屋「こむぎ堂」です。毎朝焼きあげる食パンと、季節の果物をのせたデニッシュで、ご家族の朝ごはんと、通勤前のひと息をお手伝いします。</p>
+        <ul class="badges" aria-label="お店の特徴">
+          <li>国産小麦100%</li>
+          <li>自家製酵母</li>
+          <li>朝7時オープン</li>
+          <li>お取り置きOK</li>
+        </ul>
+        <div class="btns">
+          <a class="btn btn-primary" href="#reserve">パンを予約する</a>
+          <a class="btn btn-ghost" href="#products">人気のパンを見る</a>
+        </div>
+        <p class="today" id="today-status" aria-live="polite">営業時間 7:00〜18:00（火曜定休）</p>
+      </div>
+      <div class="hero-art">
+        <svg viewBox="0 0 400 320" role="img" aria-labelledby="hero-art-title">
+          <title id="hero-art-title">湯気の立つ焼きたての山型食パンのイラスト</title>
+          <ellipse cx="200" cy="280" rx="170" ry="22" fill="#e6d2b3"/>
+          <path d="M60 280V170c-22-6-30-30-18-52 16-30 60-46 108-46h100c48 0 92 16 108 46 12 22 4 46-18 52v110z" fill="#c98a4b"/>
+          <path d="M80 280V178c-16-6-20-24-11-40 13-23 48-36 86-36h90c38 0 73 13 86 36 9 16 5 34-11 40v102z" fill="#f4dcb5"/>
+          <path d="M110 150c20-10 40-10 60 0M190 140c20-10 40-10 60 0M260 150c15-8 30-8 45 0" stroke="#e7c393" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <g stroke="#b9987a" stroke-width="5" fill="none" stroke-linecap="round" opacity=".7">
+            <path d="M150 60c-10-12 10-20 0-34"/>
+            <path d="M200 52c-10-12 10-20 0-34"/>
+            <path d="M250 60c-10-12 10-20 0-34"/>
+          </g>
+          <g fill="#d9a560"><path d="M330 250l10-30 8 30z"/><path d="M350 255l8-26 8 26z"/></g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about" aria-labelledby="about-title">
+    <div class="wrap">
+      <span class="eyebrow" aria-hidden="true">About</span>
+      <h2 id="about-title">お店について</h2>
+      <p class="lead">こむぎ堂は、住宅街の角にある小さなパン屋です。ベビーカーのまま入れるよう入口に段差をなくし、通勤前のお客さまにはすぐお渡しできるよう朝の定番パンを店頭に多めに並べています。毎日食べても飽きない、からだにやさしいパンを目指しています。</p>
+      <ul class="points">
+        <li>
+          <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M24 44V14" stroke="#8a4b1c" stroke-width="3" stroke-linecap="round"/><g fill="#d9a560"><ellipse cx="18" cy="20" rx="5" ry="8" transform="rotate(-30 18 20)"/><ellipse cx="30" cy="20" rx="5" ry="8" transform="rotate(30 30 20)"/><ellipse cx="18" cy="32" rx="5" ry="8" transform="rotate(-30 18 32)"/><ellipse cx="30" cy="32" rx="5" ry="8" transform="rotate(30 30 32)"/><ellipse cx="24" cy="10" rx="4" ry="7"/></g></svg>
+          <h3>国産小麦だけを使用</h3>
+          <p>北海道や九州など、産地の違う国産小麦をパンごとに使い分け。香りと甘みを引き出しています。</p>
+        </li>
+        <li>
+          <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M14 10h20v6l4 8v16a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4V24l4-8z" fill="#f4dcb5" stroke="#8a4b1c" stroke-width="3" stroke-linejoin="round"/><circle cx="20" cy="32" r="3" fill="#d9a560"/><circle cx="28" cy="28" r="2" fill="#d9a560"/><circle cx="27" cy="36" r="2.5" fill="#d9a560"/></svg>
+          <h3>じっくり育てる自家製酵母</h3>
+          <p>レーズンから起こした酵母で、低温で長時間発酵。しっとり、もちっとした食感に仕上がります。</p>
+        </li>
+        <li>
+          <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><circle cx="24" cy="24" r="18" fill="#f4dcb5" stroke="#8a4b1c" stroke-width="3"/><path d="M24 13v11l7 5" stroke="#8a4b1c" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <h3>朝7時に焼きたて</h3>
+          <p>開店に合わせて食パンが焼きあがります。通勤・通学前に、焼きたてを持ち帰っていただけます。</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="products" aria-labelledby="products-title">
+    <div class="wrap">
+      <span class="eyebrow" aria-hidden="true">Popular</span>
+      <h2 id="products-title">人気のパン ベスト3</h2>
+      <p class="lead">迷ったらまずはこちら。どれもご予約でお取り置きできます。</p>
+      <ol class="products-list">
+        <li>
+          <article class="card" aria-labelledby="p1">
+            <div class="card-art">
+              <svg viewBox="0 0 200 150" aria-hidden="true" focusable="false"><path d="M30 130V75c-12-4-16-18-8-30 10-16 34-24 60-24h36c26 0 50 8 60 24 8 12 4 26-8 30v55z" fill="#c98a4b"/><path d="M42 130V80c-8-3-10-12-5-20 7-11 24-17 45-17h36c21 0 38 6 45 17 5 8 3 17-5 20v50z" fill="#f4dcb5"/></svg>
+            </div>
+            <div class="card-body">
+              <span class="tag">人気No.1</span>
+              <h3 id="p1">こむぎ堂の山型食パン</h3>
+              <p>国産小麦の甘みと自家製酵母の香り。トーストすると外はさっくり、中はふんわり。朝7時焼きあがり。</p>
+              <p class="price">1斤 420円<small>（税込）</small></p>
+            </div>
+          </article>
+        </li>
+        <li>
+          <article class="card" aria-labelledby="p2">
+            <div class="card-art">
+              <svg viewBox="0 0 200 150" aria-hidden="true" focusable="false"><path d="M100 22l70 40-70 40-70-40z" fill="#d9a560"/><path d="M100 36l46 26-46 26-46-26z" fill="#f7e4b8"/><circle cx="88" cy="58" r="10" fill="#c0392b"/><circle cx="108" cy="54" r="9" fill="#c0392b"/><circle cx="100" cy="70" r="9" fill="#b03024"/><path d="M30 62v14l70 40 70-40V62l-70 40z" fill="#b8763b"/></svg>
+            </div>
+            <div class="card-body">
+              <span class="tag">季節限定</span>
+              <h3 id="p2">季節のフルーツデニッシュ</h3>
+              <p>バターが香るさくさく生地に、カスタードと旬の果物をたっぷり。今の季節は「いちじく」です。</p>
+              <p class="price">1個 380円<small>（税込）</small></p>
+            </div>
+          </article>
+        </li>
+        <li>
+          <article class="card" aria-labelledby="p3">
+            <div class="card-art">
+              <svg viewBox="0 0 200 150" aria-hidden="true" focusable="false"><ellipse cx="100" cy="85" rx="75" ry="42" fill="#b8763b"/><ellipse cx="100" cy="78" rx="68" ry="34" fill="#c98a4b"/><path d="M55 70c10-8 20-8 30 0M90 62c10-8 20-8 30 0M125 70c10-8 20-8 30 0" stroke="#f4dcb5" stroke-width="4" fill="none" stroke-linecap="round"/></svg>
+            </div>
+            <div class="card-body">
+              <span class="tag">子どもに人気</span>
+              <h3 id="p3">ほんのり甘いミルクロール</h3>
+              <p>牛乳と国産小麦だけで仕込んだ、やわらかい小さなロール。小さなお子さまの朝ごはんやおやつに。</p>
+              <p class="price">4個入り 320円<small>（税込）</small></p>
+            </div>
+          </article>
+        </li>
+      </ol>
+      <p class="note">※ 価格は税込です。季節のデニッシュは時期により内容が変わります。</p>
+    </div>
+  </section>
+
+  <section class="owner" id="owner" aria-labelledby="owner-title">
+    <div class="wrap">
+      <div class="owner-art">
+        <svg viewBox="0 0 300 300" role="img" aria-labelledby="owner-art-title">
+          <title id="owner-art-title">パン生地をこねる店主のイラスト</title>
+          <circle cx="150" cy="150" r="140" fill="#fbf6ee"/>
+          <path d="M70 280c0-50 36-80 80-80s80 30 80 80z" fill="#8a4b1c"/>
+          <path d="M115 210h70v70h-70z" fill="#f4e6d0"/>
+          <circle cx="150" cy="140" r="44" fill="#f2cfa8"/>
+          <path d="M104 126c0-32 20-50 46-50s46 18 46 50c-14-8-30-12-46-12s-32 4-46 12z" fill="#fff"/>
+          <circle cx="135" cy="142" r="4" fill="#3b2a1e"/><circle cx="165" cy="142" r="4" fill="#3b2a1e"/>
+          <path d="M138 160c8 6 16 6 24 0" stroke="#3b2a1e" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <ellipse cx="150" cy="250" rx="48" ry="18" fill="#f4dcb5"/>
+        </svg>
+      </div>
+      <div>
+        <span class="eyebrow" aria-hidden="true">Our Story</span>
+        <h2 id="owner-title">店主のこだわり</h2>
+        <blockquote>
+          <p>「子どもが毎日食べても安心で、大人も『また食べたい』と思えるパンを。」</p>
+          <p>そう思って、材料は国産小麦・自家製酵母・塩・水を基本に、できるだけシンプルにしています。酵母は毎日様子を見ながら継ぎ足し、気温や湿度に合わせて仕込みを変えています。</p>
+        </blockquote>
+        <p class="sign">こむぎ堂 店主</p>
+        <ul class="commit" aria-label="店主の約束">
+          <li><strong>毎朝4時から仕込み</strong>：開店の7時に焼きたてが並ぶよう、毎朝その日の分だけ焼いています。</li>
+          <li><strong>余計なものを入れない</strong>：保存料やショートニングは使いません。</li>
+          <li><strong>季節を味わう</strong>：デニッシュには近くの農家さんの旬の果物を使っています。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="access" id="access" aria-labelledby="access-title">
+    <div class="wrap">
+      <span class="eyebrow" aria-hidden="true">Access</span>
+      <h2 id="access-title">アクセス・営業時間</h2>
+      <div class="grid">
+        <div class="info">
+          <h3 class="sr-only">店舗情報</h3>
+          <dl>
+            <dt>店名</dt><dd>こむぎ堂</dd>
+            <dt>住所</dt><dd>〒000-0000<br>〇〇県〇〇市△△町1-2-3</dd>
+            <dt>電話</dt><dd><a href="tel:000-0000-0000">000-0000-0000</a></dd>
+            <dt>営業時間</dt><dd>7:00〜18:00<br><span class="hint">（売り切れ次第終了の場合があります）</span></dd>
+            <dt>定休日</dt><dd>毎週火曜日</dd>
+            <dt>アクセス</dt><dd>〇〇駅 東口から徒歩5分<br>店舗前に自転車置き場あり</dd>
+          </dl>
+        </div>
+        <div>
+          <table class="hours" id="hours">
+            <caption>曜日ごとの営業時間</caption>
+            <thead><tr><th scope="col">曜日</th><th scope="col">営業時間</th></tr></thead>
+            <tbody>
+              <tr data-day="1"><th scope="row">月曜日</th><td>7:00〜18:00</td></tr>
+              <tr data-day="2" class="closed"><th scope="row">火曜日</th><td>定休日</td></tr>
+              <tr data-day="3"><th scope="row">水曜日</th><td>7:00〜18:00</td></tr>
+              <tr data-day="4"><th scope="row">木曜日</th><td>7:00〜18:00</td></tr>
+              <tr data-day="5"><th scope="row">金曜日</th><td>7:00〜18:00</td></tr>
+              <tr data-day="6"><th scope="row">土曜日</th><td>7:00〜18:00</td></tr>
+              <tr data-day="0"><th scope="row">日曜日</th><td>7:00〜18:00</td></tr>
+            </tbody>
+          </table>
+          <figure class="map" style="margin:16px 0 0">
+            <svg viewBox="0 0 400 220" role="img" aria-labelledby="map-title">
+              <title id="map-title">簡易地図：〇〇駅東口を出て大通りを東へ進み、2つ目の角を左に曲がってすぐ右手がこむぎ堂</title>
+              <rect width="400" height="220" rx="12" fill="#fbf6ee"/>
+              <path d="M0 140h400" stroke="#e2d3bd" stroke-width="22"/>
+              <path d="M260 0v220" stroke="#e2d3bd" stroke-width="16"/>
+              <path d="M140 0v140" stroke="#e2d3bd" stroke-width="12"/>
+              <rect x="20" y="160" width="90" height="40" rx="6" fill="#5f4a3a"/>
+              <text x="65" y="186" font-size="14" fill="#fff" text-anchor="middle">〇〇駅</text>
+              <path d="M90 140h165V70" stroke="#8a4b1c" stroke-width="4" fill="none" stroke-dasharray="8 6" stroke-linecap="round"/>
+              <circle cx="290" cy="60" r="18" fill="#8a4b1c"/>
+              <text x="290" y="65" font-size="13" fill="#fff" text-anchor="middle">店</text>
+              <text x="315" y="66" font-size="14" fill="#3b2a1e">こむぎ堂</text>
+            </svg>
+            <figcaption>駅東口から大通りを東へ、2つ目の角を左に曲がってすぐ右手です。</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reserve" id="reserve" aria-labelledby="reserve-title">
+    <div class="wrap">
+      <span class="eyebrow" aria-hidden="true">Reserve</span>
+      <h2 id="reserve-title">ご予約・お取り置きのお問い合わせ</h2>
+      <p class="lead">焼きたての食パンや季節のデニッシュをお取り置きします。受け取り日の前日18時までにお送りください。確認のため、お店からお電話することがあります。</p>
+
+      <form id="reserve-form" novalidate aria-describedby="form-note">
+        <p id="form-note" class="hint"><span class="req" aria-hidden="true">必須</span> の項目は必ずご入力ください。</p>
+
+        <div class="field">
+          <label for="name">お名前<span class="req" aria-hidden="true">必須</span></label>
+          <input id="name" name="name" type="text" autocomplete="name" required aria-required="true" aria-describedby="name-err">
+          <p class="error" id="name-err"></p>
+        </div>
+
+        <div class="field">
+          <label for="tel">電話番号<span class="req" aria-hidden="true">必須</span></label>
+          <p class="hint" id="tel-hint">例：090-1234-5678（ハイフンなしでも可）</p>
+          <input id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" required aria-required="true" aria-describedby="tel-hint tel-err">
+          <p class="error" id="tel-err"></p>
+        </div>
+
+        <div class="field">
+          <label for="date">受け取り日<span class="req" aria-hidden="true">必須</span></label>
+          <p class="hint" id="date-hint">翌日以降の日付をお選びください。火曜日は定休日のため選べません。</p>
+          <input id="date" name="date" type="date" required aria-required="true" aria-describedby="date-hint date-err">
+          <p class="error" id="date-err"></p>
+        </div>
+
+        <div class="field">
+          <label for="time">受け取り時間帯</label>
+          <select id="time" name="time">
+            <option value="7:00〜9:00">7:00〜9:00（朝・通勤前）</option>
+            <option value="9:00〜12:00">9:00〜12:00</option>
+            <option value="12:00〜15:00">12:00〜15:00</option>
+            <option value="15:00〜18:00">15:00〜18:00</option>
+          </select>
+        </div>
+
+        <fieldset aria-describedby="items-hint items-err">
+          <legend class="legend">ご希望の商品と数量<span class="req" aria-hidden="true">必須</span><span class="sr-only">（1つ以上）</span></legend>
+          <p class="hint" id="items-hint">数量を入力した商品をお取り置きします（各10点まで）。</p>
+          <div class="choices">
+            <div class="choice">
+              <label for="q1">山型食パン（1斤 420円）</label>
+              <input id="q1" name="山型食パン" type="number" min="0" max="10" value="0" inputmode="numeric">
+            </div>
+            <div class="choice">
+              <label for="q2">季節のフルーツデニッシュ（1個 380円）</label>
+              <input id="q2" name="季節のフルーツデニッシュ" type="number" min="0" max="10" value="0" inputmode="numeric">
+            </div>
+            <div class="choice">
+              <label for="q3">ミルクロール（4個入り 320円）</label>
+              <input id="q3" name="ミルクロール" type="number" min="0" max="10" value="0" inputmode="numeric">
+            </div>
+          </div>
+          <p class="error" id="items-err"></p>
+        </fieldset>
+
+        <div class="field">
+          <label for="memo">ご要望・その他の商品</label>
+          <textarea id="memo" name="memo" rows="3"></textarea>
+        </div>
+
+        <div>
+          <button class="btn btn-primary" type="submit">内容を確認して送信</button>
+        </div>
+        <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><strong>こむぎ堂</strong>｜国産小麦と自家製酵母のパン屋</p>
+    <p>〇〇県〇〇市△△町1-2-3 ／ 営業 7:00〜18:00（火曜定休） ／ <a href="tel:000-0000-0000">000-0000-0000</a></p>
+    <p><small>&copy; こむぎ堂</small></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var now = new Date();
+  var day = now.getDay();
+  var mins = now.getHours()*60 + now.getMinutes();
+
+  // 今日の営業状況
+  var st = document.getElementById('today-status');
+  var open = day !== 2 && mins >= 420 && mins < 1080;
+  st.dataset.open = open;
+  st.textContent = day === 2 ? '本日は定休日です（火曜定休）'
+    : open ? '営業中：本日は18:00まで'
+    : mins < 420 ? '本日は7:00オープンです' : '本日の営業は終了しました（明日' + (day === 1 ? 'は定休日' : 'は7:00から') + '）';
+
+  var row = document.querySelector('#hours tr[data-day="'+day+'"]');
+  if (row) { row.classList.add('is-today'); row.querySelector('th').insertAdjacentHTML('beforeend','<span class="sr-only">（今日）</span>'); }
+
+  // 受け取り日の最小値（翌日）
+  function ymd(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+  var tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1);
+  var max = new Date(now.getFullYear(), now.getMonth(), now.getDate()+30);
+  var dateEl = document.getElementById('date');
+  dateEl.min = ymd(tomorrow); dateEl.max = ymd(max);
+
+  var form = document.getElementById('reserve-form');
+  var status = document.getElementById('form-status');
+  var nameEl = document.getElementById("name"), telEl = document.getElementById("tel");
+
+  function setErr(input, errId, msg){
+    document.getElementById(errId).textContent = msg;
+    if (input) input.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    return !msg;
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    status.className = 'form-status'; status.textContent = '';
+    var firstBad = null, ok;
+
+    var name = nameEl.value.trim();
+    ok = setErr(nameEl, 'name-err', name ? '' : 'お名前を入力してください。');
+    if(!ok && !firstBad) firstBad = nameEl;
+
+    var tel = telEl.value.replace(/[\s\-－ー()（）]/g,'').replace(/[０-９]/g,function(c){return String.fromCharCode(c.charCodeAt(0)-0xFEE0);});
+    ok = setErr(telEl, 'tel-err', !tel ? '電話番号を入力してください。' : /^0\d{9,10}$/.test(tel) ? '' : '電話番号は0から始まる10〜11桁の数字で入力してください。');
+    if(!ok && !firstBad) firstBad = telEl;
+
+    var dv = dateEl.value, msg = '';
+    if (!dv) msg = '受け取り日を選んでください。';
+    else {
+      var p = dv.split('-'), d = new Date(+p[0], +p[1]-1, +p[2]);
+      if (d < tomorrow) msg = '受け取り日は翌日以降の日付を選んでください。';
+      else if (d > max) msg = '受け取り日は30日以内の日付を選んでください。';
+      else if (d.getDay() === 2) msg = '火曜日は定休日です。別の日を選んでください。';
+    }
+    ok = setErr(dateEl, 'date-err', msg);
+    if(!ok && !firstBad) firstBad = dateEl;
+
+    var qs = ['q1','q2','q3'].map(function(id){return document.getElementById(id);});
+    var total = 0, badQty = false;
+    qs.forEach(function(q){ var n = Number(q.value||0); if(!Number.isInteger(n)||n<0||n>10){badQty=true;q.setAttribute('aria-invalid','true');} else {q.setAttribute('aria-invalid','false'); total+=n;} });
+    ok = setErr(null, 'items-err', badQty ? '数量は0〜10の整数で入力してください。' : total === 0 ? '商品を1つ以上お選びください（数量を1以上に）。' : '');
+    if(!ok && !firstBad) firstBad = qs[0];
+
+    if (firstBad){
+      status.className = 'form-status ng';
+      status.textContent = '入力内容に誤りがあります。赤字のメッセージをご確認ください。';
+      firstBad.focus();
+      return;
+    }
+
+    // ※ 実運用では、ここで送信先（メールフォームサービスやサーバー）へデータを送ります。
+    status.className = 'form-status ok';
+    status.textContent = name + ' 様、ご予約のお問い合わせを受け付けました。受け取り日：' + dv.replace(/-/g,'/') + '（' + document.getElementById("time").value + '）。内容の確認のため、お店からお電話することがあります。';
+    form.reset();
+    status.setAttribute('tabindex','-1'); status.focus();
+  });
+})();
+</script>
+</body>
+</html>
