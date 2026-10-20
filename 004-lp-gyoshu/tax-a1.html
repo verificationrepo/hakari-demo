@@ -1,0 +1,755 @@
+<!doctype html>
+<html lang="ja">
+<head><meta name="robots" content="noindex"><script>document.addEventListener("submit",function(e){if(!e.defaultPrevented)e.preventDefault()});</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>みなと会計事務所｜税務・会計のご相談</title>
+<meta name="description" content="みなと会計事務所は、個人事業主・中小企業・相続のご相談に寄り添う税理士事務所です。初回相談無料。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#16324f;
+  --navy-deep:#0e2236;
+  --sea:#2f7a8c;
+  --sea-light:#e7f1f3;
+  --sand:#f7f4ee;
+  --gold:#b88a3e;
+  --ink:#1f2a33;
+  --muted:#5d6b76;
+  --line:#dfe4e8;
+  --white:#ffffff;
+  --radius:12px;
+  --max:1120px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Noto Sans JP",system-ui,-apple-system,"Hiragino Kaku Gothic ProN",sans-serif;
+  color:var(--ink);background:var(--white);line-height:1.85;font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.container{max-width:var(--max);margin:0 auto;padding:0 20px}
+.serif{font-family:"Noto Serif JP",serif}
+
+/* Header */
+header{
+  position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+}
+.header-inner{display:flex;align-items:center;justify-content:space-between;height:68px;gap:16px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--navy)}
+.logo-mark{width:36px;height:36px;flex:none}
+.logo-text{font-family:"Noto Serif JP",serif;font-size:1.15rem;letter-spacing:.06em}
+.logo-sub{display:block;font-size:.66rem;color:var(--muted);letter-spacing:.12em;font-family:"Noto Sans JP",sans-serif;font-weight:500;line-height:1.2}
+nav ul{display:flex;gap:28px;list-style:none;font-size:.92rem;font-weight:500}
+nav a:hover{color:var(--sea)}
+.header-cta{display:flex;align-items:center;gap:14px}
+.tel-small{font-size:.8rem;color:var(--muted);text-align:right;line-height:1.3}
+.tel-small strong{display:block;font-size:1.1rem;color:var(--navy);letter-spacing:.04em}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 24px;border-radius:999px;font-weight:700;font-size:.95rem;
+  transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+  cursor:pointer;border:none;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--gold);color:var(--white);box-shadow:0 6px 18px rgba(184,138,62,.3)}
+.btn-primary:hover{background:#a67a33}
+.btn-outline{border:1.5px solid var(--white);color:var(--white)}
+.btn-outline:hover{background:rgba(255,255,255,.1)}
+.menu-toggle{display:none;background:none;border:none;width:40px;height:40px;cursor:pointer}
+.menu-toggle span{display:block;width:22px;height:2px;background:var(--navy);margin:5px auto;transition:.2s}
+
+/* Hero */
+.hero{
+  position:relative;overflow:hidden;color:var(--white);
+  background:linear-gradient(135deg,var(--navy-deep) 0%,var(--navy) 55%,var(--sea) 100%);
+}
+.hero-waves{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:120px;opacity:.9}
+.hero-inner{position:relative;padding:96px 0 160px;display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:center}
+.eyebrow{display:inline-block;font-size:.82rem;letter-spacing:.2em;color:#cfe3e8;margin-bottom:18px;border-left:3px solid var(--gold);padding-left:12px}
+.hero h1{font-family:"Noto Serif JP",serif;font-size:clamp(1.9rem,4.4vw,3rem);line-height:1.45;font-weight:700;margin-bottom:22px;letter-spacing:.03em}
+.hero h1 em{font-style:normal;color:#f0d9a8}
+.hero p.lead{font-size:1.05rem;color:#dbe7ee;margin-bottom:34px;max-width:34em}
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px}
+.hero-card{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
+  border-radius:16px;padding:28px;backdrop-filter:blur(4px);
+}
+.hero-card h2{font-size:1rem;font-weight:700;margin-bottom:16px;letter-spacing:.05em}
+.hero-card ul{list-style:none;display:grid;gap:12px}
+.hero-card li{display:flex;gap:12px;align-items:flex-start;font-size:.95rem;color:#e6eef3}
+.check{flex:none;width:22px;height:22px;border-radius:50%;background:var(--gold);display:grid;place-items:center;margin-top:3px}
+.check svg{width:12px;height:12px}
+
+/* Sections */
+section{padding:96px 0}
+.section-head{text-align:center;margin-bottom:56px}
+.section-head .en{display:block;font-size:.78rem;letter-spacing:.3em;color:var(--sea);font-weight:700;margin-bottom:8px}
+.section-head h2{font-family:"Noto Serif JP",serif;font-size:clamp(1.5rem,3vw,2.1rem);color:var(--navy);letter-spacing:.04em}
+.section-head p{color:var(--muted);margin-top:14px}
+
+/* Worries */
+.worries{background:var(--sand)}
+.worry-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.worry{
+  background:var(--white);border-radius:var(--radius);padding:24px 24px 24px 56px;position:relative;
+  box-shadow:0 2px 10px rgba(22,50,79,.05);font-weight:500;
+}
+.worry::before{
+  content:"";position:absolute;left:22px;top:28px;width:20px;height:20px;border-radius:4px;
+  border:2px solid var(--sea);
+}
+.worry::after{
+  content:"";position:absolute;left:28px;top:31px;width:7px;height:12px;border:solid var(--gold);
+  border-width:0 3px 3px 0;transform:rotate(45deg);
+}
+.worries-answer{text-align:center;margin-top:48px;font-family:"Noto Serif JP",serif;font-size:1.3rem;color:var(--navy)}
+.worries-answer strong{background:linear-gradient(transparent 62%,#f0d9a8 62%)}
+
+/* Services */
+.service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.service{
+  border:1px solid var(--line);border-radius:var(--radius);padding:32px 28px;background:var(--white);
+  transition:box-shadow .2s, transform .2s;
+}
+.service:hover{box-shadow:0 12px 30px rgba(22,50,79,.1);transform:translateY(-3px)}
+.service-icon{width:56px;height:56px;border-radius:14px;background:var(--sea-light);display:grid;place-items:center;margin-bottom:20px}
+.service-icon svg{width:28px;height:28px;stroke:var(--sea);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.service h3{font-size:1.15rem;color:var(--navy);margin-bottom:10px}
+.service p{color:var(--muted);font-size:.93rem}
+.service .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.service .tags span{font-size:.75rem;background:var(--sand);color:var(--navy);padding:3px 10px;border-radius:999px}
+
+/* Strengths */
+.strengths{background:var(--navy);color:var(--white)}
+.strengths .section-head h2{color:var(--white)}
+.strengths .section-head .en{color:#f0d9a8}
+.strengths .section-head p{color:#c7d6e0}
+.strength-list{display:grid;gap:28px}
+.strength{display:grid;grid-template-columns:96px 1fr;gap:28px;align-items:start;padding:28px;border-radius:var(--radius);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1)}
+.strength-num{font-family:"Noto Serif JP",serif;font-size:3rem;line-height:1;color:var(--gold);font-weight:700}
+.strength h3{font-size:1.2rem;margin-bottom:8px}
+.strength p{color:#cbd8e1;font-size:.95rem}
+
+/* Pricing */
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:stretch}
+.plan{border:1px solid var(--line);border-radius:16px;padding:36px 28px;display:flex;flex-direction:column;background:var(--white);position:relative}
+.plan.featured{border:2px solid var(--sea);box-shadow:0 16px 40px rgba(47,122,140,.15)}
+.plan .badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--sea);color:var(--white);font-size:.78rem;font-weight:700;padding:4px 16px;border-radius:999px;white-space:nowrap}
+.plan h3{font-size:1.1rem;color:var(--navy)}
+.plan .for{color:var(--muted);font-size:.85rem;margin-bottom:18px}
+.plan .price{font-family:"Noto Serif JP",serif;font-size:2.2rem;color:var(--navy);font-weight:700;line-height:1.2}
+.plan .price small{font-size:.85rem;font-family:"Noto Sans JP",sans-serif;color:var(--muted);font-weight:400}
+.plan ul{list-style:none;margin:22px 0 0;display:grid;gap:10px;font-size:.92rem;flex:1}
+.plan li{padding-left:22px;position:relative}
+.plan li::before{content:"";position:absolute;left:2px;top:.6em;width:8px;height:8px;border-radius:50%;background:var(--sea)}
+.price-note{text-align:center;color:var(--muted);font-size:.85rem;margin-top:28px}
+
+/* Flow */
+.flow{background:var(--sand)}
+.flow-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;counter-reset:step}
+.step{background:var(--white);border-radius:var(--radius);padding:28px 22px;text-align:center;position:relative}
+.step:not(:last-child)::after{
+  content:"";position:absolute;right:-16px;top:50%;width:12px;height:12px;
+  border-top:3px solid var(--gold);border-right:3px solid var(--gold);transform:translateY(-50%) rotate(45deg);
+}
+.step-num{display:inline-block;font-size:.75rem;letter-spacing:.15em;color:var(--sea);font-weight:700;margin-bottom:8px}
+.step h3{font-size:1.05rem;color:var(--navy);margin-bottom:8px}
+.step p{font-size:.88rem;color:var(--muted)}
+
+/* Voices */
+.voice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.voice{border-radius:var(--radius);background:var(--sea-light);padding:28px;position:relative}
+.voice p{font-size:.94rem;margin-bottom:18px}
+.voice .who{display:flex;align-items:center;gap:12px;font-size:.85rem;color:var(--muted)}
+.avatar{width:42px;height:42px;border-radius:50%;background:var(--navy);color:var(--white);display:grid;place-items:center;font-weight:700;flex:none}
+.voice-note{text-align:center;color:var(--muted);font-size:.8rem;margin-top:20px}
+
+/* Profile */
+.profile{display:grid;grid-template-columns:320px 1fr;gap:56px;align-items:center}
+.portrait{aspect-ratio:4/5;border-radius:16px;background:linear-gradient(160deg,var(--sea-light),#cfe0e5);display:grid;place-items:center;overflow:hidden}
+.portrait svg{width:70%;height:auto}
+.profile h3{font-family:"Noto Serif JP",serif;font-size:1.6rem;color:var(--navy)}
+.profile .role{color:var(--sea);font-weight:700;font-size:.9rem;margin-bottom:18px}
+.profile p{margin-bottom:14px}
+.profile dl{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font-size:.9rem;margin-top:20px;color:var(--muted)}
+.profile dt{font-weight:700;color:var(--navy)}
+
+/* FAQ */
+.faq{background:var(--sand)}
+.faq-list{max-width:820px;margin:0 auto;display:grid;gap:14px}
+details{background:var(--white);border-radius:var(--radius);border:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;padding:20px 56px 20px 60px;font-weight:700;color:var(--navy);position:relative}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"Q";position:absolute;left:22px;top:18px;font-family:"Noto Serif JP",serif;color:var(--sea);font-size:1.2rem}
+summary::after{content:"+";position:absolute;right:24px;top:16px;font-size:1.4rem;color:var(--muted);transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details .answer{padding:0 24px 22px 60px;color:var(--muted);position:relative}
+details .answer::before{content:"A";position:absolute;left:22px;top:-2px;font-family:"Noto Serif JP",serif;color:var(--gold);font-size:1.2rem;font-weight:700}
+
+/* Contact */
+.contact{background:linear-gradient(135deg,var(--navy-deep),var(--navy));color:var(--white)}
+.contact .section-head h2{color:var(--white)}
+.contact .section-head .en{color:#f0d9a8}
+.contact .section-head p{color:#c7d6e0}
+.contact-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:40px}
+.contact-info{display:grid;gap:18px;align-content:start}
+.info-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:var(--radius);padding:24px}
+.info-box .label{font-size:.8rem;color:#c7d6e0;letter-spacing:.1em}
+.info-box .tel{font-family:"Noto Serif JP",serif;font-size:1.9rem;font-weight:700;letter-spacing:.04em}
+.info-box small{color:#c7d6e0}
+form{background:var(--white);color:var(--ink);border-radius:16px;padding:32px;display:grid;gap:18px}
+.field label{display:block;font-weight:700;font-size:.9rem;margin-bottom:6px;color:var(--navy)}
+.req{font-size:.7rem;background:var(--gold);color:var(--white);padding:1px 8px;border-radius:4px;margin-left:8px;vertical-align:middle}
+.field input,.field select,.field textarea{
+  width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:.95rem;background:#fbfcfd;color:var(--ink);
+}
+.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--sea);outline-offset:1px;border-color:transparent}
+.field textarea{min-height:120px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+form .btn{width:100%;padding:16px}
+.form-msg{display:none;padding:14px;border-radius:8px;background:var(--sea-light);color:var(--navy);font-weight:500;text-align:center}
+
+/* Footer */
+footer{background:var(--navy-deep);color:#9fb3c2;padding:48px 0 28px;font-size:.88rem}
+.footer-inner{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap}
+footer .logo{color:var(--white);margin-bottom:12px}
+footer .logo-sub{color:#9fb3c2}
+footer ul{list-style:none;display:grid;gap:6px}
+footer a:hover{color:var(--white)}
+.copy{text-align:center;margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);font-size:.78rem}
+
+/* Floating CTA (mobile) */
+.float-cta{display:none}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease, transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+
+/* Responsive */
+@media (max-width:960px){
+  nav, .tel-small{display:none}
+  .menu-toggle{display:block}
+  nav.open{display:block;position:absolute;top:68px;left:0;right:0;background:var(--white);border-bottom:1px solid var(--line);padding:12px 20px 20px}
+  nav.open ul{flex-direction:column;gap:0}
+  nav.open li a{display:block;padding:12px 0;border-bottom:1px solid var(--line)}
+  .hero-inner{grid-template-columns:1fr;padding:64px 0 130px}
+  .worry-grid,.service-grid,.voice-grid{grid-template-columns:1fr 1fr}
+  .price-grid{grid-template-columns:1fr;max-width:480px;margin:0 auto}
+  .flow-steps{grid-template-columns:1fr 1fr}
+  .step:nth-child(2)::after{display:none}
+  .profile{grid-template-columns:1fr;gap:32px}
+  .portrait{max-width:280px;margin:0 auto;width:100%}
+  .contact-grid{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  body{font-size:15px}
+  .container{padding:0 16px}
+  section{padding:72px 0}
+  .header-cta .btn{display:none}
+  .worry-grid,.service-grid,.voice-grid,.flow-steps{grid-template-columns:1fr}
+  .step::after{display:none}
+  .strength{grid-template-columns:1fr;gap:10px}
+  .strength-num{font-size:2.2rem}
+  .row2{grid-template-columns:1fr}
+  form{padding:22px}
+  .float-cta{
+    display:flex;position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--white);
+    border-top:1px solid var(--line);box-shadow:0 -4px 16px rgba(0,0,0,.06)
+  }
+  .float-cta a{flex:1;text-align:center;padding:14px 8px;font-weight:700;font-size:.9rem}
+  .float-cta a:first-child{color:var(--navy)}
+  .float-cta a:last-child{background:var(--gold);color:var(--white)}
+  footer{padding-bottom:80px}
+}
+</style>
+</head>
+<body><div role="note" style="position:sticky;top:0;z-index:99999;background:#2F5D62;color:#fff;font:14px/1.5 system-ui,sans-serif;padding:8px 12px;text-align:center">【検証用デモ｜A：ひとこと 1枚目】架空のお店です。掲載内容はAIの創作を含み、フォームは送信されません。<a href="./" style="color:#F2B544">一覧へ</a></div>
+
+<header>
+  <div class="container header-inner">
+    <a href="#top" class="logo" aria-label="みなと会計事務所 トップへ">
+      <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r="19" fill="#16324f"/>
+        <path d="M7 24c3-3 6-3 9 0s6 3 9 0 6-3 8 0" stroke="#7fc0cc" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <path d="M7 29c3-3 6-3 9 0s6 3 9 0 6-3 8 0" stroke="#b88a3e" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <path d="M20 8v12M14 14h12" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+      <span><span class="logo-text">みなと会計事務所</span><span class="logo-sub">MINATO TAX ACCOUNTING</span></span>
+    </a>
+    <nav id="nav" aria-label="メインメニュー">
+      <ul>
+        <li><a href="#services">業務内容</a></li>
+        <li><a href="#strengths">選ばれる理由</a></li>
+        <li><a href="#pricing">料金</a></li>
+        <li><a href="#flow">ご相談の流れ</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ul>
+    </nav>
+    <div class="header-cta">
+      <div class="tel-small">平日 9:00–18:00<strong>000-0000-0000</strong></div>
+      <a href="#contact" class="btn btn-primary">無料相談</a>
+      <button class="menu-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" style="padding:0">
+    <div class="container hero-inner">
+      <div>
+        <span class="eyebrow">税理士事務所｜初回相談無料</span>
+        <h1>数字の不安を、<br><em>港のような安心</em>に。</h1>
+        <p class="lead">個人事業主の確定申告から、法人の税務顧問、相続・事業承継まで。<br>みなと会計事務所は、あなたの事業と暮らしに寄り添う「身近な税の相談相手」です。</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary">無料相談を予約する</a>
+          <a href="#services" class="btn btn-outline">業務内容を見る</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h2>みなと会計事務所の3つの約束</h2>
+        <ul>
+          <li><span class="check"><svg viewBox="0 0 12 12"><path d="M2 6.5l2.5 2.5L10 3.5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></span>専門用語を使わず、わかりやすく説明します</li>
+          <li><span class="check"><svg viewBox="0 0 12 12"><path d="M2 6.5l2.5 2.5L10 3.5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></span>料金は事前にお見積り。追加費用の心配なし</li>
+          <li><span class="check"><svg viewBox="0 0 12 12"><path d="M2 6.5l2.5 2.5L10 3.5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></span>ご質問には原則1営業日以内に回答します</li>
+        </ul>
+      </div>
+    </div>
+    <svg class="hero-waves" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 60 C240 110 480 10 720 50 C960 90 1200 20 1440 60 V120 H0Z" fill="rgba(255,255,255,.08)"/>
+      <path d="M0 80 C240 120 480 40 720 76 C960 112 1200 50 1440 84 V120 H0Z" fill="#f7f4ee"/>
+    </svg>
+  </section>
+
+  <section class="worries">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="en">WORRIES</span>
+        <h2>こんなお悩みはありませんか？</h2>
+      </div>
+      <div class="worry-grid">
+        <div class="worry reveal">確定申告が毎年ギリギリで、正しくできているか不安</div>
+        <div class="worry reveal">法人化したほうが得なのか、判断がつかない</div>
+        <div class="worry reveal">記帳や経理に時間を取られ、本業に集中できない</div>
+        <div class="worry reveal">インボイス制度や電子帳簿保存法への対応がわからない</div>
+        <div class="worry reveal">今の顧問税理士に相談しづらく、提案もない</div>
+        <div class="worry reveal">親の相続について、何から準備すればいいかわからない</div>
+      </div>
+      <p class="worries-answer reveal">そのお悩み、<strong>みなと会計事務所</strong>にお任せください。</p>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="en">SERVICES</span>
+        <h2>業務内容</h2>
+        <p>創業期から事業承継まで、ライフステージに合わせてサポートします。</p>
+      </div>
+      <div class="service-grid">
+        <article class="service reveal">
+          <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>
+          <h3>確定申告</h3>
+          <p>個人事業主・フリーランス・不動産所得のある方の申告を代行。青色申告への切り替えもサポートします。</p>
+          <div class="tags"><span>個人事業主</span><span>副業</span><span>医療費控除</span></div>
+        </article>
+        <article class="service reveal">
+          <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/></svg></div>
+          <h3>法人税務顧問</h3>
+          <p>月次の試算表作成から決算・法人税申告まで。数字をもとにした経営アドバイスで、会社の成長を支えます。</p>
+          <div class="tags"><span>決算申告</span><span>月次巡回</span><span>節税提案</span></div>
+        </article>
+        <article class="service reveal">
+          <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M12 3v18M5 8l7-5 7 5"/><circle cx="12" cy="14" r="3"/></svg></div>
+          <h3>会社設立・創業支援</h3>
+          <p>法人化のシミュレーションから設立手続き、融資・補助金の申請サポートまで、スタートを一緒に走ります。</p>
+          <div class="tags"><span>法人化相談</span><span>創業融資</span><span>補助金</span></div>
+        </article>
+        <article class="service reveal">
+          <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/><circle cx="12" cy="8" r="4"/></svg></div>
+          <h3>相続・贈与</h3>
+          <p>相続税申告、生前対策、贈与のご相談に対応。ご家族の想いを大切にしながら、最適な方法をご提案します。</p>
+          <div class="tags"><span>相続税申告</span><span>生前対策</span><span>事業承継</span></div>
+        </article>
+        <article class="service reveal">
+          <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/></svg></div>
+          <h3>記帳・給与計算代行</h3>
+          <p>面倒な記帳や給与計算、年末調整をまるごとお任せ。クラウド会計の導入支援も行っています。</p>
+          <div class="tags"><span>クラウド会計</span><span>年末調整</span><span>経理代行</span></div>
+        </article>
+        <article class="service reveal">
+          <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <h3>インボイス・電帳法対応</h3>
+          <p>制度の要点をわかりやすく整理し、請求書の様式や保存方法まで、現場で使える形で対応を支援します。</p>
+          <div class="tags"><span>インボイス</span><span>電子帳簿保存法</span><span>消費税</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="strengths" class="strengths">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="en">WHY US</span>
+        <h2>みなと会計事務所が選ばれる理由</h2>
+        <p>「税理士は敷居が高い」を、変えていきたい。</p>
+      </div>
+      <div class="strength-list">
+        <div class="strength reveal">
+          <div class="strength-num">01</div>
+          <div>
+            <h3>話しやすさを何より大切にしています</h3>
+            <p>税金や会計の話は、わからなくて当たり前。どんな小さな疑問でも気軽に聞ける雰囲気づくりを心がけ、専門用語はかみくだいてご説明します。</p>
+          </div>
+        </div>
+        <div class="strength reveal">
+          <div class="strength-num">02</div>
+          <div>
+            <h3>明朗会計。料金は必ず事前にお伝えします</h3>
+            <p>ご依頼前に作業内容と料金を明示したお見積りをお出しします。ご納得いただいてからのスタートなので、後から想定外の請求が届くことはありません。</p>
+          </div>
+        </div>
+        <div class="strength reveal">
+          <div class="strength-num">03</div>
+          <div>
+            <h3>対面でもオンラインでも、全国対応</h3>
+            <p>事務所での面談に加え、Zoom・チャットツールでのご相談にも対応。お忙しい経営者の方も、移動時間なくご相談いただけます。</p>
+          </div>
+        </div>
+        <div class="strength reveal">
+          <div class="strength-num">04</div>
+          <div>
+            <h3>「守り」だけでなく「攻め」の提案を</h3>
+            <p>申告書を作って終わりではありません。資金繰りや節税、補助金の活用など、事業を前に進めるための具体的なアドバイスを積極的に行います。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="en">PRICE</span>
+        <h2>料金プラン</h2>
+        <p>事業規模やご要望に合わせて、無理のないプランをご提案します。</p>
+      </div>
+      <div class="price-grid">
+        <div class="plan reveal">
+          <h3>確定申告プラン</h3>
+          <p class="for">個人事業主・フリーランスの方</p>
+          <div class="price">50,000<small>円〜（税別）／年1回</small></div>
+          <ul>
+            <li>確定申告書の作成・電子申告</li>
+            <li>帳簿のチェック・アドバイス</li>
+            <li>青色申告特別控除の適用サポート</li>
+            <li>申告後の簡単なご質問対応</li>
+          </ul>
+        </div>
+        <div class="plan featured reveal">
+          <span class="badge">いちばん人気</span>
+          <h3>法人顧問プラン</h3>
+          <p class="for">中小企業・法人成りされた方</p>
+          <div class="price">20,000<small>円〜（税別）／月</small></div>
+          <ul>
+            <li>月次試算表の作成・面談</li>
+            <li>税務・経営相談 回数無制限</li>
+            <li>節税・資金繰りのご提案</li>
+            <li>税務調査の立ち会い</li>
+            <li>決算申告料：別途お見積り</li>
+          </ul>
+        </div>
+        <div class="plan reveal">
+          <h3>相続税申告プラン</h3>
+          <p class="for">相続が発生した方・生前対策</p>
+          <div class="price">遺産総額の<br>0.5%〜<small>（税別）</small></div>
+          <ul>
+            <li>財産評価・遺産分割のご相談</li>
+            <li>相続税申告書の作成・提出</li>
+            <li>各種手続きの専門家連携</li>
+            <li>二次相続を見据えたご提案</li>
+          </ul>
+        </div>
+      </div>
+      <p class="price-note">※ 上記は目安です。売上規模・取引量・ご依頼内容により変動します。詳しくは無料相談にてお見積りいたします。</p>
+    </div>
+  </section>
+
+  <section id="flow" class="flow">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="en">FLOW</span>
+        <h2>ご相談から契約までの流れ</h2>
+      </div>
+      <div class="flow-steps">
+        <div class="step reveal">
+          <span class="step-num">STEP 01</span>
+          <h3>お問い合わせ</h3>
+          <p>お電話またはフォームからお気軽にご連絡ください。</p>
+        </div>
+        <div class="step reveal">
+          <span class="step-num">STEP 02</span>
+          <h3>無料相談</h3>
+          <p>現状やお悩みを丁寧にお伺いします（60分程度）。</p>
+        </div>
+        <div class="step reveal">
+          <span class="step-num">STEP 03</span>
+          <h3>お見積り</h3>
+          <p>内容と料金を明記したお見積りをご提示します。</p>
+        </div>
+        <div class="step reveal">
+          <span class="step-num">STEP 04</span>
+          <h3>ご契約・サポート開始</h3>
+          <p>ご納得いただいたうえで、サポートを開始します。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="voices">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="en">VOICES</span>
+        <h2>お客様の声</h2>
+      </div>
+      <div class="voice-grid">
+        <div class="voice reveal">
+          <p>「開業して初めての確定申告で右も左もわからない状態でしたが、一つずつ丁寧に教えてもらえました。翌年からは自分で帳簿をつけられるようになりました。」</p>
+          <div class="who"><span class="avatar">K</span>デザイナー（個人事業主）</div>
+        </div>
+        <div class="voice reveal">
+          <p>「法人化のタイミングをシミュレーションで比較してくれたので、納得して決断できました。毎月の面談で数字の見方がわかるようになったのも大きいです。」</p>
+          <div class="who"><span class="avatar">S</span>飲食店経営（法人）</div>
+        </div>
+        <div class="voice reveal">
+          <p>「父の相続で慌てていたところ、必要な手続きを整理して進めてくださいました。家族の事情にも配慮していただき、心強かったです。」</p>
+          <div class="who"><span class="avatar">M</span>会社員（相続のご相談）</div>
+        </div>
+      </div>
+      <p class="voice-note">※ 掲載内容はイメージです。</p>
+    </div>
+  </section>
+
+  <section id="profile" style="padding-top:0">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="en">PROFILE</span>
+        <h2>代表あいさつ</h2>
+      </div>
+      <div class="profile reveal">
+        <div class="portrait" aria-hidden="true">
+          <svg viewBox="0 0 200 240">
+            <circle cx="100" cy="88" r="42" fill="#16324f" opacity=".85"/>
+            <path d="M28 240c0-48 32-80 72-80s72 32 72 80z" fill="#16324f" opacity=".85"/>
+            <path d="M86 160l14 22 14-22" fill="#f7f4ee"/>
+          </svg>
+        </div>
+        <div>
+          <p class="role">代表税理士</p>
+          <h3>港 太郎<span style="font-size:.9rem;color:var(--muted);margin-left:12px;font-family:'Noto Sans JP',sans-serif">Taro Minato</span></h3>
+          <p style="margin-top:18px">はじめまして。みなと会計事務所 代表の港です。</p>
+          <p>「港」は、船が安心して帰ってこられる場所。事業も暮らしも、ときに荒波に揉まれることがあります。そんなとき、いつでも立ち寄って、ほっと一息つける場所でありたい——事務所の名前には、そんな想いを込めました。</p>
+          <p>税金のことは、わからなくて当然です。どうぞ肩の力を抜いて、気軽にご相談ください。</p>
+          <dl>
+            <dt>資格</dt><dd>税理士</dd>
+            <dt>所属</dt><dd>日本税理士会連合会</dd>
+            <dt>得意分野</dt><dd>中小企業の税務顧問、創業支援、相続</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="faq">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="en">FAQ</span>
+        <h2>よくあるご質問</h2>
+      </div>
+      <div class="faq-list">
+        <details class="reveal">
+          <summary>本当に初回相談は無料ですか？</summary>
+          <div class="answer">はい、初回のご相談（60分程度）は無料です。ご相談後に無理な勧誘をすることは一切ありませんので、ご安心ください。</div>
+        </details>
+        <details class="reveal">
+          <summary>帳簿や領収書がまったく整理できていないのですが…</summary>
+          <div class="answer">問題ありません。領収書の整理方法から一緒に始めましょう。状況に応じて記帳代行プランもご用意しています。</div>
+        </details>
+        <details class="reveal">
+          <summary>今の税理士から切り替えることはできますか？</summary>
+          <div class="answer">可能です。引き継ぎに必要な資料や手順もご案内しますので、スムーズに切り替えていただけます。決算期を考慮したタイミングもご提案します。</div>
+        </details>
+        <details class="reveal">
+          <summary>遠方ですが、オンラインで依頼できますか？</summary>
+          <div class="answer">はい、全国対応しております。面談はZoom等のオンラインで、資料のやり取りはクラウドや郵送で行えます。</div>
+        </details>
+        <details class="reveal">
+          <summary>使っている会計ソフトはそのまま使えますか？</summary>
+          <div class="answer">主要なクラウド会計ソフト・インストール型会計ソフトに対応しています。これから導入される場合は、事業に合ったソフト選びからお手伝いします。</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="en">CONTACT</span>
+        <h2>無料相談のご予約・お問い合わせ</h2>
+        <p>「こんなこと聞いてもいいのかな？」という内容でも大歓迎です。</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <div class="info-box">
+            <div class="label">お電話でのお問い合わせ</div>
+            <div class="tel">000-0000-0000</div>
+            <small>受付時間：平日 9:00〜18:00（土日祝は要予約）</small>
+          </div>
+          <div class="info-box">
+            <div class="label">所在地</div>
+            <p style="margin-top:6px">〒000-0000<br>○○県○○市みなと町1-2-3 みなとビル3F</p>
+            <small>○○駅から徒歩5分／駐車場あり</small>
+          </div>
+          <div class="info-box">
+            <div class="label">オンライン相談</div>
+            <p style="margin-top:6px">Zoom・Google Meet 等に対応しています。フォームの「ご希望の相談方法」でお選びください。</p>
+          </div>
+        </div>
+        <form id="contactForm" class="reveal" novalidate>
+          <div class="row2">
+            <div class="field">
+              <label for="name">お名前<span class="req">必須</span></label>
+              <input id="name" name="name" type="text" autocomplete="name" required placeholder="例）山田 花子">
+            </div>
+            <div class="field">
+              <label for="company">会社名・屋号</label>
+              <input id="company" name="company" type="text" autocomplete="organization" placeholder="例）山田デザイン">
+            </div>
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label for="email">メールアドレス<span class="req">必須</span></label>
+              <input id="email" name="email" type="email" autocomplete="email" required placeholder="example@mail.com">
+            </div>
+            <div class="field">
+              <label for="tel">電話番号</label>
+              <input id="tel" name="tel" type="tel" autocomplete="tel" placeholder="000-0000-0000">
+            </div>
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label for="topic">ご相談内容<span class="req">必須</span></label>
+              <select id="topic" name="topic" required>
+                <option value="">選択してください</option>
+                <option>確定申告</option>
+                <option>法人の税務顧問</option>
+                <option>会社設立・法人化</option>
+                <option>相続・贈与</option>
+                <option>記帳・給与計算代行</option>
+                <option>インボイス・電帳法</option>
+                <option>その他</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="method">ご希望の相談方法</label>
+              <select id="method" name="method">
+                <option>事務所で面談</option>
+                <option>オンライン</option>
+                <option>お電話</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="message">ご相談の詳細</label>
+            <textarea id="message" name="message" placeholder="現在の状況やご質問など、わかる範囲でご記入ください。"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">無料相談を申し込む</button>
+          <div class="form-msg" id="formMsg" role="status"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="logo">
+          <span><span class="logo-text">みなと会計事務所</span><span class="logo-sub">MINATO TAX ACCOUNTING</span></span>
+        </div>
+        <p>〒000-0000 ○○県○○市みなと町1-2-3 みなとビル3F<br>TEL 000-0000-0000 ／ 平日 9:00〜18:00</p>
+      </div>
+      <ul>
+        <li><a href="#services">業務内容</a></li>
+        <li><a href="#strengths">選ばれる理由</a></li>
+        <li><a href="#pricing">料金プラン</a></li>
+        <li><a href="#faq">よくあるご質問</a></li>
+        <li><a href="#contact">お問い合わせ</a></li>
+      </ul>
+    </div>
+    <p class="copy">&copy; <span id="year">2026</span> みなと会計事務所 All Rights Reserved.</p>
+  </div>
+</footer>
+
+<div class="float-cta">
+  <a href="tel:000-0000-0000">電話で相談</a>
+  <a href="#contact">無料相談を予約</a>
+</div>
+
+<script>
+(function(){
+  // Mobile menu
+  var toggle=document.querySelector('.menu-toggle');
+  var nav=document.getElementById('nav');
+  toggle.addEventListener('click',function(){
+    var open=nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded',open?'true':'false');
+  });
+  nav.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click',function(){nav.classList.remove('open');toggle.setAttribute('aria-expanded','false');});
+  });
+
+  // Reveal on scroll
+  var els=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
+    },{threshold:.12});
+    els.forEach(function(el){io.observe(el);});
+  }else{els.forEach(function(el){el.classList.add('visible');});}
+
+  // Form (demo)
+  var form=document.getElementById('contactForm');
+  var msg=document.getElementById('formMsg');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var required=form.querySelectorAll('[required]');
+    var ok=true;
+    required.forEach(function(f){
+      var valid=f.value.trim()!=='' && (f.type!=='email' || /.+@.+\..+/.test(f.value));
+      f.style.borderColor=valid?'':'#c0392b';
+      if(!valid) ok=false;
+    });
+    msg.style.display='block';
+    if(!ok){
+      msg.style.background='#fdecea';msg.style.color='#a33';
+      msg.textContent='必須項目を正しくご入力ください。';
+      return;
+    }
+    msg.style.background='';msg.style.color='';
+    msg.textContent='お問い合わせありがとうございます。担当者より1営業日以内にご連絡いたします。';
+    form.reset();
+  });
+
+  document.getElementById('year').textContent=new Date().getFullYear();
+})();
+</script>
+</body>
+</html>

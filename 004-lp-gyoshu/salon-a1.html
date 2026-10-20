@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head><meta name="robots" content="noindex"><script>document.addEventListener("submit",function(e){if(!e.defaultPrevented)e.preventDefault()});</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>美容院 こもれび｜木漏れ日のように、やさしい時間を</title>
+<meta name="description" content="自然光が差し込む小さな美容院『こもれび』。髪と頭皮にやさしいオーガニック薬剤と、ひとりひとりに寄り添うカウンセリングで、あなたらしい髪型をご提案します。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f3ea;
+    --bg-alt: #efe8d8;
+    --surface: #fffdf7;
+    --ink: #2f3a2c;
+    --ink-soft: #5c6656;
+    --green: #4f6b45;
+    --green-deep: #34492e;
+    --sun: #e2b65a;
+    --line: #ddd3bd;
+    --radius: 18px;
+    --max: 1080px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Zen Kaku Gothic New", "Hiragino Sans", "Noto Sans JP", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.9;
+    letter-spacing: .04em;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  .mincho { font-family: "Shippori Mincho", "Hiragino Mincho ProN", serif; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+
+  /* Header */
+  header {
+    position: fixed; inset: 0 0 auto 0; z-index: 50;
+    background: rgba(247, 243, 234, .88);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s;
+  }
+  header.scrolled { border-color: var(--line); }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-family: "Shippori Mincho", serif; font-size: 1.35rem; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+  .logo svg { width: 28px; height: 28px; }
+  .logo small { font-size: .7rem; color: var(--ink-soft); font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 400; letter-spacing: .2em; }
+  .nav ul { list-style: none; display: flex; gap: 28px; font-size: .9rem; }
+  .nav ul a { text-decoration: none; color: var(--ink-soft); transition: color .2s; }
+  .nav ul a:hover { color: var(--green); }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--green); color: #fff; text-decoration: none;
+    padding: 12px 26px; border-radius: 999px; font-weight: 500; font-size: .95rem;
+    transition: background .2s, transform .2s;
+    border: none; cursor: pointer; font-family: inherit; letter-spacing: .08em;
+  }
+  .btn:hover { background: var(--green-deep); transform: translateY(-1px); }
+  .btn.ghost { background: transparent; color: var(--green); border: 1px solid var(--green); }
+  .btn.ghost:hover { background: var(--green); color: #fff; }
+  .nav .btn { padding: 9px 20px; font-size: .85rem; }
+  .menu-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+  .menu-toggle span { display: block; width: 22px; height: 2px; background: var(--ink); margin: 5px 0; transition: .3s; }
+
+  /* Hero */
+  .hero {
+    position: relative; min-height: 100vh; min-height: 100svh;
+    display: flex; align-items: center; overflow: hidden;
+    padding: 110px 0 70px;
+    background:
+      radial-gradient(ellipse at 78% 18%, rgba(226,182,90,.45), transparent 55%),
+      radial-gradient(ellipse at 15% 85%, rgba(79,107,69,.18), transparent 50%),
+      var(--bg);
+  }
+  .light {
+    position: absolute; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,240,200,.9), rgba(255,240,200,0) 70%);
+    animation: flicker 7s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes flicker {
+    0%,100% { opacity: .35; transform: scale(1); }
+    50% { opacity: .9; transform: scale(1.15); }
+  }
+  .leaves { position: absolute; top: -40px; right: -60px; width: 520px; opacity: .22; pointer-events: none; }
+  .hero-inner { position: relative; display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
+  .hero-eyebrow { font-size: .8rem; letter-spacing: .3em; color: var(--green); margin-bottom: 18px; }
+  .hero h1 { font-family: "Shippori Mincho", serif; font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.55; font-weight: 700; margin-bottom: 24px; }
+  .hero h1 em { font-style: normal; background: linear-gradient(transparent 65%, rgba(226,182,90,.5) 65%); }
+  .hero p.lead { color: var(--ink-soft); margin-bottom: 36px; max-width: 30em; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+  .hero-visual {
+    aspect-ratio: 4 / 5; border-radius: 200px 200px var(--radius) var(--radius);
+    background:
+      linear-gradient(160deg, rgba(255,246,220,.7), rgba(79,107,69,.25)),
+      repeating-linear-gradient(100deg, rgba(255,255,255,.18) 0 14px, transparent 14px 46px),
+      linear-gradient(180deg, #d9c9a3, #9fb08f);
+    position: relative; overflow: hidden;
+    box-shadow: 0 30px 60px -30px rgba(52,73,46,.45);
+  }
+  .hero-visual::after {
+    content: "Since 2019"; position: absolute; left: 22px; bottom: 18px;
+    font-family: "Shippori Mincho", serif; color: #fff; letter-spacing: .2em; font-size: .85rem;
+  }
+  .hero-visual svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  /* Sections */
+  section { padding: 110px 0; }
+  .sec-head { text-align: center; margin-bottom: 60px; }
+  .sec-head .en { display: block; font-family: "Shippori Mincho", serif; color: var(--green); letter-spacing: .35em; font-size: .8rem; margin-bottom: 8px; }
+  .sec-head h2 { font-family: "Shippori Mincho", serif; font-size: clamp(1.5rem, 3.4vw, 2.1rem); font-weight: 700; }
+  .sec-head p { color: var(--ink-soft); margin-top: 14px; }
+  .alt { background: var(--bg-alt); }
+
+  /* Concept */
+  .concept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .concept-text h3 { font-family: "Shippori Mincho", serif; font-size: 1.5rem; line-height: 1.8; margin-bottom: 22px; }
+  .concept-text p + p { margin-top: 16px; }
+  .concept-text p { color: var(--ink-soft); }
+  .concept-photo {
+    aspect-ratio: 1; border-radius: var(--radius);
+    background:
+      radial-gradient(circle at 70% 25%, rgba(255,240,200,.95), transparent 40%),
+      linear-gradient(135deg, #c8b88f, #7f9672);
+    position: relative;
+  }
+  .concept-photo .tag {
+    position: absolute; right: -14px; bottom: 28px; background: var(--surface);
+    padding: 16px 22px; border-radius: 14px; box-shadow: 0 10px 30px -12px rgba(0,0,0,.2);
+    font-size: .85rem;
+  }
+  .concept-photo .tag strong { display: block; font-family: "Shippori Mincho", serif; font-size: 1.4rem; color: var(--green); }
+
+  /* Features */
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .feature {
+    background: var(--surface); border-radius: var(--radius); padding: 36px 28px;
+    border: 1px solid var(--line); position: relative;
+  }
+  .feature .num { font-family: "Shippori Mincho", serif; color: var(--sun); font-size: 2rem; line-height: 1; margin-bottom: 18px; }
+  .feature h3 { font-size: 1.1rem; margin-bottom: 12px; }
+  .feature p { color: var(--ink-soft); font-size: .93rem; }
+  .feature svg { width: 44px; height: 44px; position: absolute; top: 30px; right: 26px; color: var(--green); opacity: .8; }
+
+  /* Menu */
+  .menu-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 36px; flex-wrap: wrap; }
+  .menu-tabs button {
+    font-family: inherit; font-size: .9rem; padding: 10px 22px; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--surface); color: var(--ink-soft); cursor: pointer;
+    letter-spacing: .06em; transition: .2s;
+  }
+  .menu-tabs button[aria-selected="true"] { background: var(--green); color: #fff; border-color: var(--green); }
+  .menu-panel { max-width: 720px; margin: 0 auto; background: var(--surface); border-radius: var(--radius); padding: 18px 36px; border: 1px solid var(--line); }
+  .menu-panel[hidden] { display: none; }
+  .menu-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 18px 0; border-bottom: 1px dashed var(--line); }
+  .menu-row:last-child { border-bottom: none; }
+  .menu-row .name { font-weight: 500; }
+  .menu-row .name small { display: block; color: var(--ink-soft); font-weight: 400; font-size: .8rem; }
+  .menu-row .price { font-family: "Shippori Mincho", serif; font-size: 1.15rem; white-space: nowrap; }
+  .menu-note { text-align: center; font-size: .8rem; color: var(--ink-soft); margin-top: 20px; }
+
+  /* Staff */
+  .staff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .staff { text-align: center; }
+  .staff .avatar {
+    width: 160px; height: 160px; border-radius: 50%; margin: 0 auto 20px;
+    display: grid; place-items: center; font-family: "Shippori Mincho", serif; font-size: 2.6rem; color: #fff;
+  }
+  .staff .role { font-size: .78rem; color: var(--green); letter-spacing: .2em; }
+  .staff h3 { font-family: "Shippori Mincho", serif; font-size: 1.25rem; margin: 4px 0 10px; }
+  .staff p { font-size: .9rem; color: var(--ink-soft); max-width: 22em; margin: 0 auto; }
+
+  /* Voice */
+  .voices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .voice { background: var(--surface); border-radius: var(--radius); padding: 30px 26px; position: relative; }
+  .voice::before { content: "“"; font-family: "Shippori Mincho", serif; font-size: 4rem; color: var(--sun); position: absolute; top: -6px; left: 18px; line-height: 1; }
+  .voice p { font-size: .93rem; margin-top: 22px; }
+  .voice .who { margin-top: 16px; font-size: .8rem; color: var(--ink-soft); }
+  .stars { color: var(--sun); letter-spacing: .1em; font-size: .85rem; }
+
+  /* Flow */
+  .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; counter-reset: step; }
+  .step { background: var(--surface); border-radius: var(--radius); padding: 28px 22px; border: 1px solid var(--line); counter-increment: step; }
+  .step::before { content: "STEP " counter(step); font-family: "Shippori Mincho", serif; color: var(--green); font-size: .78rem; letter-spacing: .2em; }
+  .step h3 { font-size: 1.02rem; margin: 8px 0; }
+  .step p { font-size: .87rem; color: var(--ink-soft); }
+
+  /* FAQ */
+  .faq { max-width: 760px; margin: 0 auto; }
+  .faq details { background: var(--surface); border-radius: 14px; margin-bottom: 12px; border: 1px solid var(--line); }
+  .faq summary { cursor: pointer; padding: 20px 56px 20px 24px; font-weight: 500; list-style: none; position: relative; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::before { content: "Q."; color: var(--green); font-family: "Shippori Mincho", serif; margin-right: 10px; }
+  .faq summary::after { content: "+"; position: absolute; right: 24px; top: 50%; transform: translateY(-50%); font-size: 1.3rem; color: var(--green); transition: transform .2s; }
+  .faq details[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+  .faq .ans { padding: 0 24px 22px; color: var(--ink-soft); font-size: .93rem; }
+
+  /* Access */
+  .access-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: stretch; }
+  .info dl { display: grid; grid-template-columns: 6em 1fr; row-gap: 16px; }
+  .info dt { color: var(--green); font-weight: 500; font-size: .9rem; }
+  .info dd { font-size: .95rem; }
+  .map {
+    border-radius: var(--radius); min-height: 300px; position: relative; overflow: hidden;
+    background:
+      linear-gradient(0deg, transparent 48%, #fff 48%, #fff 52%, transparent 52%),
+      linear-gradient(90deg, transparent 36%, #fff 36%, #fff 40%, transparent 40%),
+      linear-gradient(90deg, transparent 72%, rgba(255,255,255,.7) 72%, rgba(255,255,255,.7) 74%, transparent 74%),
+      #dfe5d3;
+  }
+  .map .pin { position: absolute; left: 38%; top: 50%; transform: translate(-50%, -100%); color: var(--green); }
+  .map .pin svg { width: 40px; height: 40px; filter: drop-shadow(0 4px 6px rgba(0,0,0,.2)); }
+  .map .label { position: absolute; left: 38%; top: 52%; transform: translateX(-50%); background: var(--surface); padding: 4px 12px; border-radius: 999px; font-size: .78rem; margin-top: 6px; white-space: nowrap; }
+  .map .station { position: absolute; right: 12%; top: 18%; font-size: .75rem; background: var(--green); color: #fff; padding: 3px 10px; border-radius: 6px; }
+
+  /* Reserve CTA */
+  .reserve {
+    background: linear-gradient(135deg, var(--green-deep), var(--green));
+    color: #fff; text-align: center; border-radius: 28px; padding: 70px 24px; position: relative; overflow: hidden;
+  }
+  .reserve::before {
+    content: ""; position: absolute; width: 360px; height: 360px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(226,182,90,.45), transparent 70%); top: -140px; right: -80px;
+  }
+  .reserve h2 { font-family: "Shippori Mincho", serif; font-size: clamp(1.5rem, 3.6vw, 2.2rem); margin-bottom: 14px; position: relative; }
+  .reserve p { opacity: .88; margin-bottom: 34px; position: relative; }
+  .reserve .btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; position: relative; }
+  .reserve .btn { background: #fff; color: var(--green-deep); }
+  .reserve .btn:hover { background: var(--bg); }
+  .reserve .btn.ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,.7); }
+  .reserve .btn.ghost:hover { background: rgba(255,255,255,.12); }
+  .reserve .badge { display: inline-block; background: var(--sun); color: var(--green-deep); font-size: .8rem; font-weight: 700; padding: 4px 14px; border-radius: 999px; margin-bottom: 18px; position: relative; }
+
+  footer { padding: 50px 0 40px; text-align: center; font-size: .8rem; color: var(--ink-soft); }
+  footer .logo { justify-content: center; margin-bottom: 14px; }
+  .sns { display: flex; justify-content: center; gap: 18px; margin-bottom: 18px; }
+  .sns a { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; transition: .2s; }
+  .sns a:hover { border-color: var(--green); color: var(--green); }
+  .sns svg { width: 18px; height: 18px; }
+
+  /* Floating CTA (mobile) */
+  .float-cta { display: none; }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .light { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .features, .staff-grid, .voices { grid-template-columns: 1fr; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .flow { grid-template-columns: 1fr 1fr; }
+    .concept-grid, .access-grid, .hero-inner { grid-template-columns: 1fr; }
+    .hero-visual { max-width: 380px; width: 100%; margin: 0 auto; aspect-ratio: 4 / 4.4; }
+  }
+  @media (max-width: 760px) {
+    section { padding: 80px 0; }
+    .wrap { padding: 0 16px; }
+    .menu-toggle { display: block; }
+    .nav ul {
+      position: absolute; top: 64px; left: 0; right: 0; flex-direction: column; gap: 0;
+      background: var(--bg); border-bottom: 1px solid var(--line);
+      max-height: 0; overflow: hidden; transition: max-height .35s ease;
+    }
+    .nav ul.open { max-height: 400px; }
+    .nav ul li a { display: block; padding: 14px 20px; border-top: 1px solid var(--line); }
+    .nav .btn { display: none; }
+    .menu-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .menu-toggle.open span:nth-child(2) { opacity: 0; }
+    .menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .menu-panel { padding: 8px 20px; }
+    .concept-photo .tag { right: 12px; }
+    .info dl { grid-template-columns: 5em 1fr; }
+    .float-cta {
+      display: flex; position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 40;
+      box-shadow: 0 10px 30px -8px rgba(52,73,46,.5);
+      transform: translateY(120%); transition: transform .3s;
+    }
+    .float-cta.show { transform: none; }
+    .float-cta .btn { flex: 1; padding: 15px; }
+    footer { padding-bottom: 100px; }
+  }
+  @media (max-width: 480px) {
+    .flow { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body><div role="note" style="position:sticky;top:0;z-index:99999;background:#2F5D62;color:#fff;font:14px/1.5 system-ui,sans-serif;padding:8px 12px;text-align:center">【検証用デモ｜A：ひとこと 1枚目】架空のお店です。掲載内容はAIの創作を含み、フォームは送信されません。<a href="./" style="color:#F2B544">一覧へ</a></div>
+
+<header id="top">
+  <div class="wrap nav">
+    <a href="#top" class="logo" aria-label="こもれび トップへ">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <circle cx="16" cy="16" r="6" fill="#e2b65a"/>
+        <path d="M5 21c4-7 10-9 15-8-3 4-8 8-15 8z" fill="#4f6b45"/>
+        <path d="M27 11c-3 6-8 8-12 7 2-4 7-7 12-7z" fill="#7f9672"/>
+      </svg>
+      こもれび <small>hair salon</small>
+    </a>
+    <button class="menu-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="gnav">
+      <span></span><span></span><span></span>
+    </button>
+    <ul id="gnav">
+      <li><a href="#concept">コンセプト</a></li>
+      <li><a href="#menu">メニュー</a></li>
+      <li><a href="#staff">スタッフ</a></li>
+      <li><a href="#faq">よくある質問</a></li>
+      <li><a href="#access">アクセス</a></li>
+    </ul>
+    <a href="#reserve" class="btn">ご予約</a>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="light" style="width:220px;height:220px;top:12%;left:52%;"></div>
+    <div class="light" style="width:140px;height:140px;top:62%;left:8%;animation-delay:-2s;"></div>
+    <div class="light" style="width:90px;height:90px;top:30%;left:30%;animation-delay:-4s;"></div>
+    <svg class="leaves" viewBox="0 0 200 200" aria-hidden="true">
+      <g fill="#34492e">
+        <path d="M40 30c30 0 50 20 50 50-30 0-50-20-50-50z"/>
+        <path d="M110 10c20 10 30 35 20 60-20-10-30-35-20-60z"/>
+        <path d="M150 70c25 5 40 25 35 50-25-5-40-25-35-50z"/>
+        <path d="M70 100c25 10 35 35 25 60-25-10-35-35-25-60z"/>
+        <path d="M130 130c20 0 40 15 45 40-20 0-40-15-45-40z"/>
+      </g>
+    </svg>
+    <div class="wrap hero-inner">
+      <div>
+        <p class="hero-eyebrow">HAIR SALON KOMOREBI</p>
+        <h1>木漏れ日のように、<br><em>やさしい時間</em>を。</h1>
+        <p class="lead">
+          自然光が差し込む、席数4つだけの小さな美容院。<br>
+          髪と頭皮にやさしい薬剤と、ていねいなカウンセリングで、
+          毎日がちょっと楽しくなる「あなたらしい髪」をお届けします。
+        </p>
+        <div class="hero-actions">
+          <a href="#reserve" class="btn">
+            Web予約はこちら
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#menu" class="btn ghost">メニューを見る</a>
+        </div>
+      </div>
+      <div class="hero-visual" role="img" aria-label="窓から光が差し込む店内のイメージ">
+        <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <defs>
+            <radialGradient id="g1" cx="70%" cy="20%" r="60%">
+              <stop offset="0" stop-color="#fff6d8" stop-opacity=".95"/>
+              <stop offset="1" stop-color="#fff6d8" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <rect width="400" height="500" fill="url(#g1)"/>
+          <!-- mirror -->
+          <rect x="150" y="150" width="110" height="170" rx="55" fill="#f5efe0" opacity=".85"/>
+          <rect x="160" y="160" width="90" height="150" rx="45" fill="#c9d4bc" opacity=".8"/>
+          <!-- chair -->
+          <path d="M160 360h90v30c0 10-8 18-18 18h-54c-10 0-18-8-18-18z" fill="#34492e" opacity=".85"/>
+          <rect x="198" y="408" width="14" height="40" fill="#34492e" opacity=".85"/>
+          <rect x="170" y="446" width="70" height="8" rx="4" fill="#34492e" opacity=".85"/>
+          <!-- plant -->
+          <path d="M70 430c0-50 10-90 30-120M80 430c5-40 25-70 50-90M60 430c-10-40-5-80 10-110" stroke="#4f6b45" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="100" cy="310" rx="18" ry="9" fill="#4f6b45" transform="rotate(-40 100 310)"/>
+          <ellipse cx="130" cy="340" rx="18" ry="9" fill="#5f7e52" transform="rotate(-20 130 340)"/>
+          <ellipse cx="70" cy="320" rx="16" ry="8" fill="#4f6b45" transform="rotate(-70 70 320)"/>
+          <rect x="52" y="428" width="44" height="40" rx="6" fill="#b9946a"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Concept -->
+  <section id="concept">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="en">CONCEPT</span>
+        <h2>こもれびが大切にしていること</h2>
+      </div>
+      <div class="concept-grid">
+        <div class="concept-photo reveal" role="img" aria-label="木の温もりを感じる店内のイメージ">
+          <div class="tag">完全予約制<strong>1日 8名さま限定</strong></div>
+        </div>
+        <div class="concept-text reveal">
+          <h3 class="mincho">がんばりすぎない毎日に、<br>ちょうどいい髪型を。</h3>
+          <p>朝、鏡の前で迷わない。乾かすだけで、なんとなく決まる。こもれびが目指すのは、サロン帰りの一日だけでなく、次のご来店までずっと心地よく過ごせるスタイルです。</p>
+          <p>ひとりのスタイリストが、カウンセリングから仕上げまで担当。お客さまの暮らしや髪のクセ、お悩みをじっくり伺い、扱いやすさまで考えたご提案をいたします。</p>
+          <p>緑に囲まれた静かな空間で、どうぞ肩の力を抜いてお過ごしください。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="alt">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="en">FEATURES</span>
+        <h2>こもれびの3つの特徴</h2>
+      </div>
+      <div class="features">
+        <article class="feature reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 21c-5-2-8-6-8-11 4 0 7 2 8 5 1-3 4-5 8-5 0 5-3 9-8 11z"/><path d="M12 21V11"/></svg>
+          <div class="num">01</div>
+          <h3>髪と頭皮にやさしい薬剤</h3>
+          <p>カラー・パーマには、オーガニック由来成分を配合した低刺激の薬剤を使用。敏感肌の方や、ダメージが気になる方も安心してご相談ください。</p>
+        </article>
+        <article class="feature reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>
+          <div class="num">02</div>
+          <h3>最初から最後までマンツーマン</h3>
+          <p>担当スタイリストが、カウンセリングからシャンプー、仕上げまで一貫して担当。途中で人が変わらないから、細かなニュアンスもしっかり伝わります。</p>
+        </article>
+        <article class="feature reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <div class="num">03</div>
+          <h3>自然光が入る落ち着いた空間</h3>
+          <p>大きな窓から光が差し込む店内は、席数わずか4席。カラーの色味も自然光で確認でき、仕上がりのイメージ違いを防ぎます。お子さま連れも歓迎です。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu -->
+  <section id="menu">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="en">MENU &amp; PRICE</span>
+        <h2>メニュー・料金</h2>
+        <p>表示価格はすべて税込です。</p>
+      </div>
+      <div class="menu-tabs reveal" role="tablist" aria-label="メニューカテゴリ">
+        <button role="tab" aria-selected="true" aria-controls="p-cut" id="t-cut">カット</button>
+        <button role="tab" aria-selected="false" aria-controls="p-color" id="t-color">カラー</button>
+        <button role="tab" aria-selected="false" aria-controls="p-perm" id="t-perm">パーマ・縮毛矯正</button>
+        <button role="tab" aria-selected="false" aria-controls="p-care" id="t-care">ケア・スパ</button>
+      </div>
+
+      <div class="menu-panel reveal" role="tabpanel" id="p-cut" aria-labelledby="t-cut">
+        <div class="menu-row"><div class="name">カット<small>シャンプー・ブロー込み</small></div><div class="price">¥5,500</div></div>
+        <div class="menu-row"><div class="name">前髪カット<small>10分ほどでお直し</small></div><div class="price">¥1,100</div></div>
+        <div class="menu-row"><div class="name">学生カット<small>中学生・高校生・大学生</small></div><div class="price">¥4,400</div></div>
+        <div class="menu-row"><div class="name">キッズカット<small>小学生以下</small></div><div class="price">¥3,300</div></div>
+      </div>
+      <div class="menu-panel" role="tabpanel" id="p-color" aria-labelledby="t-color" hidden>
+        <div class="menu-row"><div class="name">カット＋オーガニックカラー<small>一番人気のセットメニュー</small></div><div class="price">¥11,000</div></div>
+        <div class="menu-row"><div class="name">オーガニックカラー<small>ショート〜ミディアム</small></div><div class="price">¥7,700〜</div></div>
+        <div class="menu-row"><div class="name">リタッチカラー<small>根元3cmまで</small></div><div class="price">¥5,500</div></div>
+        <div class="menu-row"><div class="name">ハイライト・インナーカラー<small>デザインにより変動</small></div><div class="price">¥4,400〜</div></div>
+      </div>
+      <div class="menu-panel" role="tabpanel" id="p-perm" aria-labelledby="t-perm" hidden>
+        <div class="menu-row"><div class="name">カット＋デジタルパーマ<small>ふんわり長持ち</small></div><div class="price">¥15,400</div></div>
+        <div class="menu-row"><div class="name">カット＋コスメパーマ<small>やわらかな質感に</small></div><div class="price">¥12,100</div></div>
+        <div class="menu-row"><div class="name">カット＋縮毛矯正<small>自然なストレートに</small></div><div class="price">¥19,800</div></div>
+        <div class="menu-row"><div class="name">前髪縮毛矯正</div><div class="price">¥5,500</div></div>
+      </div>
+      <div class="menu-panel" role="tabpanel" id="p-care" aria-labelledby="t-care" hidden>
+        <div class="menu-row"><div class="name">こもれびヘッドスパ（30分）<small>アロマオイルで深いリラックスを</small></div><div class="price">¥4,400</div></div>
+        <div class="menu-row"><div class="name">こもれびヘッドスパ（50分）<small>首・肩のほぐし付き</small></div><div class="price">¥6,600</div></div>
+        <div class="menu-row"><div class="name">髪質改善トリートメント<small>内部補修でまとまる髪へ</small></div><div class="price">¥5,500〜</div></div>
+        <div class="menu-row"><div class="name">クイックトリートメント<small>他メニューと同時に</small></div><div class="price">¥2,200</div></div>
+      </div>
+      <p class="menu-note">※髪の長さ・量により料金が変わる場合がございます。事前にお見積もりいたします。</p>
+    </div>
+  </section>
+
+  <!-- Staff -->
+  <section id="staff" class="alt">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="en">STAFF</span>
+        <h2>スタイリスト紹介</h2>
+      </div>
+      <div class="staff-grid">
+        <div class="staff reveal">
+          <div class="avatar" style="background:linear-gradient(135deg,#7f9672,#4f6b45)">森</div>
+          <div class="role">OWNER STYLIST</div>
+          <h3>森田 ひかり</h3>
+          <p>都内サロンで12年勤務ののち、こもれびをオープン。ショートボブと、手ぐしで決まるスタイルが得意です。</p>
+        </div>
+        <div class="staff reveal">
+          <div class="avatar" style="background:linear-gradient(135deg,#e2b65a,#b9946a)">葉</div>
+          <div class="role">COLOR SPECIALIST</div>
+          <h3>葉山 そら</h3>
+          <p>透明感カラーと白髪ぼかしハイライトが得意。肌なじみのいい色選びをお手伝いします。</p>
+        </div>
+        <div class="staff reveal">
+          <div class="avatar" style="background:linear-gradient(135deg,#9fb08f,#5f7e52)">木</div>
+          <div class="role">SPA &amp; CARE</div>
+          <h3>木村 しずく</h3>
+          <p>ヘッドスパ担当。施術中に眠ってしまう方が続出の、やさしいハンドテクニックが自慢です。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Voice -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="en">VOICE</span>
+        <h2>お客さまの声</h2>
+      </div>
+      <div class="voices">
+        <div class="voice reveal">
+          <div class="stars" aria-label="5点満点中5点">★★★★★</div>
+          <p>くせ毛で毎朝大変だったのが、乾かすだけでまとまるように。朝の時間に余裕ができました。</p>
+          <div class="who">30代・会社員の方</div>
+        </div>
+        <div class="voice reveal">
+          <div class="stars" aria-label="5点満点中5点">★★★★★</div>
+          <p>頭皮が弱くてカラーをあきらめていましたが、こちらの薬剤はしみずに楽しめています。</p>
+          <div class="who">40代・主婦の方</div>
+        </div>
+        <div class="voice reveal">
+          <div class="stars" aria-label="5点満点中5点">★★★★★</div>
+          <p>静かで落ち着いた雰囲気が好きです。ヘッドスパは毎回寝てしまうほど気持ちいい。</p>
+          <div class="who">20代・学生の方</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Flow -->
+  <section class="alt">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="en">FLOW</span>
+        <h2>ご来店の流れ</h2>
+      </div>
+      <div class="flow">
+        <div class="step reveal"><h3>ご予約</h3><p>Web・LINE・お電話で受付中。Webなら24時間ご予約いただけます。</p></div>
+        <div class="step reveal"><h3>カウンセリング</h3><p>お悩みやなりたいイメージ、普段のお手入れ方法をじっくり伺います。</p></div>
+        <div class="step reveal"><h3>施術</h3><p>担当スタイリストがマンツーマンで最後までていねいに仕上げます。</p></div>
+        <div class="step reveal"><h3>ホームケアのご提案</h3><p>ご自宅でのスタイリングのコツをお伝え。再現性の高さにこだわります。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="en">FAQ</span>
+        <h2>よくある質問</h2>
+      </div>
+      <div class="faq reveal">
+        <details>
+          <summary>初めてでも予約なしで行けますか？</summary>
+          <div class="ans">こもれびは完全予約制です。ご予約のお客さまをお待たせしないため、事前のご予約をお願いしております。当日のご予約も空きがあれば承りますので、お気軽にお電話ください。</div>
+        </details>
+        <details>
+          <summary>子ども連れでも大丈夫ですか？</summary>
+          <div class="ans">はい、大歓迎です。キッズスペースをご用意しております。ベビーカーのまま入店いただけますので、ご予約時にお知らせください。</div>
+        </details>
+        <details>
+          <summary>支払い方法は何が使えますか？</summary>
+          <div class="ans">現金のほか、各種クレジットカード、交通系IC、QRコード決済がご利用いただけます。</div>
+        </details>
+        <details>
+          <summary>駐車場はありますか？</summary>
+          <div class="ans">店舗裏に専用駐車場が2台分ございます。満車の場合は近隣のコインパーキングをご利用ください（駐車券のサービスあり）。</div>
+        </details>
+        <details>
+          <summary>キャンセルや変更はできますか？</summary>
+          <div class="ans">前日までにご連絡いただければ、キャンセル料はかかりません。当日のキャンセルはお電話にてご連絡をお願いいたします。</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Access -->
+  <section id="access" class="alt">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="en">ACCESS</span>
+        <h2>店舗情報・アクセス</h2>
+      </div>
+      <div class="access-grid">
+        <div class="info reveal">
+          <dl>
+            <dt>店名</dt><dd>美容院 こもれび</dd>
+            <dt>住所</dt><dd>〒000-0000<br>東京都〇〇区〇〇町1-2-3 1F</dd>
+            <dt>アクセス</dt><dd>〇〇駅 南口より徒歩5分</dd>
+            <dt>電話</dt><dd><a href="tel:0000000000">00-0000-0000</a></dd>
+            <dt>営業時間</dt><dd>平日 10:00〜19:00<br>土日祝 9:00〜18:00</dd>
+            <dt>定休日</dt><dd>毎週火曜日・第3水曜日</dd>
+            <dt>席数</dt><dd>セット面 4席 ／ シャンプー台 2台</dd>
+            <dt>駐車場</dt><dd>2台（店舗裏）</dd>
+          </dl>
+        </div>
+        <div class="map reveal" role="img" aria-label="店舗周辺の簡易地図">
+          <span class="station">〇〇駅 南口</span>
+          <span class="pin"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></span>
+          <span class="label">こもれび</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reserve -->
+  <section id="reserve">
+    <div class="wrap">
+      <div class="reserve reveal">
+        <span class="badge">初回限定 全メニュー20%OFF</span>
+        <h2>ご予約・お問い合わせ</h2>
+        <p>Web予約なら24時間受付中。<br>ご不明な点はお気軽にお電話・LINEでご相談ください。</p>
+        <div class="btns">
+          <a href="#" class="btn">Webで予約する</a>
+          <a href="#" class="btn ghost">LINEで予約する</a>
+          <a href="tel:0000000000" class="btn ghost">電話する 00-0000-0000</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a href="#top" class="logo">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <circle cx="16" cy="16" r="6" fill="#e2b65a"/>
+        <path d="M5 21c4-7 10-9 15-8-3 4-8 8-15 8z" fill="#4f6b45"/>
+        <path d="M27 11c-3 6-8 8-12 7 2-4 7-7 12-7z" fill="#7f9672"/>
+      </svg>
+      こもれび
+    </a>
+    <div class="sns">
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+      <a href="#" aria-label="LINE"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 4C7 4 3 7.2 3 11.2c0 3.5 3.1 6.4 7.3 7l-.5 2.6 3.4-2.5c4.6-.3 7.8-3.3 7.8-7.1C21 7.2 17 4 12 4z"/></svg></a>
+    </div>
+    <p>&copy; <span id="year">2026</span> Hair Salon Komorebi</p>
+  </div>
+</footer>
+
+<div class="float-cta" id="floatCta">
+  <a href="#reserve" class="btn">ご予約はこちら（初回20%OFF）</a>
+</div>
+
+<script>
+  // header shadow & floating CTA
+  const header = document.querySelector('header');
+  const floatCta = document.getElementById('floatCta');
+  const onScroll = () => {
+    const y = window.scrollY;
+    header.classList.toggle('scrolled', y > 10);
+    const reserve = document.getElementById('reserve').getBoundingClientRect();
+    floatCta.classList.toggle('show', y > window.innerHeight * 0.6 && reserve.top > window.innerHeight);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // mobile menu
+  const toggle = document.querySelector('.menu-toggle');
+  const nav = document.getElementById('gnav');
+  toggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    toggle.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', open);
+    toggle.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
+  });
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    nav.classList.remove('open'); toggle.classList.remove('open'); toggle.setAttribute('aria-expanded', false);
+  }));
+
+  // menu tabs
+  const tabs = document.querySelectorAll('[role="tab"]');
+  tabs.forEach(tab => tab.addEventListener('click', () => {
+    tabs.forEach(t => {
+      const selected = t === tab;
+      t.setAttribute('aria-selected', selected);
+      const panel = document.getElementById(t.getAttribute('aria-controls'));
+      panel.hidden = !selected;
+      if (selected) panel.classList.add('in');
+    });
+  }));
+
+  // reveal on scroll
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="ja">
+<head><meta name="robots" content="noindex"><script>document.addEventListener("submit",function(e){if(!e.defaultPrevented)e.preventDefault()});</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>美容院 こもれび</title>
+<meta name="description" content="駅から徒歩5分。スタイリスト1人の完全予約制サロン「こもれび」。髪にやさしいオーガニックカラーと骨格に合わせたカットで、白髪が気になり始めた大人の髪を美しく。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f3ec;
+  --bg-alt:#efe8dc;
+  --surface:#fffdf9;
+  --text:#3f3a33;
+  --text-sub:#7a7166;
+  --accent:#8a9a7b;
+  --accent-deep:#5f6f52;
+  --accent-soft:#dfe5d6;
+  --line:#e2d9cb;
+  --warm:#c9a982;
+  --radius:18px;
+  --serif:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
+  --sans:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:var(--sans);font-size:16px;line-height:1.9;letter-spacing:.04em;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:.08em;line-height:1.5;margin:0}
+p{margin:0 0 1em}
+
+/* header */
+.site-header{
+  position:sticky;top:0;z-index:20;
+  background:rgba(247,243,236,.88);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.site-header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:var(--serif);font-size:1.25rem;text-decoration:none;letter-spacing:.2em;display:flex;align-items:center;gap:10px}
+.logo svg{width:26px;height:26px}
+.nav{display:flex;gap:24px;font-size:.88rem}
+.nav a{text-decoration:none;color:var(--text-sub)}
+.nav a:hover{color:var(--accent-deep)}
+.btn{
+  display:inline-block;text-decoration:none;border:none;cursor:pointer;
+  background:var(--accent-deep);color:#fff;font-family:var(--sans);font-size:.95rem;letter-spacing:.1em;
+  padding:14px 32px;border-radius:999px;transition:background .25s, transform .25s;
+}
+.btn:hover{background:#4e5c43;transform:translateY(-1px)}
+.btn.small{padding:9px 20px;font-size:.85rem}
+@media (max-width:760px){ .nav{display:none} }
+
+/* hero */
+.hero{position:relative;overflow:hidden;padding:96px 0 112px}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(255,250,232,.95) 0, rgba(255,250,232,0) 28%),
+    radial-gradient(circle at 70% 30%, rgba(223,229,214,.9) 0, rgba(223,229,214,0) 40%),
+    radial-gradient(circle at 85% 80%, rgba(201,169,130,.25) 0, rgba(201,169,130,0) 35%);
+}
+.leaves{position:absolute;right:-40px;top:20px;width:420px;opacity:.55;pointer-events:none}
+.hero .wrap{position:relative}
+.hero-eyebrow{font-size:.85rem;color:var(--accent-deep);letter-spacing:.25em;margin-bottom:20px}
+.hero h1{font-size:clamp(1.9rem,4.6vw,3rem);margin-bottom:28px}
+.hero h1 span{display:block}
+.hero-lead{max-width:30em;color:var(--text-sub);margin-bottom:40px}
+.hero-tags{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px;padding:0;list-style:none}
+.hero-tags li{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 16px;font-size:.85rem}
+@media (max-width:760px){ .leaves{width:260px;right:-80px;top:-10px;opacity:.35} .hero{padding:64px 0 80px} }
+
+/* sections */
+section{padding:96px 0}
+.section-alt{background:var(--bg-alt)}
+.section-head{text-align:center;margin-bottom:56px}
+.section-head .en{display:block;font-family:var(--serif);color:var(--warm);letter-spacing:.3em;font-size:.8rem;margin-bottom:8px}
+.section-head h2{font-size:clamp(1.4rem,3vw,1.9rem)}
+@media (max-width:760px){ section{padding:72px 0} .section-head{margin-bottom:40px} }
+
+/* about */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.about-visual{
+  aspect-ratio:4/3;border-radius:var(--radius);
+  background:
+    linear-gradient(160deg, rgba(255,253,249,.2), rgba(138,154,123,.25)),
+    repeating-linear-gradient(90deg, #e9e0d1 0 2px, #efe7da 2px 26px);
+  position:relative;overflow:hidden;
+}
+.about-visual::after{
+  content:"";position:absolute;width:70%;height:70%;left:15%;top:15%;border-radius:50%;
+  background:radial-gradient(circle, rgba(255,248,226,.9), rgba(255,248,226,0) 70%);
+}
+.about-visual .caption{position:absolute;left:20px;bottom:16px;z-index:1;font-family:var(--serif);color:var(--accent-deep);font-size:.9rem;letter-spacing:.2em}
+.about-text h3{font-size:1.35rem;margin-bottom:20px}
+.points{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:72px}
+.point{background:var(--surface);border-radius:var(--radius);padding:32px 26px;border:1px solid var(--line)}
+.point-num{font-family:var(--serif);color:var(--warm);font-size:.85rem;letter-spacing:.2em}
+.point h3{font-size:1.1rem;margin:6px 0 12px}
+.point p{font-size:.92rem;color:var(--text-sub);margin:0}
+@media (max-width:760px){ .about-grid{grid-template-columns:1fr;gap:32px} .points{grid-template-columns:1fr;margin-top:48px} }
+
+/* menu */
+.menu-list{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.menu-card{background:var(--surface);border-radius:var(--radius);padding:36px 28px;display:flex;flex-direction:column;position:relative;border:1px solid var(--line)}
+.menu-card.popular{border-color:var(--accent)}
+.badge{position:absolute;top:-13px;left:28px;background:var(--accent);color:#fff;font-size:.75rem;padding:3px 14px;border-radius:999px;letter-spacing:.15em}
+.menu-card h3{font-size:1.15rem;margin-bottom:6px}
+.menu-card .sub{font-size:.82rem;color:var(--accent-deep);margin-bottom:16px}
+.menu-card p{font-size:.92rem;color:var(--text-sub);flex:1}
+.price{font-family:var(--serif);font-size:1.6rem;border-top:1px dashed var(--line);padding-top:16px;margin-top:8px}
+.price small{font-size:.8rem;color:var(--text-sub);font-family:var(--sans);margin-left:4px}
+.price .time{display:block;font-size:.8rem;color:var(--text-sub);font-family:var(--sans)}
+.menu-note{text-align:center;font-size:.85rem;color:var(--text-sub);margin-top:32px}
+@media (max-width:860px){ .menu-list{grid-template-columns:1fr;max-width:480px;margin:0 auto} }
+
+/* stylist */
+.stylist{display:grid;grid-template-columns:280px 1fr;gap:56px;align-items:start}
+.stylist-photo{
+  aspect-ratio:3/4;border-radius:140px 140px var(--radius) var(--radius);
+  background:linear-gradient(180deg,#e7ddcd,#d6dccb);
+  display:flex;align-items:flex-end;justify-content:center;padding-bottom:24px;
+  font-family:var(--serif);color:var(--accent-deep);letter-spacing:.2em;font-size:.9rem;
+}
+.stylist-name{font-family:var(--serif);font-size:1.3rem;margin-bottom:4px}
+.stylist-role{font-size:.85rem;color:var(--text-sub);margin-bottom:28px}
+.creed{list-style:none;padding:0;margin:0}
+.creed li{padding:22px 0;border-top:1px solid var(--line)}
+.creed li:last-child{border-bottom:1px solid var(--line)}
+.creed h3{font-size:1.05rem;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.creed h3::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);flex:none}
+.creed p{margin:0;font-size:.93rem;color:var(--text-sub)}
+.message{margin-top:32px;background:var(--surface);border-radius:var(--radius);padding:28px;font-family:var(--serif);line-height:2.1}
+@media (max-width:760px){ .stylist{grid-template-columns:1fr;gap:32px} .stylist-photo{max-width:240px;margin:0 auto;width:100%} }
+
+/* access */
+.access-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.map{
+  border-radius:var(--radius);min-height:300px;background:var(--surface);border:1px solid var(--line);
+  position:relative;overflow:hidden;
+}
+.map svg{width:100%;height:100%;display:block}
+.info-table{width:100%;border-collapse:collapse;font-size:.95rem}
+.info-table th,.info-table td{text-align:left;padding:16px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.info-table th{width:7em;font-weight:500;color:var(--accent-deep)}
+.closed{color:#a0664e}
+@media (max-width:760px){ .access-grid{grid-template-columns:1fr;gap:32px} .map{min-height:240px} }
+
+/* reserve */
+.reserve-box{max-width:640px;margin:0 auto;background:var(--surface);border-radius:var(--radius);padding:48px;border:1px solid var(--line)}
+.reserve-intro{text-align:center;color:var(--text-sub);font-size:.93rem;margin-bottom:36px}
+.field{margin-bottom:24px}
+.field label{display:block;font-size:.9rem;margin-bottom:8px}
+.req{font-size:.7rem;background:var(--warm);color:#fff;border-radius:4px;padding:1px 7px;margin-left:8px;vertical-align:2px}
+.field input,.field select,.field textarea{
+  width:100%;font:inherit;font-size:16px;color:var(--text);
+  background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px;
+  transition:border-color .2s, box-shadow .2s;
+}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.hint{font-size:.8rem;color:var(--text-sub);margin-top:6px}
+.form-actions{text-align:center;margin-top:36px}
+.thanks{display:none;text-align:center;padding:24px 0}
+.thanks h3{font-size:1.2rem;margin-bottom:12px;color:var(--accent-deep)}
+.error{color:#a0664e;font-size:.82rem;margin-top:6px;display:none}
+.field.invalid .error{display:block}
+.field.invalid input,.field.invalid select{border-color:#c79583}
+@media (max-width:560px){ .reserve-box{padding:32px 20px} .field-row{grid-template-columns:1fr;gap:0} }
+
+/* footer */
+footer{background:#4a4a3f;color:#e9e3d8;padding:48px 0 32px;text-align:center;font-size:.85rem}
+footer .logo{justify-content:center;color:#fff;margin-bottom:12px}
+footer small{display:block;margin-top:24px;color:#b3ad9f}
+
+.fixed-cta{display:none}
+@media (max-width:760px){
+  .fixed-cta{display:block;position:fixed;left:16px;right:16px;bottom:16px;z-index:30;text-align:center;box-shadow:0 8px 24px rgba(63,58,51,.2)}
+  footer{padding-bottom:96px}
+}
+
+.fade{opacity:0;transform:translateY(16px);transition:opacity .9s ease, transform .9s ease}
+.fade.is-in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){ .fade{opacity:1;transform:none;transition:none} html{scroll-behavior:auto} }
+</style>
+</head>
+<body><div role="note" style="position:sticky;top:0;z-index:99999;background:#2F5D62;color:#fff;font:14px/1.5 system-ui,sans-serif;padding:8px 12px;text-align:center">【検証用デモ｜B：中身を詳しく 3枚目】架空のお店です。掲載内容はAIの創作を含み、フォームは送信されません。<a href="./" style="color:#F2B544">一覧へ</a></div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="#top" class="logo" aria-label="こもれび トップへ">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="6" fill="#e9c98f"/><path d="M6 22c6-1 10-6 11-14 3 6 2 13-5 17-2 1-4 0-6-3z" fill="#8a9a7b"/></svg>
+      こもれび
+    </a>
+    <nav class="nav" aria-label="ページ内メニュー">
+      <a href="#about">お店について</a>
+      <a href="#menu">メニュー</a>
+      <a href="#stylist">こだわり</a>
+      <a href="#access">アクセス</a>
+    </nav>
+    <a href="#reserve" class="btn small">ご予約</a>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <svg class="leaves" viewBox="0 0 400 400" aria-hidden="true">
+      <g fill="#8a9a7b">
+        <path d="M300 40c-40 10-70 50-60 100 40-10 70-50 60-100z"/>
+        <path d="M200 90c-30 20-40 60-20 95 30-20 40-60 20-95z" opacity=".7"/>
+        <path d="M340 160c-45 0-80 30-85 75 45 0 80-30 85-75z" opacity=".8"/>
+        <path d="M250 220c-25 25-25 65 0 90 25-25 25-65 0-90z" opacity=".5"/>
+        <path d="M150 180c-35 5-60 35-55 70 35-5 60-35 55-70z" opacity=".45"/>
+      </g>
+    </svg>
+    <div class="wrap">
+      <p class="hero-eyebrow">HAIR SALON KOMOREBI</p>
+      <h1><span>白髪も、これからの髪も。</span><span>やさしく、わたしらしく。</span></h1>
+      <p class="hero-lead">木もれ日のような、やわらかな時間を。<br>駅から歩いて5分の小さなサロンで、スタイリストがひとりで最初から最後まで担当します。髪と頭皮にやさしいオーガニックカラーで、気になり始めた白髪とも穏やかに付き合っていきましょう。</p>
+      <ul class="hero-tags">
+        <li>完全予約制・マンツーマン</li>
+        <li>オーガニックカラー</li>
+        <li>骨格に合わせたカット</li>
+      </ul>
+      <a href="#reserve" class="btn">ご予約・お問い合わせ</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="section-alt">
+    <div class="wrap">
+      <div class="section-head fade">
+        <span class="en">ABOUT</span>
+        <h2>こもれびについて</h2>
+      </div>
+      <div class="about-grid fade">
+        <div class="about-visual" role="img" aria-label="木の温もりを感じる店内のイメージ"><span class="caption">salon komorebi</span></div>
+        <div class="about-text">
+          <h3>ほかのお客さまと重ならない、<br>あなただけの時間</h3>
+          <p>こもれびは、スタイリストひとりで営む小さなサロンです。ご予約はひと枠ずつ。お隣の席を気にすることも、途中で担当が変わることもありません。</p>
+          <p>「最近、分け目の白髪が目立つ」「カラーをすると頭皮がしみる」「どんな髪型が似合うのか分からなくなった」──そんな、なかなか人に言いにくいお悩みも、ゆっくりお聞かせください。</p>
+        </div>
+      </div>
+      <div class="points">
+        <div class="point fade">
+          <span class="point-num">POINT 01</span>
+          <h3>完全予約制のマンツーマン</h3>
+          <p>カウンセリングから仕上げまで、すべて同じスタイリストが担当。待ち時間なく、落ち着いて過ごせます。</p>
+        </div>
+        <div class="point fade">
+          <span class="point-num">POINT 02</span>
+          <h3>髪にやさしいオーガニックカラー</h3>
+          <p>植物由来成分を配合したカラー剤で、頭皮や髪への負担をおさえながら白髪をきれいに染め上げます。</p>
+        </div>
+        <div class="point fade">
+          <span class="point-num">POINT 03</span>
+          <h3>骨格に合わせたカット</h3>
+          <p>頭の形や顔まわりの骨格、髪のクセを見きわめて。ご自宅でも扱いやすく、まとまるスタイルに。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section id="menu">
+    <div class="wrap">
+      <div class="section-head fade">
+        <span class="en">MENU</span>
+        <h2>人気のメニュー</h2>
+      </div>
+      <div class="menu-list">
+        <article class="menu-card popular fade">
+          <span class="badge">いちばん人気</span>
+          <h3>カット ＋ オーガニックカラー</h3>
+          <p class="sub">白髪をやさしくカバーしたい方に</p>
+          <p>骨格に合わせたカットと、髪をいたわるオーガニックカラーのセット。白髪をなじませながら、ツヤのある明るい印象に仕上げます。</p>
+          <div class="price">¥13,200<small>（税込）</small><span class="time">所要時間 約2時間30分</span></div>
+        </article>
+        <article class="menu-card fade">
+          <h3>オーガニックリタッチカラー</h3>
+          <p class="sub">根元の白髪が気になってきたら</p>
+          <p>伸びてきた根元だけを丁寧に染めるメニュー。毛先への負担を減らしながら、きれいな状態を長くキープできます。</p>
+          <div class="price">¥6,600<small>（税込）</small><span class="time">所要時間 約1時間30分</span></div>
+        </article>
+        <article class="menu-card fade">
+          <h3>骨格補正カット</h3>
+          <p class="sub">似合う形をもう一度見つけたい方に</p>
+          <p>頭の丸みや顔まわりのバランスを整え、ふんわりとした立体感を。ボリュームの悩みや扱いにくさもご相談ください。</p>
+          <div class="price">¥5,500<small>（税込）</small><span class="time">所要時間 約1時間</span></div>
+        </article>
+      </div>
+      <p class="menu-note">※髪の長さ・量により料金が変わる場合があります。ご予約時にお気軽にご相談ください。</p>
+    </div>
+  </section>
+
+  <!-- STYLIST -->
+  <section id="stylist" class="section-alt">
+    <div class="wrap">
+      <div class="section-head fade">
+        <span class="en">STYLIST</span>
+        <h2>スタイリストのこだわり</h2>
+      </div>
+      <div class="stylist fade">
+        <div class="stylist-photo" role="img" aria-label="スタイリストの写真">stylist</div>
+        <div>
+          <p class="stylist-name">オーナースタイリスト</p>
+          <p class="stylist-role">こもれび 代表</p>
+          <ul class="creed">
+            <li>
+              <h3>話をきくことから、はじめます</h3>
+              <p>最初のカウンセリングにしっかり時間をとります。普段のお手入れ、お仕事やご家庭での過ごし方まで伺って、無理なく続けられるスタイルをご提案します。</p>
+            </li>
+            <li>
+              <h3>白髪を「隠す」より「なじませる」</h3>
+              <p>真っ黒に塗りつぶすのではなく、肌になじむやわらかな色味で。伸びてきても境目が目立ちにくい染め方を心がけています。</p>
+            </li>
+            <li>
+              <h3>おうちで再現できること</h3>
+              <p>サロン帰りがいちばんきれい、では終わらせません。骨格と髪のクセを生かしたカットで、乾かすだけでまとまる髪を目指します。</p>
+            </li>
+          </ul>
+          <p class="message">年齢とともに変わっていく髪を、無理に抗うのではなく、いまのご自分に似合うかたちへ。ほっとひと息つけるような時間とともに、お手伝いができたらうれしいです。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACCESS -->
+  <section id="access">
+    <div class="wrap">
+      <div class="section-head fade">
+        <span class="en">ACCESS</span>
+        <h2>アクセス・営業時間</h2>
+      </div>
+      <div class="access-grid fade">
+        <div class="map" role="img" aria-label="駅からサロンまでの簡易地図。駅から徒歩約5分">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <rect width="400" height="300" fill="#f4efe6"/>
+            <path d="M0 90H400M0 210H400M120 0V300M280 0V300" stroke="#fffdf9" stroke-width="16"/>
+            <rect x="20" y="40" width="80" height="34" rx="6" fill="#8a9a7b"/>
+            <text x="60" y="62" text-anchor="middle" font-size="13" fill="#fff" font-family="sans-serif">駅</text>
+            <path d="M60 90 H120 V210 H250" fill="none" stroke="#c9a982" stroke-width="3" stroke-dasharray="6 6"/>
+            <circle cx="262" cy="210" r="14" fill="#5f6f52"/>
+            <circle cx="262" cy="210" r="5" fill="#fff"/>
+            <text x="262" y="250" text-anchor="middle" font-size="13" fill="#3f3a33" font-family="sans-serif">こもれび</text>
+            <text x="190" y="150" text-anchor="middle" font-size="12" fill="#7a7166" font-family="sans-serif">徒歩約5分</text>
+          </svg>
+        </div>
+        <table class="info-table">
+          <tbody>
+            <tr><th>店名</th><td>美容院 こもれび</td></tr>
+            <tr><th>アクセス</th><td>駅から徒歩5分<br><span class="hint">詳しい道順はご予約時にご案内します</span></td></tr>
+            <tr><th>営業時間</th><td>10:00〜19:00<br><span class="hint">最終受付はメニューにより異なります</span></td></tr>
+            <tr><th>定休日</th><td><span class="closed">毎週月曜日</span></td></tr>
+            <tr><th>ご予約</th><td>完全予約制<br><span class="hint">下記フォームよりお問い合わせください</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESERVE -->
+  <section id="reserve" class="section-alt">
+    <div class="wrap">
+      <div class="section-head fade">
+        <span class="en">RESERVATION</span>
+        <h2>ご予約・お問い合わせ</h2>
+      </div>
+      <div class="reserve-box fade">
+        <form id="reserve-form" novalidate>
+          <p class="reserve-intro">ご希望の日時をお知らせください。<br>確認のうえ、お電話にてご連絡いたします。</p>
+          <div class="field">
+            <label for="name">お名前<span class="req">必須</span></label>
+            <input id="name" name="name" type="text" autocomplete="name" placeholder="例）木村 陽子" required>
+            <p class="error">お名前を入力してください</p>
+          </div>
+          <div class="field">
+            <label for="tel">電話番号<span class="req">必須</span></label>
+            <input id="tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" placeholder="例）090-1234-5678" required pattern="[0-9０-９\-－ ]{10,14}">
+            <p class="error">電話番号を正しく入力してください</p>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="date">ご希望日<span class="req">必須</span></label>
+              <input id="date" name="date" type="date" required>
+              <p class="error">月曜日以外の日付を選んでください</p>
+            </div>
+            <div class="field">
+              <label for="time">ご希望時間<span class="req">必須</span></label>
+              <select id="time" name="time" required>
+                <option value="">選択してください</option>
+                <option>10:00</option><option>11:00</option><option>12:00</option>
+                <option>13:00</option><option>14:00</option><option>15:00</option>
+                <option>16:00</option><option>17:00</option>
+              </select>
+              <p class="error">時間を選んでください</p>
+            </div>
+          </div>
+          <p class="hint" style="margin:-12px 0 24px">※月曜日は定休日です</p>
+          <div class="field">
+            <label for="menu-select">ご希望メニュー<span class="req">必須</span></label>
+            <select id="menu-select" name="menu" required>
+              <option value="">選択してください</option>
+              <option>カット ＋ オーガニックカラー（¥13,200）</option>
+              <option>オーガニックリタッチカラー（¥6,600）</option>
+              <option>骨格補正カット（¥5,500）</option>
+              <option>その他・相談して決めたい</option>
+            </select>
+            <p class="error">メニューを選んでください</p>
+          </div>
+          <div class="field">
+            <label for="note">ご相談・ご要望（任意）</label>
+            <textarea id="note" name="note" rows="4" placeholder="例）頭皮がしみやすいです／白髪の量が気になります など"></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn">この内容で送信する</button>
+          </div>
+        </form>
+        <div class="thanks" id="thanks" role="status" aria-live="polite">
+          <h3>お問い合わせありがとうございます</h3>
+          <p>内容を確認のうえ、ご入力いただいたお電話番号へご連絡いたします。<br>ご来店を心よりお待ちしております。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a href="#top" class="logo">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="6" fill="#e9c98f"/><path d="M6 22c6-1 10-6 11-14 3 6 2 13-5 17-2 1-4 0-6-3z" fill="#b8c5aa"/></svg>
+      こもれび
+    </a>
+    <p>駅から徒歩5分 ／ 10:00〜19:00 ／ 月曜定休 ／ 完全予約制</p>
+    <small>&copy; 美容院 こもれび</small>
+  </div>
+</footer>
+
+<a href="#reserve" class="btn fixed-cta">ご予約・お問い合わせ</a>
+
+<script>
+(function(){
+  // fade-in
+  var els = document.querySelectorAll('.fade');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); } });
+    }, {threshold:.12});
+    els.forEach(function(el){ io.observe(el); });
+  } else {
+    els.forEach(function(el){ el.classList.add('is-in'); });
+  }
+
+  // date min = tomorrow
+  var date = document.getElementById('date');
+  var t = new Date(); t.setDate(t.getDate()+1);
+  date.min = t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
+
+  // form
+  var form = document.getElementById('reserve-form');
+  function check(el){
+    var ok = el.checkValidity();
+    if (ok && el.id === 'date' && el.value) {
+      var d = new Date(el.value + 'T00:00:00');
+      if (d.getDay() === 1) ok = false;
+    }
+    el.closest('.field').classList.toggle('invalid', !ok);
+    return ok;
+  }
+  form.querySelectorAll('[required]').forEach(function(el){
+    el.addEventListener('change', function(){ check(el); });
+    el.addEventListener('blur', function(){ if (el.value) check(el); });
+  });
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var all = true, first = null;
+    form.querySelectorAll('[required]').forEach(function(el){
+      if (!check(el)) { all = false; if (!first) first = el; }
+    });
+    if (!all) { first.focus(); return; }
+    // ※送信先は未設定です。実運用ではここでメール送信やフォームサービスへ連携してください。
+    form.style.display = 'none';
+    document.getElementById('thanks').style.display = 'block';
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="ja">
+<head><meta name="robots" content="noindex"><script>document.addEventListener("submit",function(e){if(!e.defaultPrevented)e.preventDefault()});</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>こもれび｜駅徒歩5分・完全予約制の美容院｜白髪をやさしく染めるオーガニックカラー</title>
+<meta name="description" content="駅から徒歩5分、スタイリスト1人の完全予約制サロン「こもれび」。髪と頭皮にやさしいオーガニックカラーで白髪をなじませ、骨格に合わせたカットで扱いやすいスタイルに。30〜40代の白髪のお悩みに寄り添います。営業10時〜19時・月曜定休。">
+<meta name="theme-color" content="#f7f3ec">
+<meta property="og:type" content="website">
+<meta property="og:title" content="美容院 こもれび｜完全予約制・オーガニックカラー">
+<meta property="og:description" content="スタイリスト1人の完全予約制。髪にやさしいオーガニックカラーと、骨格に合わせたカット。駅から徒歩5分。">
+<meta property="og:locale" content="ja_JP">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HairSalon",
+  "name": "こもれび",
+  "description": "スタイリスト1人の完全予約制サロン。オーガニックカラーと骨格に合わせたカット。",
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+    "opens": "10:00",
+    "closes": "19:00"
+  }],
+  "priceRange": "¥6,600〜"
+}
+</script>
+<style>
+  :root {
+    --bg: #f7f3ec;
+    --surface: #fffdf9;
+    --surface-2: #efe8dc;
+    --text: #3a332c;        /* on --bg: ~11:1 */
+    --text-sub: #5f554a;    /* on --bg: ~6.8:1 */
+    --accent: #6b7f5e;      /* 木の葉のグリーン */
+    --accent-strong: #4a5a40; /* on --bg: ~6.9:1 */
+    --accent-soft: #e3e8dc;
+    --line: #d9cfbf;
+    --focus: #b3541e;
+    --error: #a3321c;
+    --radius: 14px;
+    --max: 960px;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", serif;
+    font-size: 1rem;
+    line-height: 1.9;
+    letter-spacing: .04em;
+    font-feature-settings: "palt";
+  }
+  p, li, dd, label, input, select, textarea, button, .sans {
+    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "YuGothic", "Noto Sans JP", Meiryo, sans-serif;
+  }
+  img, svg { max-width: 100%; display: block; }
+  a { color: var(--accent-strong); text-underline-offset: .2em; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+
+  .skip {
+    position: absolute; left: 8px; top: -100px; z-index: 100;
+    background: var(--text); color: #fff; padding: .6em 1em; border-radius: 8px; text-decoration: none;
+  }
+  .skip:focus { top: 8px; }
+  .visually-hidden {
+    position: absolute !important; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+  }
+
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 16px; }
+
+  /* header */
+  .site-header {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(247, 243, 236, .94);
+    border-bottom: 1px solid var(--line);
+  }
+  .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; }
+  .logo { font-size: 1.25rem; font-weight: 600; color: var(--text); text-decoration: none; letter-spacing: .15em; }
+  .logo small { display: block; font-size: .7rem; letter-spacing: .1em; color: var(--text-sub); font-weight: 400; line-height: 1.2; }
+  .nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 4px; }
+  .nav a { display: inline-block; padding: .5em .7em; color: var(--text); text-decoration: none; font-size: .9rem; border-radius: 8px; }
+  .nav a:hover { background: var(--surface-2); }
+  .nav .nav-cta { background: var(--accent-strong); color: #fff; }
+  .nav .nav-cta:hover { background: #3c4a34; }
+  @media (max-width: 640px) {
+    .nav li:not(:last-child) { display: none; }
+  }
+
+  /* hero */
+  .hero {
+    position: relative; overflow: hidden;
+    padding: 72px 0 80px;
+    background:
+      radial-gradient(ellipse 60% 50% at 85% 20%, rgba(255, 236, 190, .55), transparent 70%),
+      radial-gradient(ellipse 50% 40% at 10% 90%, rgba(107, 127, 94, .16), transparent 70%),
+      var(--bg);
+  }
+  .hero .leaves { position: absolute; right: -40px; top: 10px; width: 320px; opacity: .5; pointer-events: none; }
+  .hero-eyebrow { font-size: .85rem; color: var(--accent-strong); letter-spacing: .2em; margin: 0 0 1em; }
+  .hero h1 { font-size: clamp(1.6rem, 6vw, 2.6rem); line-height: 1.6; font-weight: 500; margin: 0 0 .8em; letter-spacing: .08em; }
+  .hero-lead { max-width: 34em; color: var(--text-sub); margin: 0 0 2em; }
+  .badges { list-style: none; padding: 0; margin: 0 0 2.2em; display: flex; flex-wrap: wrap; gap: 8px; }
+  .badges li { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: .3em 1em; font-size: .85rem; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .5em;
+    min-height: 48px; padding: .7em 1.8em; border-radius: 999px;
+    background: var(--accent-strong); color: #fff; text-decoration: none; font-size: 1rem;
+    border: 0; cursor: pointer; letter-spacing: .08em;
+  }
+  .btn:hover { background: #3c4a34; }
+  .btn-ghost { background: transparent; color: var(--accent-strong); border: 1px solid var(--accent-strong); }
+  .btn-ghost:hover { background: var(--accent-soft); }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+  /* sections */
+  section { padding: 72px 0; }
+  section:nth-of-type(even) { background: var(--surface); }
+  .sec-label { font-size: .8rem; letter-spacing: .3em; color: var(--accent-strong); margin: 0 0 .4em; text-transform: uppercase; }
+  h2 { font-size: clamp(1.35rem, 4.5vw, 1.8rem); font-weight: 500; line-height: 1.6; margin: 0 0 1.2em; letter-spacing: .08em; }
+  h3 { font-size: 1.15rem; font-weight: 600; line-height: 1.6; margin: 0 0 .5em; }
+  .lead { color: var(--text-sub); max-width: 40em; }
+
+  .about-grid { display: grid; gap: 32px; }
+  @media (min-width: 760px) { .about-grid { grid-template-columns: 1fr 1fr; align-items: center; } }
+  .about-visual {
+    aspect-ratio: 4 / 3; border-radius: var(--radius);
+    background: linear-gradient(160deg, #e9dfcd, #d8e0cf);
+    display: grid; place-items: center;
+  }
+  .worries { list-style: none; padding: 0; margin: 1.5em 0 0; display: grid; gap: 8px; }
+  .worries li { padding: .8em 1em .8em 2.6em; background: var(--bg); border-radius: 10px; position: relative; }
+  .worries li::before { content: ""; position: absolute; left: 1em; top: 1.25em; width: .8em; height: .8em; border-radius: 50%; background: var(--accent); }
+
+  /* menu */
+  .menu-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 20px; }
+  @media (min-width: 760px) { .menu-list { grid-template-columns: repeat(3, 1fr); } }
+  .menu-card {
+    background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 28px 22px; display: flex; flex-direction: column;
+  }
+  .menu-card .rank { font-size: .8rem; color: var(--accent-strong); letter-spacing: .15em; margin: 0 0 .3em; }
+  .menu-card p { color: var(--text-sub); font-size: .95rem; margin: 0 0 1em; flex: 1; }
+  .price { font-size: 1.5rem; color: var(--text); margin: 0; font-family: inherit; }
+  .price small { font-size: .8rem; color: var(--text-sub); margin-left: .3em; }
+  .menu-card .time { font-size: .85rem; color: var(--text-sub); margin: .2em 0 0; }
+  .note { font-size: .85rem; color: var(--text-sub); margin-top: 1.5em; }
+
+  /* stylist */
+  .commit-list { list-style: none; counter-reset: c; padding: 0; margin: 0; display: grid; gap: 28px; }
+  .commit-list li { counter-increment: c; display: grid; grid-template-columns: 56px 1fr; gap: 16px; align-items: start; }
+  .commit-list li::before {
+    content: counter(c, decimal-leading-zero);
+    font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+    width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--accent-soft); color: var(--accent-strong); font-size: 1.1rem;
+  }
+  .commit-list p { margin: 0; color: var(--text-sub); }
+  .message {
+    margin: 40px 0 0; padding: 24px; border-left: 4px solid var(--accent);
+    background: var(--surface-2); border-radius: 0 var(--radius) var(--radius) 0;
+  }
+  .message p { margin: 0 0 .6em; }
+  .message footer { font-size: .9rem; color: var(--text-sub); }
+
+  /* access */
+  .access-grid { display: grid; gap: 32px; }
+  @media (min-width: 760px) { .access-grid { grid-template-columns: 1fr 1fr; } }
+  .info { margin: 0; display: grid; grid-template-columns: 6.5em 1fr; border-top: 1px solid var(--line); }
+  .info dt, .info dd { padding: .9em 0; border-bottom: 1px solid var(--line); margin: 0; }
+  .info dt { font-weight: 600; font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif; }
+  .hours { width: 100%; border-collapse: collapse; font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif; }
+  .hours caption { text-align: left; font-weight: 600; margin-bottom: .5em; }
+  .hours th, .hours td { border: 1px solid var(--line); padding: .5em .2em; text-align: center; font-size: .9rem; }
+  .hours thead th { background: var(--surface-2); font-weight: 600; }
+  .hours .closed { color: var(--error); }
+
+  /* form */
+  .form-card { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px 20px; max-width: 640px; }
+  @media (min-width: 760px) { .form-card { padding: 40px; } }
+  .field { margin: 0 0 22px; }
+  .field > label, fieldset legend { display: block; font-weight: 600; margin-bottom: .4em; padding: 0; }
+  .req { display: inline-block; font-size: .75rem; background: var(--accent-strong); color: #fff; border-radius: 4px; padding: 0 .5em; margin-left: .5em; vertical-align: .1em; font-weight: 400; }
+  .hint { display: block; font-size: .85rem; color: var(--text-sub); margin: 0 0 .4em; }
+  input, select, textarea {
+    width: 100%; min-height: 48px; font-size: 1rem; /* iOSのズーム防止 */
+    padding: .6em .8em; border: 1px solid #8a7d6c; border-radius: 10px;
+    background: var(--surface); color: var(--text);
+  }
+  textarea { min-height: 120px; resize: vertical; }
+  input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--error); border-width: 2px; }
+  fieldset { border: 0; margin: 0 0 22px; padding: 0; }
+  .row-2 { display: grid; gap: 12px; }
+  @media (min-width: 520px) { .row-2 { grid-template-columns: 1fr 1fr; } }
+  .row-2 label { font-size: .9rem; display: block; margin-bottom: .2em; }
+  .error { color: var(--error); font-size: .9rem; margin: .4em 0 0; }
+  .error:empty { display: none; }
+  .form-actions { margin-top: 28px; }
+  .form-actions .btn { width: 100%; }
+  .status { margin-top: 20px; padding: 16px; border-radius: 10px; background: var(--accent-soft); }
+  .status:empty { display: none; }
+  .status.is-error { background: #f6e3dc; }
+
+  .site-footer { padding: 40px 0 96px; text-align: center; font-size: .85rem; color: var(--text-sub); border-top: 1px solid var(--line); }
+  .site-footer p { margin: .3em 0; }
+
+  /* mobile fixed CTA */
+  .fixed-cta { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: rgba(247, 243, 236, .96); border-top: 1px solid var(--line); }
+  .fixed-cta .btn { width: 100%; }
+  @media (min-width: 760px) { .fixed-cta { display: none; } .site-footer { padding-bottom: 40px; } }
+</style>
+</head>
+<body><div role="note" style="position:sticky;top:0;z-index:99999;background:#2F5D62;color:#fff;font:14px/1.5 system-ui,sans-serif;padding:8px 12px;text-align:center">【検証用デモ｜C：＋品質の1行 3枚目】架空のお店です。掲載内容はAIの創作を含み、フォームは送信されません。<a href="./" style="color:#F2B544">一覧へ</a></div>
+<a class="skip" href="#main">本文へスキップ</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="こもれび トップへ">こもれび<small>hair salon</small></a>
+    <nav class="nav" aria-label="ページ内メニュー">
+      <ul>
+        <li><a href="#about">お店</a></li>
+        <li><a href="#menu">メニュー</a></li>
+        <li><a href="#stylist">こだわり</a></li>
+        <li><a href="#access">アクセス</a></li>
+        <li><a class="nav-cta" href="#reserve">予約する</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="hero" id="top">
+    <svg class="leaves" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+      <g fill="#6b7f5e">
+        <path d="M120 30c30 5 50 30 45 55-25-2-48-25-45-55z" opacity=".55"/>
+        <path d="M70 60c25-10 55 0 62 22-22 10-52 2-62-22z" opacity=".4"/>
+        <path d="M140 100c22 12 32 38 22 58-22-8-34-34-22-58z" opacity=".35"/>
+        <path d="M95 110c18 4 30 22 26 40-18-3-30-21-26-40z" opacity=".3"/>
+      </g>
+    </svg>
+    <div class="wrap">
+      <p class="hero-eyebrow sans">駅から徒歩5分・完全予約制のちいさな美容院</p>
+      <h1>白髪も、わたしらしさに。<br>髪をいたわる<br>オーガニックカラーと骨格カット</h1>
+      <p class="hero-lead">「最近、白髪が気になってきた」。そんなお悩みに、スタイリストがひとりで最初から最後まで寄り添います。木もれ日のようにやわらかな時間の中で、これからの髪との付き合い方を一緒に見つけませんか。</p>
+      <ul class="badges" aria-label="こもれびの特徴">
+        <li>スタイリスト1人・完全予約制</li>
+        <li>オーガニックカラー</li>
+        <li>骨格に合わせたカット</li>
+      </ul>
+      <div class="hero-actions">
+        <a class="btn" href="#reserve">ご予約・お問い合わせ</a>
+        <a class="btn btn-ghost" href="#menu">メニューを見る</a>
+      </div>
+    </div>
+  </div>
+
+  <section id="about" aria-labelledby="about-title">
+    <div class="wrap about-grid">
+      <div>
+        <p class="sec-label sans" aria-hidden="true">About</p>
+        <h2 id="about-title">こもれびについて</h2>
+        <p>駅から歩いて5分。住宅街の一角にある、セット面ひとつだけの小さなサロンです。</p>
+        <p>ご予約はおひとりずつ。ほかのお客様と重なることがないので、まわりを気にせず、髪のことや毎日のお手入れのことをゆっくりご相談いただけます。</p>
+        <ul class="worries" aria-label="こんなお悩みはありませんか">
+          <li>分け目や生え際の白髪が目立ってきた</li>
+          <li>白髪染めを続けて、髪のパサつきや頭皮のしみが気になる</li>
+          <li>いつものスタイルが、なんだか似合わなくなってきた</li>
+        </ul>
+      </div>
+      <div class="about-visual" aria-hidden="true">
+        <svg viewBox="0 0 120 90" width="60%">
+          <rect x="22" y="20" width="76" height="56" rx="6" fill="none" stroke="#6b7f5e" stroke-width="2"/>
+          <path d="M22 34h76" stroke="#6b7f5e" stroke-width="2"/>
+          <circle cx="60" cy="56" r="10" fill="none" stroke="#6b7f5e" stroke-width="2"/>
+          <path d="M60 8c8 2 12 8 10 14-6 0-11-6-10-14z" fill="#6b7f5e" opacity=".6"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section id="menu" aria-labelledby="menu-title">
+    <div class="wrap">
+      <p class="sec-label sans" aria-hidden="true">Menu</p>
+      <h2 id="menu-title">人気のメニュー</h2>
+      <ol class="menu-list">
+        <li class="menu-card">
+          <p class="rank sans">人気 No.1</p>
+          <h3>オーガニックカラー＋骨格カット</h3>
+          <p>白髪をしっかりカバーしながら、髪と頭皮への負担をおさえたカラー。カットで形を整え、ツヤのある仕上がりに。</p>
+          <p class="price">13,200円<small>（税込）</small></p>
+          <p class="time sans">所要時間 約2時間30分</p>
+        </li>
+        <li class="menu-card">
+          <p class="rank sans">人気 No.2</p>
+          <h3>白髪ぼかしハイライト＋カット</h3>
+          <p>白髪を「隠す」のではなく、細いハイライトで「なじませる」デザイン。伸びてきても境目が目立ちにくく、染める間隔をあけられます。</p>
+          <p class="price">17,600円<small>（税込）</small></p>
+          <p class="time sans">所要時間 約3時間</p>
+        </li>
+        <li class="menu-card">
+          <p class="rank sans">人気 No.3</p>
+          <h3>骨格補正カット</h3>
+          <p>頭の形や髪のクセ、生えぐせを見きわめてカット。ボリュームの出したい所・おさえたい所を整え、朝のお手入れがぐっと楽に。</p>
+          <p class="price">6,600円<small>（税込）</small></p>
+          <p class="time sans">所要時間 約1時間</p>
+        </li>
+      </ol>
+      <p class="note sans">※ 価格はすべて税込です。髪の長さや量によって追加料金がかかる場合は、施術前に必ずご説明します。</p>
+    </div>
+  </section>
+
+  <section id="stylist" aria-labelledby="stylist-title">
+    <div class="wrap">
+      <p class="sec-label sans" aria-hidden="true">Stylist</p>
+      <h2 id="stylist-title">スタイリストのこだわり</h2>
+      <ol class="commit-list">
+        <li>
+          <div>
+            <h3>はじめから最後まで、ひとりで担当します</h3>
+            <p>カウンセリング、カラー、シャンプー、カット、仕上げまで、すべて同じスタイリストが担当。途中で人が替わらないので、お伝えいただいたご要望が最後までぶれません。</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>髪と頭皮にやさしいオーガニックカラー</h3>
+            <p>植物由来の成分を配合し、においや刺激をおさえたカラー剤を使用しています。染めるたびに髪が傷んでいく…という悩みを減らし、続けやすい白髪ケアをご提案します。</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>骨格とクセに合わせて切る</h3>
+            <p>年齢とともに変わる髪質やボリュームも考えながら、頭の形に合わせてカット。ご自宅で乾かすだけでまとまる、再現しやすいスタイルを大切にしています。</p>
+          </div>
+        </li>
+      </ol>
+      <blockquote class="message">
+        <p>白髪は、がんばってきた毎日のしるし。隠すことだけにとらわれず、「今のわたし」がいちばん素敵に見える髪を一緒に考えていけたらうれしいです。</p>
+        <footer>― こもれび スタイリスト</footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <section id="access" aria-labelledby="access-title">
+    <div class="wrap">
+      <p class="sec-label sans" aria-hidden="true">Access</p>
+      <h2 id="access-title">アクセス・営業時間</h2>
+      <div class="access-grid">
+        <dl class="info">
+          <dt>店名</dt><dd>美容院 こもれび</dd>
+          <dt>住所</dt><dd>〒000-0000 〇〇市〇〇町0-0-0</dd>
+          <dt>アクセス</dt><dd>〇〇駅 南口から徒歩5分</dd>
+          <dt>営業時間</dt><dd>10:00〜19:00<br><span class="sans" style="font-size:.9rem;color:var(--text-sub)">（最終受付はメニューにより異なります）</span></dd>
+          <dt>定休日</dt><dd>毎週月曜日</dd>
+          <dt>電話</dt><dd><a href="tel:000-0000-0000">000-0000-0000</a></dd>
+          <dt>ご予約</dt><dd>完全予約制（当日のご予約はお電話で）</dd>
+        </dl>
+        <div>
+          <table class="hours">
+            <caption>営業日のご案内</caption>
+            <thead>
+              <tr>
+                <th scope="col">時間</th>
+                <th scope="col">月</th><th scope="col">火</th><th scope="col">水</th><th scope="col">木</th>
+                <th scope="col">金</th><th scope="col">土</th><th scope="col">日</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">10:00〜<br>19:00</th>
+                <td class="closed"><span aria-hidden="true">✕</span><span class="visually-hidden">定休日</span></td>
+                <td><span aria-hidden="true">○</span><span class="visually-hidden">営業</span></td>
+                <td><span aria-hidden="true">○</span><span class="visually-hidden">営業</span></td>
+                <td><span aria-hidden="true">○</span><span class="visually-hidden">営業</span></td>
+                <td><span aria-hidden="true">○</span><span class="visually-hidden">営業</span></td>
+                <td><span aria-hidden="true">○</span><span class="visually-hidden">営業</span></td>
+                <td><span aria-hidden="true">○</span><span class="visually-hidden">営業</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="note sans">祝日の月曜日もお休みをいただいております。臨時休業はご予約時にお知らせします。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reserve" aria-labelledby="reserve-title">
+    <div class="wrap">
+      <p class="sec-label sans" aria-hidden="true">Reservation</p>
+      <h2 id="reserve-title">ご予約・お問い合わせ</h2>
+      <p class="lead">下記フォームからご希望をお送りください。内容を確認のうえ、2営業日以内にお電話でご連絡し、ご予約を確定いたします。</p>
+
+      <form class="form-card" id="reserve-form" action="#" method="post" novalidate>
+        <p class="hint" id="req-note"><span class="req" aria-hidden="true">必須</span> の項目は入力が必要です。</p>
+
+        <div class="field">
+          <label for="name">お名前<span class="req">必須</span></label>
+          <input id="name" name="name" type="text" autocomplete="name" required aria-required="true" aria-describedby="name-error">
+          <p class="error" id="name-error" aria-live="polite"></p>
+        </div>
+
+        <div class="field">
+          <label for="tel">電話番号<span class="req">必須</span></label>
+          <span class="hint" id="tel-hint">ハイフンなしでも入力できます（例：09012345678）</span>
+          <input id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" required aria-required="true" aria-describedby="tel-hint tel-error">
+          <p class="error" id="tel-error" aria-live="polite"></p>
+        </div>
+
+        <fieldset aria-describedby="date-hint">
+          <legend>ご希望の日時<span class="req">必須</span></legend>
+          <span class="hint" id="date-hint">月曜日は定休日です。営業時間は10:00〜19:00です。</span>
+          <div class="row-2">
+            <div>
+              <label for="date">日付</label>
+              <input id="date" name="date" type="date" required aria-required="true" aria-describedby="date-error">
+            </div>
+            <div>
+              <label for="time">時間</label>
+              <select id="time" name="time" required aria-required="true" aria-describedby="date-error">
+                <option value="">選択してください</option>
+                <option>10:00</option><option>10:30</option><option>11:00</option><option>11:30</option>
+                <option>12:00</option><option>12:30</option><option>13:00</option><option>13:30</option>
+                <option>14:00</option><option>14:30</option><option>15:00</option><option>15:30</option>
+                <option>16:00</option><option>16:30</option><option>17:00</option>
+              </select>
+            </div>
+          </div>
+          <p class="error" id="date-error" aria-live="polite"></p>
+        </fieldset>
+
+        <div class="field">
+          <label for="menu-select">ご希望のメニュー<span class="req">必須</span></label>
+          <select id="menu-select" name="menu" required aria-required="true" aria-describedby="menu-error">
+            <option value="">選択してください</option>
+            <option>オーガニックカラー＋骨格カット（13,200円）</option>
+            <option>白髪ぼかしハイライト＋カット（17,600円）</option>
+            <option>骨格補正カット（6,600円）</option>
+            <option>相談して決めたい</option>
+          </select>
+          <p class="error" id="menu-error" aria-live="polite"></p>
+        </div>
+
+        <div class="field">
+          <label for="message">ご質問・ご要望（任意）</label>
+          <textarea id="message" name="message" rows="4"></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn" type="submit">この内容で送信する</button>
+        </div>
+        <div class="status" id="form-status" role="status" aria-live="polite" tabindex="-1"></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>美容院 こもれび</p>
+  <p>10:00〜19:00 ／ 月曜定休 ／ 〇〇駅から徒歩5分</p>
+  <p><small>&copy; こもれび</small></p>
+</footer>
+
+<div class="fixed-cta">
+  <a class="btn" href="#reserve">ご予約・お問い合わせ</a>
+</div>
+
+<script>
+(function () {
+  var form = document.getElementById('reserve-form');
+  var date = document.getElementById('date');
+  var status = document.getElementById('form-status');
+
+  // 今日以降のみ選択可能に
+  var d = new Date();
+  var pad = function (n) { return String(n).padStart(2, '0'); };
+  date.min = d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+
+  function setError(input, errEl, msg) {
+    errEl.textContent = msg;
+    if (msg) input.setAttribute('aria-invalid', 'true');
+    else input.removeAttribute('aria-invalid');
+    return !msg;
+  }
+
+  function validate() {
+    var first = null;
+    var name = form.name;
+    var tel = form.tel;
+    var time = form.time;
+    var menu = form.menu;
+
+    var ok1 = setError(name, document.getElementById('name-error'),
+      name.value.trim() ? '' : 'お名前を入力してください。');
+    if (!ok1 && !first) first = name;
+
+    var digits = tel.value.replace(/[^0-9]/g, '');
+    var telMsg = !tel.value.trim() ? '電話番号を入力してください。'
+      : (digits.length < 10 || digits.length > 11) ? '電話番号は10桁または11桁の数字で入力してください。' : '';
+    var ok2 = setError(tel, document.getElementById('tel-error'), telMsg);
+    if (!ok2 && !first) first = tel;
+
+    var dateErr = document.getElementById('date-error');
+    var dateMsg = '';
+    if (!date.value) dateMsg = 'ご希望の日付を選択してください。';
+    else if (date.value < date.min) dateMsg = '本日以降の日付を選択してください。';
+    else if (new Date(date.value + 'T00:00:00').getDay() === 1) dateMsg = '月曜日は定休日のため、別の日付を選択してください。';
+    setError(date, dateErr, dateMsg);
+    if (dateMsg && !first) first = date;
+    if (!dateMsg) {
+      if (!time.value) {
+        dateErr.textContent = 'ご希望の時間を選択してください。';
+        time.setAttribute('aria-invalid', 'true');
+        if (!first) first = time;
+      } else {
+        time.removeAttribute('aria-invalid');
+      }
+    } else {
+      time.removeAttribute('aria-invalid');
+    }
+
+    var ok4 = setError(menu, document.getElementById('menu-error'),
+      menu.value ? '' : 'ご希望のメニューを選択してください。');
+    if (!ok4 && !first) first = menu;
+
+    return first;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var first = validate();
+    if (first) {
+      status.className = 'status is-error';
+      status.textContent = '入力内容に不足があります。赤字のメッセージをご確認ください。';
+      first.focus();
+      return;
+    }
+    // ※ 実際の送信先（メールフォームサービス等）に接続してご利用ください
+    status.className = 'status';
+    status.textContent = form.name.value.trim() + ' 様、お問い合わせありがとうございます。2営業日以内にお電話でご連絡いたします。';
+    form.reset();
+    status.focus();
+  });
+})();
+</script>
+</body>
+</html>
